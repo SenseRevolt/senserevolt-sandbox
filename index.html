@@ -82,9 +82,47 @@
             display: flex; justify-content: center; align-items: center; 
             border-radius: 5px; font-variant-numeric: tabular-nums;
         }
-        .pre-order-btn { background: var(--c-cream); color: var(--c-header-bg); padding: 0.16rem 0.77rem; border-radius: 4px; text-decoration: none; font-weight: 500; }
+        .pre-order-btn { 
+            background: var(--c-cream); color: var(--c-header-bg); 
+            padding: 0 0.77rem; border-radius: var(--radius-btn); 
+            text-decoration: none; font-weight: 700; font-family: 'El Messiri', sans-serif;
+            height: 2.77rem; min-width: 10rem; display: inline-flex; align-items: center; justify-content: center;
+            font-size: 1rem;
+        }
+        .btn-sub-pill { 
+            background-color: #3d3c3b; color: #fbefdc; border: none; height: 2.77rem; width: 10rem; 
+            border-radius: var(--radius-btn); margin: 1.5rem auto 0;
+            font-family: 'El Messiri', sans-serif; font-size: 1rem; font-weight: 700; cursor: pointer; transition: opacity 0.3s;
+            display: block;
+        }
         
-        header { height: 5rem; }
+        .top-bar { display: none; }
+
+        header { 
+            display: flex; flex-direction: column; 
+            border-bottom: 1px solid rgba(251, 239, 220, 0.08);
+        }
+        /* Верхній рядок хедера — таймер */
+        .header-timer-row {
+            width: 100%; height: 2.5rem;
+            display: flex; align-items: center; justify-content: center;
+            gap: 1.11rem;
+            border-bottom: 1px solid rgba(251, 239, 220, 0.08);
+            font-size: 0.83rem; font-weight: 300;
+            background-color: var(--c-header-bg);
+        }
+        /* Нижній рядок хедера — лого + нав + іконки */
+        .header-main-row {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            column-gap: var(--gutter);
+            max-width: var(--max-width);
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 var(--margin);
+            height: 5rem;
+            align-items: center;
+        }
         .logo-col { grid-column: span 3; display: flex; align-items: center; }
         .logo-col img { width: 11.83rem; height: 2.55rem; display: block; object-fit: contain; }
         
@@ -107,7 +145,12 @@
 
         /* BANNER */
         .banner-section { padding-top: 2.22rem; padding-bottom: 1.38rem; }
-        .banner-link { grid-column: span 12; display: block; border-radius: var(--radius-block); overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
+        .banner-carousel { grid-column: span 12; position: relative; overflow: hidden; border-radius: var(--radius-block); box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
+        .banner-slide { display: none; }
+        .banner-slide.active { display: block; }
+        .banner-slide.fade-in { animation: bannerFade 0.6s ease; }
+        @keyframes bannerFade { from { opacity: 0; } to { opacity: 1; } }
+        .banner-link { display: block; }
         .banner-link img { width: 100%; display: block; height: auto; }
         .carousel-dots { grid-column: span 12; display: flex; justify-content: center; gap: 0.66rem; margin-bottom: 4.44rem; }
         .dot { width: 0.44rem; height: 0.44rem; border-radius: 50%; background-color: var(--c-cream); opacity: 0.3; }
@@ -126,7 +169,7 @@
         
         .btn-eco { 
             background-color: var(--c-cream); color: var(--c-body-bg); 
-            font-family: 'El Messiri', sans-serif; font-size: 1rem; 
+            font-family: 'El Messiri', sans-serif; font-size: 1rem; font-weight: 700;
             min-width: 13.5rem; height: 2.77rem; border-radius: var(--radius-btn); 
             text-decoration: none; display: inline-flex; align-items: center; justify-content: center; 
             transition: 0.3s; align-self: flex-start; line-height: 1; padding: 0 1.5rem;
@@ -280,12 +323,6 @@
             font-family: 'Jost', sans-serif; font-size: 1rem; outline: none;
         }
         .sub-form-modern input::placeholder { color: rgba(251, 239, 220, 0.4); }
-        .btn-sub-pill { 
-            background-color: #3d3c3b; color: #fbefdc; border: none; height: 2.77rem; width: 10rem; 
-            border-radius: 1.38rem; margin: 1.5rem auto 0;
-            font-family: 'El Messiri', sans-serif; font-size: 1rem; cursor: pointer; transition: opacity 0.3s;
-            display: block;
-        }
         .btn-sub-pill:hover { opacity: 0.8; }
 
         .sub-img-side { 
@@ -475,18 +512,17 @@
 </head><body>
 
     <div class="header-wrapper">
-        <div class="top-bar">
-            <div class="container top-bar-content">
+        <header>
+            <div class="header-timer-row">
                 <span>Somatic Anger Kit Vol.2</span> | <span>Coming Soon</span>
                 <div class="timer">
-                    <span class="timer-box">31</span>:<span class="timer-box">08</span>:<span class="timer-box">24</span>:<span class="timer-box">50</span>
+                    <span class="timer-box" id="t-days">31</span>:<span class="timer-box" id="t-hours">08</span>:<span class="timer-box" id="t-min">24</span>:<span class="timer-box" id="t-sec">50</span>
                 </div>
                 <a href="#" class="pre-order-btn">Pre-Order Now</a>
             </div>
-        </div>
-        <header class="container grid">
-            <div class="logo-col"><img src="assets/SenseRevolt-_Logo.png" alt="SenseRevolt Logo"></div>
-            <nav class="main-nav">
+            <div class="header-main-row">
+                <div class="logo-col"><img src="assets/SenseRevolt-_Logo.png" alt="SenseRevolt Logo"></div>
+                <nav class="main-nav">
                 <a href="#">Somatic Tools</a>
                 <a href="#">SEL Tools for Kids</a>
                 <a href="#">For Pros</a>
@@ -499,11 +535,18 @@
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                 <div class="lang-switch">En ▾</div>
             </div>
+            </div><!-- /header-main-row -->
         </header>
-    </div>
 
     <main class="banner-section container grid">
-        <div class="banner-link"><img src="assets/banner.jpg" alt="Hero Banner"></div>
+        <div class="banner-carousel">
+            <div class="banner-slide active">
+                <a href="#" class="banner-link"><img src="assets/banner.jpg" alt="Hero Banner 1"></a>
+            </div>
+            <div class="banner-slide">
+                <a href="#" class="banner-link"><img src="assets/banner-2.jpg" alt="Hero Banner 2"></a>
+            </div>
+        </div>
     </main>
 
     <div class="container grid">
@@ -783,7 +826,45 @@
                 </form>
             </div>
             <div class="sub-img-side">
-                <img src="assets/subscribe-vortex.png" alt="The Vortex Reset Workbook">
+                <!-- Замін на sub-img.png коли є файл. Назви 2й банер: banner-2.jpg -->
+                <svg viewBox="0 0 400 520" xmlns="http://www.w3.org/2000/svg" style="max-height:100%;width:auto;filter:drop-shadow(0 20px 40px rgba(0,0,0,0.18));transform:rotate(3deg)">
+                  <!-- Аркуш 1 (задній) -->
+                  <rect x="60" y="30" width="260" height="360" rx="4" fill="white" transform="rotate(-5,190,210)" style="filter:drop-shadow(2px 4px 8px rgba(0,0,0,0.12))"/>
+                  <!-- Аркуш 2 (передній) -->
+                  <rect x="70" y="50" width="260" height="360" rx="4" fill="white" transform="rotate(3,200,230)" style="filter:drop-shadow(4px 8px 16px rgba(0,0,0,0.15))"/>
+                  <!-- Ілюстрація — хвилясті лінії -->
+                  <g transform="rotate(3,200,230)" opacity="0.85">
+                    <rect x="85" y="65" width="230" height="180" rx="2" fill="#f0ede8"/>
+                    <path d="M85,90 Q130,75 175,95 Q220,115 265,90 Q290,78 315,88" stroke="#2a2a2a" stroke-width="1.2" fill="none"/>
+                    <path d="M85,105 Q140,88 185,108 Q230,128 275,105 Q295,95 315,103" stroke="#2a2a2a" stroke-width="1.2" fill="none"/>
+                    <path d="M85,120 Q125,105 170,122 Q215,140 260,118 Q288,108 315,118" stroke="#2a2a2a" stroke-width="1.2" fill="none"/>
+                    <path d="M85,135 Q135,118 178,136 Q222,155 265,133 Q292,122 315,132" stroke="#2a2a2a" stroke-width="1.2" fill="none"/>
+                    <path d="M85,150 Q130,134 175,150 Q220,168 265,148 Q290,138 315,147" stroke="#2a2a2a" stroke-width="1.2" fill="none"/>
+                    <path d="M85,165 Q128,150 172,165 Q218,182 262,163 Q288,153 315,162" stroke="#2a2a2a" stroke-width="1.2" fill="none"/>
+                    <path d="M85,180 Q132,165 176,180 Q222,196 266,177 Q290,168 315,177" stroke="#2a2a2a" stroke-width="1.2" fill="none"/>
+                    <path d="M85,195 Q135,180 178,196 Q223,212 267,193 Q291,183 315,192" stroke="#2a2a2a" stroke-width="1.2" fill="none"/>
+                    <path d="M85,210 Q130,196 175,212 Q220,228 265,209 Q290,199 315,208" stroke="#2a2a2a" stroke-width="1.2" fill="none"/>
+                    <path d="M85,225 Q133,211 178,227 Q222,243 267,224 Q291,214 315,223" stroke="#2a2a2a" stroke-width="1.2" fill="none"/>
+                    <!-- Текст-заголовок -->
+                    <rect x="145" y="260" width="120" height="10" rx="2" fill="#2a2a2a" opacity="0.8"/>
+                    <rect x="155" y="278" width="100" height="6" rx="1.5" fill="#2a2a2a" opacity="0.3"/>
+                    <!-- Текст-рядки -->
+                    <rect x="90" y="300" width="230" height="4" rx="1.5" fill="#2a2a2a" opacity="0.2"/>
+                    <rect x="90" y="310" width="200" height="4" rx="1.5" fill="#2a2a2a" opacity="0.2"/>
+                    <rect x="90" y="320" width="215" height="4" rx="1.5" fill="#2a2a2a" opacity="0.2"/>
+                    <rect x="90" y="330" width="190" height="4" rx="1.5" fill="#2a2a2a" opacity="0.2"/>
+                    <rect x="90" y="340" width="210" height="4" rx="1.5" fill="#2a2a2a" opacity="0.2"/>
+                    <!-- QR-код -->
+                    <rect x="255" y="358" width="44" height="44" rx="3" fill="#2a2a2a" opacity="0.9"/>
+                    <rect x="259" y="362" width="36" height="36" rx="2" fill="white"/>
+                    <rect x="262" y="365" width="12" height="12" rx="1" fill="#2a2a2a"/>
+                    <rect x="278" y="365" width="12" height="12" rx="1" fill="#2a2a2a"/>
+                    <rect x="262" y="381" width="12" height="12" rx="1" fill="#2a2a2a"/>
+                    <rect x="278" y="381" width="5" height="5" rx="0.5" fill="#2a2a2a"/>
+                    <rect x="285" y="381" width="5" height="5" rx="0.5" fill="#2a2a2a"/>
+                    <rect x="278" y="388" width="12" height="5" rx="0.5" fill="#2a2a2a"/>
+                  </g>
+                </svg>
             </div>
         </div>
     </section>
@@ -844,4 +925,61 @@
             </div>
         </div>
     </footer>
+    <script>
+    // ── CAROUSEL ──────────────────────────────────────────────
+    (function() {
+        const slides = document.querySelectorAll('.banner-slide');
+        const dots   = document.querySelectorAll('.carousel-dots .dot');
+        let current  = 0;
+
+        function goTo(n) {
+            slides[current].classList.remove('active');
+            dots[current] && dots[current].classList.remove('active');
+            current = (n + slides.length) % slides.length;
+            slides[current].classList.add('active', 'fade-in');
+            dots[current] && dots[current].classList.add('active');
+            setTimeout(() => slides[current].classList.remove('fade-in'), 700);
+        }
+
+        // Dot clicks
+        dots.forEach((d, i) => d.addEventListener('click', () => goTo(i)));
+
+        // Auto-rotate every 5 s
+        setInterval(() => goTo(current + 1), 5000);
+    })();
+
+    // ── COUNTDOWN TIMER ───────────────────────────────────────
+    (function() {
+        // Встанови дату релізу тут:
+        const target = new Date('2025-09-01T00:00:00');
+
+        const els = {
+            d: document.getElementById('t-days'),
+            h: document.getElementById('t-hours'),
+            m: document.getElementById('t-min'),
+            s: document.getElementById('t-sec'),
+        };
+
+        function pad(n) { return String(n).padStart(2, '0'); }
+
+        function tick() {
+            const diff = target - Date.now();
+            if (diff <= 0) {
+                Object.values(els).forEach(e => e && (e.textContent = '00'));
+                return;
+            }
+            const d = Math.floor(diff / 86400000);
+            const h = Math.floor((diff % 86400000) / 3600000);
+            const m = Math.floor((diff % 3600000)  / 60000);
+            const s = Math.floor((diff % 60000)    / 1000);
+            if (els.d) els.d.textContent = pad(d);
+            if (els.h) els.h.textContent = pad(h);
+            if (els.m) els.m.textContent = pad(m);
+            if (els.s) els.s.textContent = pad(s);
+        }
+
+        tick();
+        setInterval(tick, 1000);
+    })();
+    </script>
 </body></html>
