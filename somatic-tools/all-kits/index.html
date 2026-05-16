@@ -416,36 +416,54 @@
         }
 
         /* ==============================
-           ФІРМОВІ КУТОВІ ЛЕЙБЛИ (SVG Mask)
+           ФІРМОВІ КУТОВІ ЛЕЙБЛИ (Чиста векторна маска через інлайновий Base64)
            ============================== */
         .product-card-label {
             position: absolute;
             top: 0;
             left: 0;
-            width: 10.5rem;   
-            height: 8.8rem;   
-            /* Магія вирізання форми */
-            -webkit-mask-image: url('assets/Label_form.svg');
+            width: 9.89rem;   /* Ідеальні пропорції твоєї оригінальної хвилі 178x116px */
+            height: 6.44rem;   
+            z-index: 10;
+        }
+
+        /* Векторний трафарет, в який вшито альфа-канал твоєї форми */
+        .label-mask {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            
+            /* Твій SVG-PNG файл, закодований в Base64. Обходить CORS блокування на локалці та повністю випалює білий бордер */
+            -webkit-mask-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALIAAAB0CAYAAAAhO2jBAAAABHNCSVQICAgIfAhkiAAABR5JREFUeJzt3U1u20YYgOHvo6zai6jIEdITNDeoj+Aj0EujkG06QG3t5FWCLmylRteVbyDdQLpBdQPrBiXaTbvw14V/oNiSzP8Zku8DBEEoWZnFi8FwSNEiQAPothd/v/71473d/2QqH8Tko4h8ePwDeMTmr0L+4/r6/T/y34mZhUK0qIGu2g87qwdurr6c/G3/DkXkvZshAemoyNejaHD3HPLN1ZeRiZy4HBSQUvxOd4ciIoGIyM31530iRt2oangYRX+JPIZspqduhwSkZfN+dD55+lfw+PePjkYDZBF3VcLVA09r5A+VDwXISnV4FF3crR4KNrwV8NXiODofvTxIyKiVjgbhuuOEjNows8ufo1/+XPcaIaMmbH7yaTDc9Cohow5e7VK8RMjwn9rpUTS42/aWnW0vAq6p2G0/Gozfeh8zMjxmy3e6l+iqMyHDWx3tHDzdS/EWQoaf1A43bbWtwxoZ3km6Ll7FjAzfLJKui1cRMnwSd9USr4tXETK8oWoHb+0Xb0LI8IPaYT8azLL+OCd7cC7Lyd1LzMhwbdo/G4R5P4SQ4dKip7thER9EyHDElj3d3c+yQ7EOIcOFOM3l5yQIGVWLOxrym7n8nAQho1KqGhYdsQgho0pqh6sPVSkSIaMaaofHOfeKtyFklK/kiEUIGWWrIGIRLlGjREVcek6KGRmlUJGvRVx6Throughrage');
             -webkit-mask-size: 100% 100%;
             -webkit-mask-repeat: no-repeat;
-            mask-image: url('assets/Label_form.svg');
+            mask-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALIAAAB0CAYAAAAhO2jBAAAABHNCSVQICAgIfAhkiAAABR5JREFUeJzt3U1u20YYgOHvo6zai6jIEdITNDeoj+Aj0EujkG06QG3t5FWCLmylRteVbyDdQLpBdQPrBiXaTbvw14V/oNiSzP8Zku8DBEEoWZnFi8FwSNEiQAPothd/v/71473d/2QqH8Tko4h8ePwDeMTmr0L+4/r6/T/y34mZhUK0qIGu2g87qwdurr6c/G3/DkXkvZshAemoyNejaHD3HPLN1ZeRiZy4HBSQUvxOd4ciIoGIyM31530iRt2oangYRX+JPIZspqduhwSkZfN+dD55+lfw+PePjkYDZBF3VcLVA09r5A+VDwXISnV4FF3crR4KNrwV8NXiODofvTxIyKiVjgbhuuOEjNows8ufo1/+XPcaIaMmbH7yaTDc9Cohow5e7VK8RMjwn9rpUTS42/aWnW0vAq6p2G0/Gozfeh8zMjxmy3e6l+iqMyHDWx3tHDzdS/EWQoaf1A43bbWtwxoZ3km6Ll7FjAzfLJKui1cRMnwSd9USr4tXETK8oWoHb+0Xb0LI8IPaYT8azLL+OCd7cC7Lyd1LzMhwbdo/G4R5P4SQ4dKip7thER9EyHDElj3d3c+yQ7EOIcOFOM3l5yQIGVWLOxrym7n8nAQho1KqGhYdsQgho0pqh6sPVSkSIaMaaofHOfeKtyFklK/kiEUIGWWrIGIRLlGjREVcek6KGRmlUJGvRVx6Throughrage');
             mask-size: 100% 100%;
             mask-repeat: no-repeat;
-            
+        }
+
+        /* Нанесення чистих бренд-кольорів на маску */
+        .launch-color { background-color: #938e88; }
+        .bestseller-color { background-color: #2d2c2b; }
+
+        /* Текстовий шар поверх маски */
+        .label-text-container {
+            position: relative;
+            z-index: 12;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
             align-items: flex-start;
-            padding-top: 1.1rem;
-            padding-left: 1.5rem; /* Відступ підігнано для точного співпадіння з макетом */
-            z-index: 10;
+            padding-top: 0.8rem;
+            padding-left: 1.1rem;
         }
 
-        /* Текстові стилі всередині кутових лейблів */
         .label-text-launch {
             font-family: 'El Messiri', sans-serif;
-            font-weight: 700; /* Bold */
-            font-size: 1rem;  /* 18px */
+            font-weight: 700; 
+            font-size: 1rem;       /* 18px */
             color: #eeeeee;
             line-height: 1.1;
         }
@@ -453,7 +471,7 @@
         .label-text-price {
             font-family: 'El Messiri', sans-serif;
             font-weight: 700;
-            font-size: 0.78rem; /* 14px */
+            font-size: 0.78rem;    /* 14px */
             color: #eeeeee;
             line-height: 1.1;
             margin-top: 0.15rem;
@@ -462,19 +480,10 @@
         .label-text-bestseller {
             font-family: 'El Messiri', sans-serif;
             font-weight: 700;
-            font-size: 1rem;    /* 18px */
+            font-size: 1rem;       /* 18px */
             color: #eeeeee;
             line-height: 1.1;
-            padding-top: 0.55rem; /* Центруємо один рядок */
-        }
-
-        /* Колірні палітри плашок */
-        .label-launch {
-            background-color: #938e88;
-        }
-
-        .label-bestseller {
-            background-color: #2d2c2b;
+            padding-top: 0.35rem;   
         }
 
         /* ==============================
@@ -510,14 +519,14 @@
             line-height: 1.2;
         }
 
-        /* Сабтайтл кіту: El Messiri Semibold 24px aaa399. Обмежений довжиною на 4 колонки сітки (493px) */
+        /* Сабтайтл кіту: Завжди строго займає 4 колонки сітки (66.6% від загальної ширини картки) */
         .product-card-subtitle {
             font-family: 'El Messiri', sans-serif;
             font-weight: 600;    
             font-size: 1.33rem;  
             color: #aaa399;
             line-height: 1.3;
-            max-width: 27.4rem; 
+            max-width: 66.6%; 
         }
 
         /* --- RESPONSIVE QUERIES --- */
@@ -554,12 +563,13 @@
             .filter-pill { padding: 0.35rem 0.77rem; font-size: 0.83rem; }
             
             .products-grid { grid-template-columns: 1fr; row-gap: 3.5rem; }
-            .product-card-subtitle { max-width: 100%; }
+            .product-card-subtitle { max-width: 100%; } 
             
-            .product-card-label { width: 7.5rem; height: 6.3rem; padding-top: 0.7rem; padding-left: 1rem; }
+            .product-card-label { width: 7.5rem; height: 4.9rem; }
+            .label-text-container { padding-top: 0.5rem; padding-left: 0.8rem; }
             .label-text-launch { font-size: 0.83rem; }
             .label-text-price { font-size: 0.67rem; }
-            .label-text-bestseller { font-size: 0.83rem; padding-top: 0.4rem; }
+            .label-text-bestseller { font-size: 0.83rem; padding-top: 0.25rem; }
         }
     </style>
 </head>
@@ -770,9 +780,12 @@
 
                 <div class="product-card">
                     <div class="product-image-box">
-                        <div class="product-card-label label-launch">
-                            <span class="label-text-launch">Launch</span>
-                            <span class="label-text-price">Price</span>
+                        <div class="product-card-label">
+                            <div class="label-mask launch-color"></div>
+                            <div class="label-text-container">
+                                <span class="label-text-launch">Launch</span>
+                                <span class="label-text-price">Price</span>
+                            </div>
                         </div>
                         <img src="assets/kit_cover_anger_3.jpg" alt="Somatic Insomnia Kit">
                     </div>
@@ -784,8 +797,11 @@
 
                 <div class="product-card">
                     <div class="product-image-box">
-                        <div class="product-card-label label-bestseller">
-                            <span class="label-text-bestseller">Bestseller</span>
+                        <div class="product-card-label">
+                            <div class="label-mask bestseller-color"></div>
+                            <div class="label-text-container">
+                                <span class="label-text-bestseller">Bestseller</span>
+                            </div>
                         </div>
                         <img src="assets/kit_cover_anger_4.jpg" alt="Somatic Burnout Kit">
                     </div>
