@@ -21,7 +21,6 @@
             --c-accent-block: #c9cdce;
             --c-light-sub: #f2f2f2;
             
-            --radius-block: 0.28rem;   
             --radius-pill: 0.28rem;    
             --radius-card-img: 0.56rem; 
         }
@@ -416,80 +415,38 @@
         }
 
         /* ==============================
-           ФІРМОВІ КУТОВІ ЛЕЙБЛИ (Чиста векторна маска через інлайновий Base64)
+           СТРАТЕГІЧНІ КУТОВІ ЛЕЙБЛИ
            ============================== */
         .product-card-label {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 9.89rem;   /* Ідеальні пропорції твоєї оригінальної хвилі 178x116px */
-            height: 6.44rem;   
+            top: calc(16rem / 18);   
+            left: 0;                
+            width: calc(154rem / 18);
+            height: 2.5rem;         
+            border-radius: 0;       
             z-index: 10;
-        }
-
-        /* Векторний трафарет, в який вшито альфа-канал твоєї форми */
-        .label-mask {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
             
-            /* Твій SVG-PNG файл, закодований в Base64. Обходить CORS блокування на локалці та повністю випалює білий бордер */
-            -webkit-mask-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALIAAAB0CAYAAAAhO2jBAAAABHNCSVQICAgIfAhkiAAABR5JREFUeJzt3U1u20YYgOHvo6zai6jIEdITNDeoj+Aj0EujkG06QG3t5FWCLmylRteVbyDdQLpBdQPrBiXaTbvw14V/oNiSzP8Zku8DBEEoWZnFi8FwSNEiQAPothd/v/71473d/2QqH8Tko4h8ePwDeMTmr0L+4/r6/T/y34mZhUK0qIGu2g87qwdurr6c/G3/DkXkvZshAemoyNejaHD3HPLN1ZeRiZy4HBSQUvxOd4ciIoGIyM31530iRt2oangYRX+JPIZspqduhwSkZfN+dD55+lfw+PePjkYDZBF3VcLVA09r5A+VDwXISnV4FF3crR4KNrwV8NXiODofvTxIyKiVjgbhuuOEjNows8ufo1/+XPcaIaMmbH7yaTDc9Cohow5e7VK8RMjwn9rpUTS42/aWnW0vAq6p2G0/Gozfeh8zMjxmy3e6l+iqMyHDWx3tHDzdS/EWQoaf1A43bbWtwxoZ3km6Ll7FjAzfLJKui1cRMnwSd9USr4tXETK8oWoHb+0Xb0LI8IPaYT8azLL+OCd7cC7Lyd1LzMhwbdo/G4R5P4SQ4dKip7thER9EyHDElj3d3c+yQ7EOIcOFOM3l5yQIGVWLOxrym7n8nAQho1KqGhYdsQgho0pqh6sPVSkSIaMaaofHOfeKtyFklK/kiEUIGWWrIGIRLlGjREVcek6KGRmlUJGvRVx6Throughrage');
-            -webkit-mask-size: 100% 100%;
-            -webkit-mask-repeat: no-repeat;
-            mask-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALIAAAB0CAYAAAAhO2jBAAAABHNCSVQICAgIfAhkiAAABR5JREFUeJzt3U1u20YYgOHvo6zai6jIEdITNDeoj+Aj0EujkG06QG3t5FWCLmylRteVbyDdQLpBdQPrBiXaTbvw14V/oNiSzP8Zku8DBEEoWZnFi8FwSNEiQAPothd/v/71473d/2QqH8Tko4h8ePwDeMTmr0L+4/r6/T/y34mZhUK0qIGu2g87qwdurr6c/G3/DkXkvZshAemoyNejaHD3HPLN1ZeRiZy4HBSQUvxOd4ciIoGIyM31530iRt2oangYRX+JPIZspqduhwSkZfN+dD55+lfw+PePjkYDZBF3VcLVA09r5A+VDwXISnV4FF3crR4KNrwV8NXiODofvTxIyKiVjgbhuuOEjNows8ufo1/+XPcaIaMmbH7yaTDc9Cohow5e7VK8RMjwn9rpUTS42/aWnW0vAq6p2G0/Gozfeh8zMjxmy3e6l+iqMyHDWx3tHDzdS/EWQoaf1A43bbWtwxoZ3km6Ll7FjAzfLJKui1cRMnwSd9USr4tXETK8oWoHb+0Xb0LI8IPaYT8azLL+OCd7cC7Lyd1LzMhwbdo/G4R5P4SQ4dKip7thER9EyHDElj3d3c+yQ7EOIcOFOM3l5yQIGVWLOxrym7n8nAQho1KqGhYdsQgho0pqh6sPVSkSIaMaaofHOfeKtyFklK/kiEUIGWWrIGIRLlGjREVcek6KGRmlUJGvRVx6Throughrage');
-            mask-size: 100% 100%;
-            mask-repeat: no-repeat;
-        }
-
-        /* Нанесення чистих бренд-кольорів на маску */
-        .launch-color { background-color: #938e88; }
-        .bestseller-color { background-color: #2d2c2b; }
-
-        /* Текстовий шар поверх маски */
-        .label-text-container {
-            position: relative;
-            z-index: 12;
             display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: flex-start;
-            padding-top: 0.8rem;
-            padding-left: 1.1rem;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
         }
 
-        .label-text-launch {
-            font-family: 'El Messiri', sans-serif;
-            font-weight: 700; 
-            font-size: 1rem;       /* 18px */
-            color: #eeeeee;
-            line-height: 1.1;
-        }
+        .launch-bg { background-color: #938e88; }
+        .bestseller-bg { background-color: #2d2c2b; }
 
-        .label-text-price {
+        .label-text-one-line {
             font-family: 'El Messiri', sans-serif;
-            font-weight: 700;
-            font-size: 0.78rem;    /* 14px */
+            font-weight: 700;                 
+            font-size: calc(16rem / 18);      
             color: #eeeeee;
-            line-height: 1.1;
-            margin-top: 0.15rem;
-        }
-
-        .label-text-bestseller {
-            font-family: 'El Messiri', sans-serif;
-            font-weight: 700;
-            font-size: 1rem;       /* 18px */
-            color: #eeeeee;
-            line-height: 1.1;
-            padding-top: 0.35rem;   
+            white-space: nowrap;              
+            padding-top: 0.15rem;             
         }
 
         /* ==============================
            КАРТКА: ТЕКСТ ТА ЛІНІЇ
            ============================== */
-        /* Vol.1 текст: El Messiri Semibold 24px, відступ зверху 44px */
         .product-vol-text {
             font-family: 'El Messiri', sans-serif;
             font-weight: 600; 
@@ -500,7 +457,6 @@
             line-height: 1;
         }
 
-        /* Роздільна лінія: колір fbefdc, прозорість 23% */
         .product-card-line {
             width: 100%;
             height: 1px;
@@ -508,7 +464,6 @@
             margin-top: 1.17rem; 
         }
 
-        /* Назва кіту: El Messiri Semibold 36px, відступ від лінії строго 38px */
         .product-card-title {
             font-family: 'El Messiri', sans-serif;
             font-weight: 600; 
@@ -519,14 +474,14 @@
             line-height: 1.2;
         }
 
-        /* Сабтайтл кіту: Завжди строго займає 4 колонки сітки (66.6% від загальної ширини картки) */
+        /* Сабтайтл кіту: [FIX] Тепер суворо займає 5 колонок сітки (83.33% від ширини картки) */
         .product-card-subtitle {
             font-family: 'El Messiri', sans-serif;
             font-weight: 600;    
             font-size: 1.33rem;  
             color: #aaa399;
             line-height: 1.3;
-            max-width: 66.6%; 
+            max-width: 83.33%; 
         }
 
         /* --- RESPONSIVE QUERIES --- */
@@ -565,11 +520,8 @@
             .products-grid { grid-template-columns: 1fr; row-gap: 3.5rem; }
             .product-card-subtitle { max-width: 100%; } 
             
-            .product-card-label { width: 7.5rem; height: 4.9rem; }
-            .label-text-container { padding-top: 0.5rem; padding-left: 0.8rem; }
-            .label-text-launch { font-size: 0.83rem; }
-            .label-text-price { font-size: 0.67rem; }
-            .label-text-bestseller { font-size: 0.83rem; padding-top: 0.25rem; }
+            .product-card-label { top: 0.5rem; width: 6.5rem; height: 2rem; }
+            .label-text-one-line { font-size: 0.78rem; padding-top: 0.1rem; }
         }
     </style>
 </head>
@@ -765,7 +717,7 @@
                     <span class="product-vol-text">Vol.1</span>
                     <div class="product-card-line"></div>
                     <h3 class="product-card-title">Somatic Anger Kit</h3>
-                    <p class="product-card-subtitle">Body-Based Practices to Move Through Rage<br>& Understand What's Underneath</p>
+                    <p class="product-card-subtitle">Body-Based Practices to Move Through Rage & Understand What's Underneath</p>
                 </div>
 
                 <div class="product-card">
@@ -775,16 +727,14 @@
                     <span class="product-vol-text">Vol.1</span>
                     <div class="product-card-line"></div>
                     <h3 class="product-card-title">Somatic Anger Kit</h3>
-                    <p class="product-card-subtitle">Body-Based Practices to Move Through Rage<br>& Understand What's Underneath</p>
+                    <p class="product-card-subtitle">Body-Based Practices to Move Through Rage & Understand What's Underneath</p>
                 </div>
 
                 <div class="product-card">
                     <div class="product-image-box">
-                        <div class="product-card-label">
-                            <div class="label-mask launch-color"></div>
+                        <div class="product-card-label launch-bg">
                             <div class="label-text-container">
-                                <span class="label-text-launch">Launch</span>
-                                <span class="label-text-price">Price</span>
+                                <span class="label-text-one-line">Launch Price</span>
                             </div>
                         </div>
                         <img src="assets/kit_cover_anger_3.jpg" alt="Somatic Insomnia Kit">
@@ -797,10 +747,9 @@
 
                 <div class="product-card">
                     <div class="product-image-box">
-                        <div class="product-card-label">
-                            <div class="label-mask bestseller-color"></div>
+                        <div class="product-card-label bestseller-bg">
                             <div class="label-text-container">
-                                <span class="label-text-bestseller">Bestseller</span>
+                                <span class="label-text-one-line">Bestseller</span>
                             </div>
                         </div>
                         <img src="assets/kit_cover_anger_4.jpg" alt="Somatic Burnout Kit">
