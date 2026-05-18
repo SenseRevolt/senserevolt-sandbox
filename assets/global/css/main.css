@@ -341,27 +341,29 @@ footer { background-color: #262524; color: #fbefdc; padding: 4.5rem 0 0; }
 @media (max-width: 767px) {
     footer { padding: 3rem 0 0; }
     .footer-grid { 
-        grid-template-columns: 1fr 1fr;
-        column-gap: 1.5rem;
+        grid-template-columns: 1fr;
         row-gap: 2rem;
         padding-bottom: 2.5rem;
         text-align: center;
         justify-items: center;
     }
     .f-col-brand { 
-        grid-column: span 2;
+        grid-column: span 1;
         width: auto;
         justify-content: center;
     }
     .f-col-brand img { width: 8rem; }
     .f-col-desc { 
-        grid-column: span 2;
+        grid-column: span 1;
         align-items: center;
         text-align: center;
         padding-right: 0;
     }
     .f-socials { justify-content: center; }
-    .f-col-nav { grid-column: span 1; }
+    .f-col-nav { 
+        grid-column: span 1;
+        align-items: center;
+    }
     .f-copyright-bar { padding: 1rem 0; }
     .f-copy-flex { flex-direction: column; gap: 0.8rem; text-align: center; }
     .f-legal { flex-wrap: wrap; justify-content: center; }
