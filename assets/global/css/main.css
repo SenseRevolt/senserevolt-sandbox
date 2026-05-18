@@ -183,13 +183,84 @@ header.main-header { height: 5rem; position: sticky; top: 0; background-color: v
 .notify-btn { font-family: 'El Messiri', sans-serif; font-weight: 700; font-size: calc(18rem / 18); color: var(--c-cream); text-decoration: none; background-color: #2d2c2b; width: calc(220rem / 18); padding: 0.8rem 0; display: inline-block; text-align: center; border-radius: 50px; white-space: nowrap; line-height: 1; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); transform: scale(1); }
 .notify-btn:hover { transform: scale(1.06); }
 
-/* FOOTER */
-footer.main-footer { background-color: var(--c-header-bg); padding: 3.5rem 0; width: 100%; border-top: 1px solid rgba(251, 239, 220, 0.05); font-family: 'Jost', sans-serif; }
-.footer-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
-.footer-copy { font-size: 0.88rem; font-weight: 300; color: #9c958b; letter-spacing: 0.02em; }
-.footer-links { display: flex; gap: 1.5rem; }
-.footer-links a { color: #9c958b; text-decoration: none; font-size: 0.88rem; font-weight: 300; transition: color 0.2s; }
-.footer-links a:hover { color: var(--c-cream); }
+/* ==============================
+    PREMIUM GRID FOOTER STYLES
+============================== */
+.main-footer {
+    background-color: var(--c-header-bg);
+    padding: 4.44rem 0;
+    border-top: 1px solid rgba(251, 239, 220, 0.05);
+    margin-top: auto;
+    width: 100%;
+    font-family: 'Jost', sans-serif;
+}
+.footer-grid {
+    align-items: flex-start;
+}
+.footer-brand-col {
+    grid-column: span 4;
+    display: flex;
+    flex-direction: column;
+    gap: 0.89rem;
+}
+.footer-brand-col .footer-logo {
+    width: 11.83rem;
+    height: auto;
+    display: block;
+}
+.footer-tagline {
+    font-size: 0.89rem;
+    font-weight: 300;
+    color: #9c958b;
+    letter-spacing: 0.02em;
+}
+.copyright-text {
+    font-size: 0.78rem;
+    font-weight: 300;
+    color: rgba(156, 149, 139, 0.6);
+    margin-top: 1.11rem;
+}
+.footer-links-col {
+    grid-column: span 2;
+}
+.footer-links-col:last-child {
+    grid-column: span 2;
+    justify-self: end;
+}
+.footer-title {
+    font-family: 'El Messiri', sans-serif;
+    font-weight: 600;
+    font-size: 1.11rem;
+    color: var(--c-cream);
+    margin-bottom: 1.33rem;
+    line-height: 1.2;
+}
+.footer-links-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.67rem;
+}
+.footer-links-list a {
+    font-size: 0.89rem;
+    font-weight: 300;
+    color: #9c958b;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    width: fit-content;
+    display: block;
+}
+.footer-links-list a:hover {
+    color: var(--c-cream);
+}
+
+/* Адаптив під мобільні пристрої для 4 колонок */
+@media (max-width: 767px) {
+    .main-footer { padding: 3rem 0; }
+    .footer-grid { display: flex; flex-direction: column; gap: 2.5rem; text-align: center; align-items: center; }
+    .footer-brand-col { align-items: center; }
+    .footer-links-col:last-child { justify-self: center; }
+    .footer-links-list { align-items: center; }
+}}
 
 /* RESPONSIVE MEDIA QUERIES */
 @media (max-width: 1440px) { :root { --gutter: 24px; } .main-nav a { font-size: 0.9rem; padding: 0 0.6rem; } }
