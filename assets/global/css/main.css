@@ -1,6 +1,4 @@
-/* ========================================================
-   1. GLOBAL CONFIGURATION, CONFIG & VARIABLES
-   ======================================================== */
+/* GLOBAL CONFIGURATION & VARIABLES */
 @view-transition {
     navigation: auto; 
 }
@@ -20,7 +18,7 @@
     --radius-card-img: 0.56rem; 
 }
 
-/* AUTOMATIC SCALING SYSTEM */
+/* SCALING: 1920px -> 3840px (x2) */
 html { font-size: 18px; }
 @media (min-width: 2560px) {
     html { font-size: 27px; } 
@@ -62,7 +60,7 @@ body {
     column-gap: var(--gutter);
 }
 
-/* ANTI-THEFT IMAGE PROTECTION */
+/* ANTI-THEFT IMAGE PROTECTION (CSS) */
 img {
     pointer-events: none;       
     user-select: none;          
@@ -70,9 +68,7 @@ img {
     user-drag: none;            
 }
 
-/* ========================================================
-   2. TOP BAR, NAVIGATION & STICKY MAIN HEADER
-   ======================================================== */
+/* HEADER & TOP BAR */
 .top-bar-wrapper { background-color: var(--c-header-bg); width: 100%; }
 .top-bar { height: 2.5rem; display: flex; align-items: center; border-bottom: 1px solid rgba(251, 239, 220, 0.08); font-size: 0.83rem; font-weight: 300; }
 .top-bar-content { display: flex; justify-content: center; align-items: center; gap: 1.11rem; width: 100%; }
@@ -95,15 +91,14 @@ header.main-header { height: 5rem; position: sticky; top: 0; background-color: v
 .lang-dropdown a { color: #9c958b; text-decoration: none; padding: 0.35rem 0.88rem; font-family: 'Jost', sans-serif; font-size: 0.83rem; font-weight: 400; transition: all 0.2s ease; text-align: left; display: block; }
 .lang-dropdown a:hover { color: var(--c-cream); background-color: rgba(251, 239, 220, 0.04); }
 
-/* ========================================================
-   3. BREADCRUMBS & CATALOG HERO BANNER
-   ======================================================== */
+/* BREADCRUMBS */
 .breadcrumbs-section { width: 100%; padding: 0.88rem 0; background-color: var(--c-body-bg); }
 .breadcrumbs-content { grid-column: span 12; font-family: 'Jost', sans-serif; font-weight: 300; font-size: 0.78rem; color: #9c958b; letter-spacing: 0.05em; }
 .breadcrumbs-content a { color: inherit; text-decoration: none; transition: opacity 0.2s; }
 .breadcrumbs-content a:hover { opacity: 0.8; }
 .breadcrumbs-separator { margin: 0 0.5rem; opacity: 0.5; }
 
+/* CATALOG HERO BANNER */
 .catalog-hero { 
     width: 100%; 
     height: 18.89rem; 
@@ -119,9 +114,7 @@ header.main-header { height: 5rem; position: sticky; top: 0; background-color: v
 .catalog-title { font-family: 'El Messiri', sans-serif; font-weight: 600; font-size: 2.67rem; color: #373635; margin-bottom: 0.5rem; line-height: 1.2; }
 .catalog-subtitle { font-family: 'Jost', sans-serif; font-weight: 300; font-size: 1.44rem; color: #373635; line-height: 1.4; }
 
-/* ========================================================
-   4. LAUNCH SCHEDULE TIMELINE MATRIX
-   ======================================================== */
+/* LAUNCH SCHEDULE */
 .launch-schedule { width: 100%; height: 15.67rem; background-color: #2d2c2b; box-sizing: border-box; padding-top: 2.39rem; padding-bottom: 2.39rem; display: flex; flex-direction: column; }
 .schedule-title { font-family: 'Jost', sans-serif; font-weight: 300; font-size: 1rem; color: #d6ccbe; text-align: center; margin-bottom: 2.83rem; line-height: 1; }
 .timeline-container { position: relative; width: 100%; }
@@ -135,9 +128,7 @@ header.main-header { height: 5rem; position: sticky; top: 0; background-color: v
 .timeline-week { font-family: 'Jost', sans-serif; font-weight: 400; font-size: 0.89rem; color: #9c958b; margin-bottom: 0.89rem; line-height: 1; display: block; }
 .timeline-name { font-family: 'El Messiri', sans-serif; font-weight: 700; font-size: 0.89rem; color: #d6ccbe; line-height: 1.5; display: block; text-align: center; }
 
-/* ========================================================
-   5. CATALOG FILTERS PILLS BLOCK
-   ======================================================== */
+/* FILTERS */
 .catalog-filters { width: 100%; padding: 2rem 0; background-color: var(--c-body-bg); }
 .filter-row { grid-column: span 12; display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.83rem; width: 100%; }
 .filter-row:last-child { margin-bottom: 0; }
@@ -152,9 +143,7 @@ header.main-header { height: 5rem; position: sticky; top: 0; background-color: v
 .filter-pill.disabled { opacity: 0.25; border-color: rgba(156, 149, 139, 0.15); color: #9c958b; cursor: not-allowed; pointer-events: none; }
 .filter-pill .icon-lock { width: 0.72rem; height: 0.72rem; fill: currentColor; display: inline-block; vertical-align: middle; }
 
-/* ========================================================
-   6. PRODUCTS GRID, CARDS & INTERACTIVE OVERLAYS
-   ======================================================== */
+/* PRODUCTS GRID */
 .catalog-products { width: 100%; padding-bottom: 5rem; background-color: var(--c-body-bg); }
 .products-grid { grid-column: span 12; display: grid; grid-template-columns: repeat(2, 1fr); justify-content: center; column-gap: var(--gutter); row-gap: 5.28rem; }
 .product-card { display: flex; flex-direction: column; width: 100%; max-width: 41.83rem; margin: 0 auto; }
@@ -166,7 +155,7 @@ header.main-header { height: 5rem; position: sticky; top: 0; background-color: v
 .no-results-text { font-family: 'Jost', sans-serif; font-weight: 300; font-size: 1.11rem; color: #aaa399; line-height: 1.5; }
 .no-results.hidden { display: none !important; }
 
-/* CAROUSEL IMAGES SRE */
+/* IMAGES & OVERLAYS */
 .product-image-box { position: relative; width: 100%; aspect-ratio: 753 / 616; border-radius: var(--radius-card-img); overflow: hidden; background-color: #2d2c2b; isolation: isolate; }
 .product-image-box img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
 .product-card:has(.project-status-overlay) .product-image-box img { pointer-events: none; }
@@ -194,10 +183,93 @@ header.main-header { height: 5rem; position: sticky; top: 0; background-color: v
 .notify-btn { font-family: 'El Messiri', sans-serif; font-weight: 700; font-size: calc(18rem / 18); color: var(--c-cream); text-decoration: none; background-color: #2d2c2b; width: calc(220rem / 18); padding: 0.8rem 0; display: inline-block; text-align: center; border-radius: 50px; white-space: nowrap; line-height: 1; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); transform: scale(1); }
 .notify-btn:hover { transform: scale(1.06); }
 
-/* ========================================================
-   7. ТВІЙ ОРИГІНАЛЬНИЙ ДЕСКТОПНИЙ ФУТЕР (ПОВНІСТЮ ВІДНОВЛЕНО)
-   ======================================================== */
-footer { background-color: #262524; color: #fbefdc; padding: 4.5rem 0 0; width: 100%; }
+/* ==============================
+    PREMIUM GRID FOOTER STYLES
+============================== */
+.main-footer {
+    background-color: var(--c-header-bg);
+    padding: 4.44rem 0;
+    border-top: 1px solid rgba(251, 239, 220, 0.05);
+    margin-top: auto;
+    width: 100%;
+    font-family: 'Jost', sans-serif;
+}
+.footer-grid {
+    align-items: flex-start;
+}
+.footer-brand-col {
+    grid-column: span 4;
+    display: flex;
+    flex-direction: column;
+    gap: 0.89rem;
+}
+.footer-brand-col .footer-logo {
+    width: 11.83rem;
+    height: auto;
+    display: block;
+}
+.footer-tagline {
+    font-size: 0.89rem;
+    font-weight: 300;
+    color: #9c958b;
+    letter-spacing: 0.02em;
+}
+.copyright-text {
+    font-size: 0.78rem;
+    font-weight: 300;
+    color: rgba(156, 149, 139, 0.6);
+    margin-top: 1.11rem;
+}
+.footer-links-col {
+    grid-column: span 2;
+}
+.footer-links-col:last-child {
+    grid-column: span 2;
+    justify-self: end;
+}
+.footer-title {
+    font-family: 'El Messiri', sans-serif;
+    font-weight: 600;
+    font-size: 1.11rem;
+    color: var(--c-cream);
+    margin-bottom: 1.33rem;
+    line-height: 1.2;
+}
+.footer-links-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.67rem;
+}
+.footer-links-list a {
+    font-size: 0.89rem;
+    font-weight: 300;
+    color: #9c958b;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    width: fit-content;
+    display: block;
+}
+.footer-links-list a:hover {
+    color: var(--c-cream);
+}
+
+/* Адаптив під мобільні пристрої для 4 колонок */
+@media (max-width: 767px) {
+    .main-footer { padding: 3rem 0; }
+    .footer-grid { display: flex; flex-direction: column; gap: 2.5rem; text-align: center; align-items: center; }
+    .footer-brand-col { align-items: center; }
+    .footer-links-col:last-child { justify-self: center; }
+    .footer-links-list { align-items: center; }
+}}
+
+/* RESPONSIVE MEDIA QUERIES */
+@media (max-width: 1440px) { :root { --gutter: 24px; } .main-nav a { font-size: 0.9rem; padding: 0 0.6rem; } }
+@media (max-width: 1279px) { .main-nav { display: none; } .logo-col { grid-column: span 6; } .header-icons { grid-column: span 6; } .timeline-container { overflow-x: auto; scrollbar-width: none; padding-bottom: 1rem; } .timeline-container::-webkit-scrollbar { display: none; } .timeline-line { width: 95rem; left: 4.5rem; right: 4.5rem; } .timeline-grid { width: 95rem; padding: 0 2rem; } .filter-row { flex-direction: column; gap: 0.83rem; margin-bottom: 0.83rem; } .status-group, .series-group { min-width: auto; margin-left: 0; } }
+@media (max-width: 767px) { html { font-size: 15px; } :root { --gutter: 16px; --margin: 16px; } header.main-header { height: 4rem; } .logo-col { grid-column: span 8; } .header-icons { grid-column: span 4; } .top-bar { height: auto; padding: 0.6rem 0; } .top-bar-content { flex-wrap: wrap; gap: 0.5rem; justify-content: center; font-size: 0.78rem; } .catalog-hero { height: auto; padding: 2.5rem 0; background-size: cover; } .catalog-title { font-size: 2rem; } .catalog-subtitle { font-size: 1.1rem; } .launch-schedule { height: auto; padding: 2.5rem 0; } .catalog-filters { padding: 2rem 0; } .filter-group { flex-direction: column; align-items: flex-start; gap: 0.44rem; width: 100%; } .pills-container { gap: 0.44rem; } .filter-pill { padding: 0.35rem 0.77rem; font-size: 0.83rem; } .products-grid { grid-template-columns: 1fr; row-gap: 3.5rem; } .lock-icon-container { width: 4.5rem; height: 4.5rem; margin-bottom: 0.8rem; } .lock-icon { width: 1rem; height: 1.25rem; } .notify-btn { padding: 0.7rem 0; } .notify-btn:hover { transform: scale(1.04); } .footer-content { flex-direction: column; text-align: center; } .footer-links { flex-direction: column; gap: 0.8rem; } }
+/* ==============================
+   FOOTER STYLES
+============================== */
+footer { background-color: #262524; color: #fbefdc; padding: 4.5rem 0 0; }
 .footer-grid { 
     display: grid; 
     grid-template-columns: clamp(8rem, 10vw, 12rem) minmax(14rem, 26rem) repeat(4, max-content); 
@@ -237,7 +309,7 @@ footer { background-color: #262524; color: #fbefdc; padding: 4.5rem 0 0; width: 
 }
 .f-col-nav a:hover { opacity: 1; }
 
-.f-copyright-bar { border-top: 1px solid rgba(251, 239, 220, 0.08); padding: 1.2rem 0; width: 100%; }
+.f-copyright-bar { border-top: 1px solid rgba(251, 239, 220, 0.08); padding: 1.2rem 0; }
 .f-copy-flex { display: flex; justify-content: space-between; align-items: center; font-size: 0.77rem; font-weight: 300; opacity: 0.5; }
 .f-legal { display: flex; align-items: center; }
 .f-legal a { color: inherit; text-decoration: none; padding: 0 0.75rem; position: relative; transition: opacity 0.2s; }
@@ -245,14 +317,8 @@ footer { background-color: #262524; color: #fbefdc; padding: 4.5rem 0 0; width: 
 .f-legal a::before { content: '|'; position: absolute; left: 0; color: rgba(251, 239, 220, 0.25); }
 .f-legal a:first-child::before { display: none; }
 
-.f-nav-row { display: contents; } /* Прозорий на десктопі для прямих grid-елементів */
-
-/* ========================================================
-   8. RESPONSIVE DESIGN SYSTEM MEDIA QUERIES (GENERAL)
-   ======================================================== */
-@media (max-width: 1440px) { 
-    :root { --gutter: 24px; } 
-    .main-nav a { font-size: 0.9rem; padding: 0 0.6rem; } 
+/* Footer 1440px */
+@media (max-width: 1440px) {
     .footer-grid { column-gap: clamp(10px, 2vw, 30px); }
     .f-col-nav h4 { font-size: 0.9rem; margin-bottom: 0.7rem; }
     .f-col-nav a { font-size: 0.8rem; }
@@ -260,104 +326,47 @@ footer { background-color: #262524; color: #fbefdc; padding: 4.5rem 0 0; width: 
     .f-made-ua { font-size: 0.8rem; margin-bottom: 0.9rem; }
 }
 
-@media (max-width: 1279px) { 
-    .main-nav { display: none; } 
-    .logo-col { grid-column: span 6; } 
-    .header-icons { grid-column: span 6; } 
-    .timeline-container { overflow-x: auto; scrollbar-width: none; padding-bottom: 1rem; } 
-    .timeline-container::-webkit-scrollbar { display: none; } 
-    .timeline-line { width: 95rem; left: 4.5rem; right: 4.5rem; } 
-    .timeline-grid { width: 95rem; padding: 0 2rem; } 
-    .filter-row { flex-direction: column; gap: 0.83rem; margin-bottom: 0.83rem; } 
-    .status-group, .series-group { min-width: auto; margin-left: 0; } 
+/* Footer 1024px */
+@media (max-width: 1024px) {
+    .footer-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+        row-gap: 3.5rem;
+        justify-content: start;
+    }
+    .f-col-brand { grid-column: span 1; width: 8rem; }
+    .f-col-desc { grid-column: span 2; padding-right: 0; }
 }
 
-/* ========================================================
-   9. ЧІТКИЙ МОБІЛЬНИЙ АДАПТИВ (ВМИКАЄТЬСЯ ВІД 1024px І НИЖЧЕ)
-   ======================================================== */
-@media (max-width: 1024px) {
-    /* Контентні блоки сторінки */
-    header.main-header { height: 4rem; } 
-    .top-bar { height: auto; padding: 0.6rem 0; } 
-    .top-bar-content { flex-wrap: wrap; gap: 0.5rem; justify-content: center; font-size: 0.78rem; } 
-    .catalog-hero { height: auto; padding: 2.5rem 0; background-size: cover; } 
-    .catalog-title { font-size: 2rem; } 
-    .catalog-subtitle { font-size: 1.1rem; } 
-    .launch-schedule { height: auto; padding: 2.5rem 0; } 
-    .catalog-filters { padding: 2rem 0; } 
-    .filter-group { flex-direction: column; align-items: flex-start; gap: 0.44rem; width: 100%; } 
-    .pills-container { gap: 0.44rem; } 
-    .filter-pill { padding: 0.35rem 0.77rem; font-size: 0.83rem; } 
-    .products-grid { grid-template-columns: 1fr; row-gap: 3.5rem; } 
-    .lock-icon-container { width: 4.5rem; height: 4.5rem; margin-bottom: 0.8rem; } 
-    .lock-icon { width: 1rem; height: 1.25rem; } 
-    .notify-btn { padding: 0.7rem 0; } 
-    .notify-btn:hover { transform: scale(1.04); }
-
-    /* Мобільна перебудова твого футера під дизайн 390px */
-    footer { padding: 2.5rem 0 0; }
-
-    .footer-grid {
-        display: flex;
-        flex-direction: column;
-        gap: 0;
-        padding-bottom: 0;
-        width: 100%;
+/* Footer mobile */
+@media (max-width: 767px) {
+    footer { padding: 3rem 0 0; }
+    .footer-grid { 
+        grid-template-columns: 1fr;
+        row-gap: 2rem;
+        padding-bottom: 2.5rem;
+        text-align: center;
+        justify-items: center;
     }
-
-    /* Лого — строго по центру, лінія знизу на всю ширину */
-    .f-col-brand {
-        display: flex;
+    .f-col-brand { 
+        grid-column: span 1;
+        width: auto;
         justify-content: center;
-        width: 100%;
-        padding: 0 0 2rem;
-        border-bottom: 1px solid rgba(251, 239, 220, 0.15);
-        margin-bottom: 2rem;
     }
-    .f-col-brand img { width: 13rem; height: auto; }
-
-    /* Опис — по центру */
-    .f-col-desc {
+    .f-col-brand img { width: 8rem; }
+    .f-col-desc { 
+        grid-column: span 1;
         align-items: center;
         text-align: center;
-        padding: 0;
-        margin-bottom: 0;
-        width: 100%;
+        padding-right: 0;
     }
-    .f-made-ua { font-size: 1.15rem; font-weight: 600; margin-bottom: 1rem; }
-    .f-desc-text { font-size: 1rem; line-height: 1.6; margin-bottom: 1.5rem; max-width: 100%; opacity: 0.7; }
-    .f-socials { justify-content: center; gap: 0.7rem; margin-bottom: 0; width: 100%; }
-    .f-soc-btn { width: 2.6rem; height: 2.6rem; }
-    .f-soc-btn svg { width: 1.1rem; height: 1.1rem; }
-
-    /* Навігаційні рядки — 2х2, лінія зверху */
-    .f-nav-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 0;
-        border-top: 1px solid rgba(251, 239, 220, 0.15);
-        padding: 2rem 0;
-        margin: 0;
-        width: 100%;
+    .f-socials { justify-content: center; }
+    .f-col-nav { 
+        grid-column: span 1;
+        align-items: center;
     }
-    .f-nav-row:first-of-type { margin-top: 2rem; }
-    .f-nav-row:last-of-type { border-bottom: 1px solid rgba(251, 239, 220, 0.15); }
-
-    .f-col-nav { align-items: flex-start; text-align: left; padding: 0; }
-    .f-col-nav h4 { font-size: 1.15rem; font-weight: 700; margin-bottom: 1rem; letter-spacing: 0.01em; }
-    .f-col-nav a { font-size: 0.95rem; line-height: 2.1; }
-
-    /* Copyright & Legal нижня планка — по центру */
-    .f-copyright-bar { border-top: 1px solid rgba(251, 239, 220, 0.15); padding: 1.5rem 0; width: 100%; background-color: transparent; }
-    .f-copy-flex { flex-direction: column-reverse; gap: 0.8rem; text-align: center; width: 100%; }
-    .f-legal { flex-wrap: wrap; justify-content: center; width: 100%; }
-    .f-legal a { padding: 0.2rem 0.6rem; font-size: 0.85rem; position: relative; }
-    .f-legal a::before { content: '|'; position: absolute; left: 0; color: rgba(251, 239, 220, 0.25); }
-    .f-legal a:first-child::before { display: none; }
-    .f-copyright { font-size: 0.85rem; opacity: 0.6; }
-}
-
-@media (max-width: 767px) { 
-    html { font-size: 15px; } 
-    :root { --gutter: 16px; --margin: 16px; } 
+    .f-copyright-bar { padding: 1rem 0; }
+    .f-copy-flex { flex-direction: column; gap: 0.8rem; text-align: center; }
+    .f-legal { flex-wrap: wrap; justify-content: center; }
+    .f-legal a { padding: 0.1rem 0.5rem; }
+    .f-legal a::before { display: none; }
 }
