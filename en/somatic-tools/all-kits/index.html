@@ -323,6 +323,31 @@ title: "SenseRevolt | Somatic Tools Catalog"
                 overflow-x: visible !important;
             }
         }
+
+        /* Фіксація чистого накреслення 400 без розмиття */
+        .project-text-small,
+        .project-text-large {
+            font-weight: 400 !important;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Кнопка: зменшена довжина на 40px та ідеально м'яка анімація */
+        .notify-btn {
+            width: 150px !important; /* На 40px менша від початкових 190px */
+            max-width: 100% !important;
+            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1) !important;
+            backface-visibility: hidden !important;
+            -webkit-backface-visibility: hidden !important;
+            transform: translateZ(0) scale(1) !important;
+            -webkit-transform: translateZ(0) scale(1) !important;
+        }
+        .notify-btn:hover {
+            transform: translateZ(0) scale(1.05) !important;
+            -webkit-transform: translateZ(0) scale(1.05) !important;
+        }
+
+        /* Відступи картки товару */
         .product-vol-text {
             font-family: 'El Messiri', sans-serif !important;
             font-size: 24px !important;
@@ -334,31 +359,61 @@ title: "SenseRevolt | Somatic Tools Catalog"
         .product-card-line {
             margin-bottom: 0.55rem !important;
         }
+
+        /* Збільшено відстань між лінією та назвою на 20px */
         .product-card-title {
             font-family: 'El Messiri', sans-serif !important;
             font-size: 36px !important;
             font-weight: 400 !important;
             color: #fbefdc !important;
-            margin-top: 0 !important;
+            margin-top: 20px !important; 
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
+
+        /* Зменшено відстань між назвою та підзаголовком на 20px */
         .product-card-subtitle {
             font-family: 'El Messiri', sans-serif !important;
             font-size: 24px !important;
             font-weight: 400 !important;
             color: #aaa399 !important;
+            margin-top: -20px !important; 
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ПЛАВНА КАРУСЕЛЬ (ЧИСТИЙ КРОС-ФЕЙД) */
+        .product-image-box {
+            position: relative;
+            overflow: hidden;
+        }
+        .carousel-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            z-index: 1;
+            transition: opacity 0.8s ease-in-out !important; /* Ультра-плавний перехід */
+        }
+        .carousel-img.img-1 {
+            position: relative; /* Перша тримає висоту блоку */
+            opacity: 1;
+            z-index: 2;
+        }
+        .carousel-img.active {
+            opacity: 1 !important;
+            z-index: 2 !important;
         }
     </style>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Код фільтрів
             const filterButtons = document.querySelectorAll('.filter-pill:not(.disabled)');
             const productCards = document.querySelectorAll('.product-card');
             const noResultsMessage = document.getElementById('noResultsMessage');
-
             const activeFilters = { topic: 'all', status: 'all', type: 'all', series: 'all' };
 
             filterButtons.forEach(button => {
@@ -393,6 +448,25 @@ title: "SenseRevolt | Somatic Tools Catalog"
                 else noResultsMessage.classList.add('hidden');
             }
             filterProducts();
+
+            // Плавна карусель без ривків контенту
+            const activeCarousel = document.querySelector('.active-carousel');
+            if (activeCarousel) {
+                const images = activeCarousel.querySelectorAll('.carousel-img');
+                let currentIndex = 0;
+
+                setInterval(() => {
+                    images[currentIndex].classList.remove('active');
+                    if (currentIndex === 0) {
+                        images[currentIndex].style.opacity = '0'; // Забезпечуємо крос-фейд для базової картинки
+                    }
+                    
+                    currentIndex = (currentIndex + 1) % images.length;
+                    
+                    images[currentIndex].classList.add('active');
+                    images[currentIndex].style.opacity = '1';
+                }, 3500); // Оновлення кожні 3.5 сек для м'якої презентації
+            }
         });
     </script>
 
