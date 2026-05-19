@@ -156,7 +156,7 @@ title: "SenseRevolt | Somatic Tools Catalog"
                             </div>
                             <span class="project-text-small">Week 3</span>
                             <span class="project-text-large">Jun 2026</span>
-                            <a href="#" class="notify-btn">Notify Me</a>
+                            <a href="#" class="notify-btn"><span>Notify Me</span></a>
                         </div>
                         <img src="{{ site.baseurl }}/assets/en/covers/insomnia-kit/card-1.jpg" alt="Insomnia Kit">
                     </div>
@@ -174,7 +174,7 @@ title: "SenseRevolt | Somatic Tools Catalog"
                             </div>
                             <span class="project-text-small">Week 5</span>
                             <span class="project-text-large">Jun 2026</span>
-                            <a href="#" class="notify-btn">Notify Me</a>
+                            <a href="#" class="notify-btn"><span>Notify Me</span></a>
                         </div>
                         <img src="{{ site.baseurl }}/assets/en/covers/panic-kit/card-1.jpg" alt="Panic Kit">
                     </div>
@@ -192,7 +192,7 @@ title: "SenseRevolt | Somatic Tools Catalog"
                             </div>
                             <span class="project-text-small">Week 6</span>
                             <span class="project-text-large">Jul 2026</span>
-                            <a href="#" class="notify-btn">Notify Me</a>
+                            <a href="#" class="notify-btn"><span>Notify Me</span></a>
                         </div>
                         <img src="{{ site.baseurl }}/assets/en/covers/burnout-kit/card-1.jpg" alt="Burnout Kit">
                     </div>
@@ -202,7 +202,7 @@ title: "SenseRevolt | Somatic Tools Catalog"
                     <p class="product-card-subtitle">Body-Based Practices to Reconnect With Yourself Through Exhaustion</p>
                 </div>
 
-                <div class="product-card" data-topic="adhd" data-status="coming-soon" data-type="" data-series="vol-1">
+                <div class="product-card" data-topic="focus" data-status="coming-soon" data-type="" data-series="vol-1">
                     <div class="product-image-box">
                         <div class="project-status-overlay">
                             <div class="lock-icon-container">
@@ -210,7 +210,7 @@ title: "SenseRevolt | Somatic Tools Catalog"
                             </div>
                             <span class="project-text-small">Week 7</span>
                             <span class="project-text-large">Jul 2026</span>
-                            <a href="#" class="notify-btn">Notify Me</a>
+                            <a href="#" class="notify-btn"><span>Notify Me</span></a>
                         </div>
                         <img src="{{ site.baseurl }}/assets/en/covers/focus-kit/card-1.jpg" alt="Focus Kit">
                     </div>
@@ -228,7 +228,7 @@ title: "SenseRevolt | Somatic Tools Catalog"
                             </div>
                             <span class="project-text-small">Week 8</span>
                             <span class="project-text-large">Aug 2026</span>
-                            <a href="#" class="notify-btn">Notify Me</a>
+                            <a href="#" class="notify-btn"><span>Notify Me</span></a>
                         </div>
                         <img src="{{ site.baseurl }}/assets/en/covers/anxiety-kit/card-1.jpg" alt="Anxiety Kit">
                     </div>
@@ -246,7 +246,7 @@ title: "SenseRevolt | Somatic Tools Catalog"
                             </div>
                             <span class="project-text-small">Week 9</span>
                             <span class="project-text-large">Aug 2026</span>
-                            <a href="#" class="notify-btn">Notify Me</a>
+                            <a href="#" class="notify-btn"><span>Notify Me</span></a>
                         </div>
                         <img src="{{ site.baseurl }}/assets/en/covers/dopamine-kit/card-1.jpg" alt="Dopamine Kit">
                     </div>
@@ -264,7 +264,7 @@ title: "SenseRevolt | Somatic Tools Catalog"
                             </div>
                             <span class="project-text-small">Week 10</span>
                             <span class="project-text-large">Sep 2026</span>
-                            <a href="#" class="notify-btn">Notify Me</a>
+                            <a href="#" class="notify-btn"><span>Notify Me</span></a>
                         </div>
                         <img src="{{ site.baseurl }}/assets/en/covers/test-anxiety-kit/card-1.jpg" alt="Test Anxiety Kit">
                     </div>
@@ -282,7 +282,7 @@ title: "SenseRevolt | Somatic Tools Catalog"
                             </div>
                             <span class="project-text-small">Week 10</span>
                             <span class="project-text-large">Sep 2026</span>
-                            <a href="#" class="notify-btn">Notify Me</a>
+                            <a href="#" class="notify-btn"><span>Notify Me</span></a>
                         </div>
                         <img src="{{ site.baseurl }}/assets/en/covers/decompression-kit/card-1.jpg" alt="After-School Decompression Kit">
                     </div>
@@ -331,14 +331,25 @@ title: "SenseRevolt | Somatic Tools Catalog"
             -moz-osx-font-smoothing: grayscale;
         }
 
+        /* КНОПКА: ЖИРНІСТЬ ЗМЕНШЕНО НА 100 одиниць (СТРУКТУРНО 300) */
         .notify-btn {
             width: 150px !important;
             max-width: 100% !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-weight: 300 !important; /* Легке чисте накреслення */
             transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1) !important;
             backface-visibility: hidden !important;
             -webkit-backface-visibility: hidden !important;
             transform: translateZ(0) scale(1) !important;
             -webkit-transform: translateZ(0) scale(1) !important;
+        }
+        .notify-btn span {
+            display: inline-block !important;
+            font-weight: 300 !important; /* Гарантія від штучного потовщення */
+            transform: translateY(2px) !important;
+            -webkit-transform: translateY(2px) !important;
         }
         .notify-btn:hover {
             transform: translateZ(0) scale(1.05) !important;
@@ -357,7 +368,6 @@ title: "SenseRevolt | Somatic Tools Catalog"
             margin-bottom: 0.55rem !important;
         }
 
-        /* Збільшено відстань між лінією та назвою на 20px */
         .product-card-title {
             font-family: 'El Messiri', sans-serif !important;
             font-size: 36px !important;
@@ -368,7 +378,6 @@ title: "SenseRevolt | Somatic Tools Catalog"
             -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Збільшено відступ між назвою та підзаголовком вдвічі */
         .product-card-subtitle {
             font-family: 'El Messiri', sans-serif !important;
             font-size: 24px !important;
@@ -379,7 +388,6 @@ title: "SenseRevolt | Somatic Tools Catalog"
             -moz-osx-font-smoothing: grayscale;
         }
 
-        /* КРОС-ФЕЙД АНІМАЦІЯ КАРУСЕЛІ */
         .product-image-box {
             position: relative;
             overflow: hidden;
@@ -392,20 +400,19 @@ title: "SenseRevolt | Somatic Tools Catalog"
             height: 100%;
             opacity: 0;
             z-index: 1;
-            transition: opacity 0.8s ease-in-out !important; /* Надвисока плавність перетікання */
+            transition: opacity 0.8s ease-in-out !important;
         }
         .carousel-img.active {
             opacity: 1 !important;
             z-index: 2 !important;
         }
         .carousel-img.img-1 {
-            position: relative; /* Перша картинка тримає фізичні пропорції блоку */
+            position: relative;
         }
     </style>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Фільтрація
             const filterButtons = document.querySelectorAll('.filter-pill:not(.disabled)');
             const productCards = document.querySelectorAll('.product-card');
             const noResultsMessage = document.getElementById('noResultsMessage');
@@ -444,31 +451,38 @@ title: "SenseRevolt | Somatic Tools Catalog"
             }
             filterProducts();
 
-            // ЛОГІКА КАРУСЕЛІ СУВОРO ЗА НАВЕДЕННЯМ МИШКИ (HOVER)
+            // МИТТЄВИЙ ЗАПУСК КАРУСЕЛІ ПРИ НАВЕДЕННІ (DELAY ЗМЕНШЕНО)
             const carousels = document.querySelectorAll('.hover-carousel');
             carousels.forEach(carousel => {
                 const images = carousel.querySelectorAll('.carousel-img');
                 let intervalId = null;
                 let currentIndex = 0;
 
-                // Коли мишка заходить на товар — запускаємо цикл
                 carousel.addEventListener('mouseenter', () => {
                     if (images.length <= 1) return;
                     
+                    // Перше швидке перемикання (через 150ms), щоб прибрати затримку старту
+                    setTimeout(() => {
+                        if (intervalId !== null) { // Перевірка, чи користувач досі тримає мишу
+                            images[currentIndex].classList.remove('active');
+                            currentIndex = (currentIndex + 1) % images.length;
+                            images[currentIndex].classList.add('active');
+                        }
+                    }, 150);
+
+                    // Далі запускаємо стандартний плавний крок перебору картинок
                     intervalId = setInterval(() => {
                         images[currentIndex].classList.remove('active');
                         currentIndex = (currentIndex + 1) % images.length;
                         images[currentIndex].classList.add('active');
-                    }, 2200); // Оптимальний таймінг для перегляду ховер-каруселі
+                    }, 2200); 
                 });
 
-                // Коли мишка виходить — миттєво зупиняємо і скидаємо на головну обкладинку (card-1.jpg)
                 carousel.addEventListener('mouseleave', () => {
                     if (intervalId) {
                         clearInterval(intervalId);
                         intervalId = null;
                     }
-                    // Повертаємо початковий стан
                     images.forEach(img => img.classList.remove('active'));
                     currentIndex = 0;
                     images[0].classList.add('active');
