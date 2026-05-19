@@ -190,7 +190,7 @@ header.main-header { height: 5rem; position: sticky; top: 0; background-color: v
 @media (max-width: 767px) { html { font-size: 18px; } :root { --gutter: 16px; --margin: 16px; } header.main-header { height: 4rem; } .logo-col { grid-column: span 8; } .header-icons { grid-column: span 4; } .top-bar { height: auto; padding: 0.6rem 0; } .top-bar-content { flex-wrap: wrap; gap: 0.5rem; justify-content: center; font-size: 0.78rem; } .catalog-hero { height: auto; padding: 2.5rem 0; background-size: cover; } .catalog-title { font-size: 2rem; } .catalog-subtitle { font-size: 1.1rem; } .launch-schedule { height: auto; padding: 2.5rem 0; } .catalog-filters { padding: 2rem 0; } .filter-group { flex-direction: column; align-items: flex-start; gap: 0.44rem; width: 100%; } .pills-container { gap: 0.44rem; } .filter-pill { padding: 0.35rem 0.77rem; font-size: 0.83rem; } .products-grid { grid-template-columns: 1fr; row-gap: 3.5rem; } .lock-icon-container { width: 4.5rem; height: 4.5rem; margin-bottom: 0.8rem; } .lock-icon { width: 1rem; height: 1.25rem; } .notify-btn { padding: 0.7rem 0; } .notify-btn:hover { transform: scale(1.04); } }
 
 /* ==============================
-   FOOTER STYLES (CLEAN & ADAPTIVE)
+   FOOTER STYLES
 ============================== */
 footer { 
     background-color: #262524; 
@@ -203,56 +203,60 @@ footer {
 
 .footer-grid { 
     display: grid; 
-    /* Desktop 1600px: 6 Columns */
-    grid-template-columns: 1.2fr 2.5fr repeat(4, 1fr); 
-    column-gap: clamp(20px, 3.5vw, 60px); 
+    /* Повернуто твою оригінальну сітку для ідеальних відступів між навігацією */
+    grid-template-columns: clamp(8rem, 10vw, 12rem) minmax(14rem, 26rem) repeat(4, max-content); 
+    column-gap: clamp(15px, 3.5vw, 60px); 
     padding-bottom: 4rem; 
-    align-items: start; 
+    align-items: start;
+    justify-content: space-between; 
 }
 
 .f-col-brand { display: flex; align-items: flex-start; padding-top: 0.2rem; width: 100%; }
-.f-col-brand img { width: 100%; max-width: 140px; display: block; object-fit: contain; }
+/* Прибрав max-width, тепер логотип буде великим, як ти хотіла */
+.f-col-brand img { width: 100%; height: auto; display: block; object-fit: contain; }
 
 .f-col-desc { display: flex; flex-direction: column; }
-.f-made-ua { font-size: 0.88rem; margin-bottom: 1.1rem; font-weight: 400; transition: 0.3s; }
+.f-made-ua { font-size: 0.88rem; margin-bottom: 1.1rem; font-weight: 400; color: #9c958b; transition: 0.3s; }
 .f-heart { color: #fbefdc; font-style: normal; margin: 0 0.2rem; }
-.f-desc-text { font-size: 0.83rem; font-weight: 300; opacity: 0.6; line-height: 1.6; margin-bottom: 1.8rem; max-width: 25rem; transition: 0.3s; }
+.f-desc-text { font-size: 0.83rem; font-weight: 300; line-height: 1.6; margin-bottom: 1.8rem; max-width: 25rem; color: #9c958b; transition: 0.3s; }
 
 .f-socials { display: flex; gap: 0.55rem; flex-wrap: wrap; }
 .f-soc-btn { 
     width: 2rem; height: 2rem; border-radius: 50%; 
-    border: 1px solid rgba(251, 239, 220, 0.2); 
+    border: 1px solid rgba(204, 193, 178, 0.25); 
     display: flex; align-items: center; justify-content: center; 
-    text-decoration: none; color: inherit; transition: 0.25s; 
+    text-decoration: none; color: #ccc1b2; transition: 0.25s; 
 }
-.f-soc-btn:hover { border-color: rgba(251,239,220,0.7); background: rgba(251, 239, 220, 0.08); }
+.f-soc-btn:hover { border-color: #ccc1b2; background: rgba(204, 193, 178, 0.08); color: #fbefdc; }
 .f-soc-btn svg { width: 0.95rem; height: 0.95rem; fill: currentColor; }
 
 .f-col-nav { display: flex; flex-direction: column; gap: 0.55rem; }
 .f-col-nav h4 { 
     font-family: 'El Messiri', sans-serif; font-weight: 600; font-size: 1rem; 
     margin-bottom: 0.9rem; letter-spacing: 0.02em; transition: 0.3s;
+    color: #fbefdc;
 }
 .f-col-nav a { 
-    text-decoration: none; color: inherit; opacity: 0.55; 
-    font-size: 0.88rem; font-weight: 300; transition: color 0.2s, opacity 0.2s; 
+    text-decoration: none; color: #ccc1b2; 
+    font-size: 0.88rem; font-weight: 300; transition: color 0.2s; 
     line-height: 1.6; white-space: nowrap; width: fit-content;
 }
-.f-col-nav a:hover { opacity: 1; color: #fbefdc; }
+.f-col-nav a:hover { color: #fbefdc; }
 
 .f-copyright-bar { border-top: 1px solid rgba(251, 239, 220, 0.08); padding: 1.2rem 0; }
-.f-copy-flex { display: flex; justify-content: space-between; align-items: center; font-size: 0.77rem; font-weight: 300; opacity: 0.5; }
+.f-copy-flex { display: flex; justify-content: space-between; align-items: center; font-size: 0.77rem; font-weight: 300; color: #9c958b; }
 .f-legal { display: flex; align-items: center; }
-.f-legal a { color: inherit; text-decoration: none; padding: 0 0.75rem; position: relative; transition: opacity 0.2s; }
-.f-legal a:hover { opacity: 1; }
-.f-legal a:not(:first-child)::before { content: '|'; position: absolute; left: 0; color: rgba(251, 239, 220, 0.25); }
+.f-legal a { color: #ccc1b2; text-decoration: none; padding: 0 0.75rem; position: relative; transition: color 0.2s; }
+.f-legal a:hover { color: #fbefdc; }
+.f-legal a:not(:first-child)::before { content: '|'; position: absolute; left: 0; color: rgba(204, 193, 178, 0.25); }
 
-/* Tablet 1024px (Font settings matched to 390px Mobile) */
+/* Tablet 1024px */
 @media (max-width: 1024px) {
     .footer-grid {
         grid-template-columns: repeat(4, 1fr);
         row-gap: 3.5rem;
         column-gap: 1.5rem;
+        justify-content: start;
     }
     
     .f-col-brand { grid-column: span 1; justify-content: flex-start; }
