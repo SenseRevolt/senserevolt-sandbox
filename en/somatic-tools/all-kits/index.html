@@ -304,6 +304,15 @@ title: "SenseRevolt | Somatic Tools Catalog"
     {% include en/footer.html %}
 
     <style>
+        .project-status-overlay {
+            background: rgba(0, 0, 0, 0) !important;
+            backdrop-filter: blur(8px) !important;
+            -webkit-backdrop-filter: blur(8px) !important;
+        }
+        .product-image-box img {
+            color: transparent;
+            alt: "";
+        }
         .pills-container {
             display: flex !important;
             gap: 8px !important;
@@ -326,7 +335,6 @@ title: "SenseRevolt | Somatic Tools Catalog"
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
-        /* Відступ скориговано строго посередині (0.55rem) */
         .product-card-line {
             margin-bottom: 0.55rem !important;
         }
@@ -375,6 +383,7 @@ title: "SenseRevolt | Somatic Tools Catalog"
                     const matchStatus = activeFilters.status === 'all' || card.getAttribute('data-status') === activeFilters.status;
                     const matchSeries = activeFilters.series === 'all' || card.getAttribute('data-series') === activeFilters.series;
                     
+                    // Захист від null (якщо атрибута data-type немає на картці, скрипт більше не падає)
                     const cardType = card.getAttribute('data-type') || "";
                     const matchType = activeFilters.type === 'all' || cardType.includes(activeFilters.type);
 
