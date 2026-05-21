@@ -8,187 +8,132 @@
 
     ready(function () {
 
-        var burger     = document.getElementById('burger-btn');
-        var tabletMenu = document.getElementById('tablet-menu');
-        var mobileMenu = document.getElementById('mobile-menu');
-
-        /* ── Яке меню активне по ширині екрану ── */
-        function activeMenu() {
-            return window.innerWidth <= 767 ? mobileMenu : tabletMenu;
-        }
+        var burger  = document.getElementById('sr-burger');
+        var menu    = document.getElementById('sr-menu');
+        var closeBtn = document.getElementById('sr-menu-close');
+        var backdrop = document.getElementById('sr-menu-backdrop');
 
         /* ── Відкрити меню ── */
         function openMenu() {
-            var m = activeMenu();
-            if (!m) return;
-            m.removeAttribute('hidden');
+            if (!menu) return;
+            menu.removeAttribute('hidden');
             requestAnimationFrame(function () {
-                m.classList.add('is-open');
+                menu.classList.add('sr-menu--open');
             });
             if (burger) burger.setAttribute('aria-expanded', 'true');
             document.body.style.overflow = 'hidden';
         }
 
-        /* ── Закрити всі меню ── */
-        function closeMenus() {
-            [tabletMenu, mobileMenu].forEach(function (m) {
-                if (!m) return;
-                m.classList.remove('is-open');
-                m.addEventListener('transitionend', function h() {
-                    if (!m.classList.contains('is-open')) m.setAttribute('hidden', '');
-                    m.removeEventListener('transitionend', h);
-                }, { once: true });
-            });
+        /* ── Закрити меню ── */
+        function closeMenu() {
+            if (!menu) return;
+            menu.classList.remove('sr-menu--open');
             if (burger) burger.setAttribute('aria-expanded', 'false');
             document.body.style.overflow = '';
+            // Ховаємо після transition
+            var panel = menu.querySelector('.sr-menu-panel');
+            if (panel) {
+                panel.addEventListener('transitionend', function h() {
+                    menu.setAttribute('hidden', '');
+                    panel.removeEventListener('transitionend', h);
+                }, { once: true });
+            } else {
+                menu.setAttribute('hidden', '');
+            }
+            // Закрити підменю
             closeTabletSub();
+            closeMobSub();
         }
 
-        /* ── Burger ── */
-        if (burger) {
-            burger.addEventListener('click', function () {
-                if (this.getAttribute('aria-expanded') === 'true') closeMenus();
-                else openMenu();
-            });
-        }
-
-        /* ── Backdrop + close btns ── */
-        document.querySelectorAll('.tablet-menu-backdrop, .mobile-menu-backdrop').forEach(function (el) {
-            el.addEventListener('click', closeMenus);
+        if (burger) burger.addEventListener('click', function () {
+            this.getAttribute('aria-expanded') === 'true' ? closeMenu() : openMenu();
         });
-        document.querySelectorAll('.tablet-close-btn, .mobile-close-btn').forEach(function (el) {
-            el.addEventListener('click', closeMenus);
-        });
+        if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+        if (backdrop) backdrop.addEventListener('click', closeMenu);
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
 
-        document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape') closeMenus();
-        });
+        /* ══ TABLET підменю ══ */
+        var subCol = document.getElementById('sr-sub-col');
+        var activeTabletLink = null;
 
-        /* ════════════════════════════
-           TABLET: підменю slide зліва
-        ════════════════════════════ */
-        var SUBMENUS = {
-            somatic: [
-                { label: 'Our Method', href: '/en/somatic-tools/our-method/' },
-                { label: 'All Kits',   href: '/en/somatic-tools/all-kits/' },
-                { label: 'Bundles',    href: '/en/somatic-tools/bundles/' },
-                { label: 'Extras',     href: '/en/somatic-tools/extras/' }
-            ]
-        };
-
-        /* baseurl з Jekyll */
-        var baseurl = '';
-        var sample = document.querySelector('.main-nav .nav-link[href]');
-        if (sample) {
-            var m = sample.getAttribute('href').match(/^(.*?)\/en\//);
-            if (m) baseurl = m[1];
-        }
-
-        var arrowR = '<svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-
-        function openTabletSub(key) {
-            var col = document.getElementById('tablet-submenu-col');
-            if (!col) return;
-            var items = SUBMENUS[key] || [];
-            col.innerHTML = items.map(function (it) {
-                return '<a href="' + baseurl + it.href + '" class="tablet-sub-link"><span>' + it.label + '</span>' + arrowR + '</a>';
-            }).join('');
-            col.removeAttribute('hidden');
-            requestAnimationFrame(function () { col.classList.add('is-open'); });
+        function openTabletSub(link) {
+            if (!subCol) return;
+            subCol.removeAttribute('hidden');
+            requestAnimationFrame(function () { subCol.classList.add('is-open'); });
+            activeTabletLink = link;
         }
 
         function closeTabletSub() {
-            var col = document.getElementById('tablet-submenu-col');
-            if (!col) return;
-            col.classList.remove('is-open');
-            col.addEventListener('transitionend', function h() {
-                col.setAttribute('hidden', '');
-                col.removeEventListener('transitionend', h);
-            }, { once: true });
-            document.querySelectorAll('.tablet-nav-link').forEach(function (l) {
-                l.classList.remove('is-active');
-            });
+            if (!subCol) return;
+            subCol.classList.remove('is-open');
+            activeTabletLink = null;
         }
 
-        document.querySelectorAll('.tablet-nav-link[data-has-sub]').forEach(function (link) {
+        document.querySelectorAll('.sr-menu-link[data-sub]').forEach(function (link) {
             link.addEventListener('click', function (e) {
                 e.preventDefault();
-                var col = document.getElementById('tablet-submenu-col');
-                var alreadyOpen = col && col.classList.contains('is-open') && this.classList.contains('is-active');
-                document.querySelectorAll('.tablet-nav-link').forEach(function (l) { l.classList.remove('is-active'); });
-                if (alreadyOpen) {
+                if (activeTabletLink === this && subCol && subCol.classList.contains('is-open')) {
                     closeTabletSub();
                 } else {
-                    this.classList.add('is-active');
-                    openTabletSub(this.getAttribute('data-has-sub'));
+                    openTabletSub(this);
                 }
             });
         });
 
-        /* ════════════════════════════
-           MOBILE: підменю slide overlay
-        ════════════════════════════ */
-        document.querySelectorAll('.mobile-nav-trigger').forEach(function (trigger) {
-            trigger.addEventListener('click', function () {
-                var sub = document.getElementById(this.getAttribute('aria-controls'));
-                if (!sub) return;
-                sub.removeAttribute('hidden');
-                requestAnimationFrame(function () { sub.classList.add('is-open'); });
-                trigger.setAttribute('aria-expanded', 'true');
-            });
-        });
+        /* ══ MOBILE підменю ══ */
+        function openMobSub(id) {
+            var sub = document.getElementById(id);
+            if (!sub) return;
+            sub.removeAttribute('hidden');
+            requestAnimationFrame(function () { sub.classList.add('is-open'); });
+        }
 
-        document.querySelectorAll('.mobile-sub-back').forEach(function (btn) {
-            btn.addEventListener('click', function () {
-                var sub = this.closest('.mobile-submenu');
-                if (!sub) return;
+        function closeMobSub() {
+            document.querySelectorAll('.sr-mob-sub').forEach(function (sub) {
                 sub.classList.remove('is-open');
-                sub.addEventListener('transitionend', function h() {
-                    sub.setAttribute('hidden', '');
-                    sub.removeEventListener('transitionend', h);
-                }, { once: true });
-                var trigger = document.querySelector('[aria-controls="' + sub.id + '"]');
-                if (trigger) trigger.setAttribute('aria-expanded', 'false');
+            });
+        }
+
+        document.querySelectorAll('.sr-mob-trigger').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                openMobSub(this.getAttribute('data-sub'));
             });
         });
 
-        /* ════════════════════════════
-           LANGUAGE SWITCHER
-        ════════════════════════════ */
-        document.querySelectorAll('.lang-switch').forEach(function (sw) {
-            var btn  = sw.querySelector('.lang-current-btn');
-            var list = sw.querySelector('.lang-list');
+        document.querySelectorAll('.sr-mob-back').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var sub = this.closest('.sr-mob-sub');
+                if (sub) sub.classList.remove('is-open');
+            });
+        });
+
+        /* ══ LANGUAGE ══ */
+        document.querySelectorAll('.sr-lang').forEach(function (sw) {
+            var btn  = sw.querySelector('.sr-lang-btn');
+            var list = sw.querySelector('.sr-lang-list');
             if (!btn || !list) return;
 
             btn.addEventListener('click', function (e) {
                 e.stopPropagation();
-                var open = btn.getAttribute('aria-expanded') === 'true';
-                /* закрити всі інші */
-                document.querySelectorAll('.lang-current-btn').forEach(function (b) {
+                var open = this.getAttribute('aria-expanded') === 'true';
+                // Закрити всі інші
+                document.querySelectorAll('.sr-lang-btn[aria-expanded="true"]').forEach(function (b) {
                     if (b !== btn) {
                         b.setAttribute('aria-expanded', 'false');
-                        var l = b.closest('.lang-switch').querySelector('.lang-list');
+                        var l = b.closest('.sr-lang').querySelector('.sr-lang-list');
                         if (l) l.setAttribute('hidden', '');
                     }
                 });
-                if (open) {
-                    btn.setAttribute('aria-expanded', 'false');
-                    list.setAttribute('hidden', '');
-                } else {
-                    btn.setAttribute('aria-expanded', 'true');
-                    list.removeAttribute('hidden');
-                }
+                this.setAttribute('aria-expanded', open ? 'false' : 'true');
+                open ? list.setAttribute('hidden', '') : list.removeAttribute('hidden');
             });
 
-            list.querySelectorAll('.lang-option').forEach(function (opt) {
+            list.querySelectorAll('.sr-lang-opt').forEach(function (opt) {
                 opt.addEventListener('click', function (e) {
                     e.preventDefault();
                     var lang = this.getAttribute('data-lang');
-                    /* фіксована ширина кнопки — беремо найширший варіант */
-                    sw.querySelectorAll('.lang-current-text').forEach(function (t) { t.textContent = lang; });
-                    list.querySelectorAll('.lang-option').forEach(function (o) {
-                        o.classList.toggle('lang-option--active', o === opt);
-                    });
+                    // Оновлюємо ВСІ кнопки мови на сторінці
+                    document.querySelectorAll('.sr-lang-current').forEach(function (t) { t.textContent = lang; });
                     btn.setAttribute('aria-expanded', 'false');
                     list.setAttribute('hidden', '');
                 });
@@ -196,18 +141,16 @@
         });
 
         document.addEventListener('click', function () {
-            document.querySelectorAll('.lang-current-btn[aria-expanded="true"]').forEach(function (btn) {
+            document.querySelectorAll('.sr-lang-btn[aria-expanded="true"]').forEach(function (btn) {
                 btn.setAttribute('aria-expanded', 'false');
-                var l = btn.closest('.lang-switch').querySelector('.lang-list');
+                var l = btn.closest('.sr-lang').querySelector('.sr-lang-list');
                 if (l) l.setAttribute('hidden', '');
             });
         });
 
-        /* ════════════════════════════
-           АКТИВНА СТОРІНКА
-        ════════════════════════════ */
+        /* ══ АКТИВНА СТОРІНКА ══ */
         var path = window.location.pathname;
-        document.querySelectorAll('.main-nav .nav-link, .tablet-nav-link, .mobile-nav-link, .mobile-sub-link').forEach(function (link) {
+        document.querySelectorAll('.sr-nav-link, .sr-menu-link, .sr-mob-link, .sr-mob-sub-link, .sr-sub-link, .sr-dd-link').forEach(function (link) {
             var href = link.getAttribute('href');
             if (!href) return;
             try {
@@ -216,12 +159,10 @@
             } catch (e) {}
         });
 
-        /* ════════════════════════════
-           ТАЙМЕР
-        ════════════════════════════ */
-        var LAUNCH = new Date('2025-12-31T00:00:00');
-        var launchBar = document.querySelector('.top-bar--launch');
-        if (launchBar && getComputedStyle(launchBar).display !== 'none') {
+        /* ══ ТАЙМЕР ══ */
+        var launchBar = document.querySelector('.sr-topbar--launch');
+        if (launchBar && launchBar.style.display !== 'none') {
+            var LAUNCH = new Date('2025-12-31T00:00:00');
             function pad(n) { return n < 10 ? '0' + n : '' + n; }
             function tick() {
                 var d = Math.max(0, LAUNCH - new Date());
