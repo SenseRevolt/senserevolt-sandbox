@@ -1,12 +1,9 @@
 /* ==============================
-   HEADER.CSS — SenseRevolt v2
+   HEADER.CSS — SenseRevolt v3
 ============================== */
 
 /* ─── TOP BAR ─── */
-.top-bar-wrapper {
-    background-color: var(--c-header-bg);
-    width: 100%;
-}
+.top-bar-wrapper { background-color: var(--c-header-bg); width: 100%; }
 
 .top-bar {
     height: 2.5rem;
@@ -20,86 +17,50 @@
     overflow: hidden;
 }
 
-/* Режим 1: Статичне вітання — десктоп */
-.top-bar--welcome {
-    overflow: hidden;
-}
+/* Welcome — десктоп: статика */
 .top-bar--welcome .top-bar-text {
     color: rgba(251,239,220,0.6);
     text-align: center;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 100%;
 }
+.top-bar--welcome .top-bar-marquee { display: none; }
 
-/* Мобайл: бігучий рядок */
+/* Welcome — мобайл: marquee */
 @media (max-width: 767px) {
-    .top-bar--welcome .top-bar-text {
-        display: none;
-    }
+    .top-bar { height: 2.2rem; font-size: 0.7rem; }
+    .top-bar--welcome .top-bar-text { display: none; }
     .top-bar--welcome .top-bar-marquee {
         display: block;
         width: 100%;
         overflow: hidden;
         white-space: nowrap;
-        mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
-        -webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+        mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
     }
     .top-bar--welcome .top-bar-track {
         display: inline-flex;
-        animation: srMarquee 28s linear infinite;
+        animation: srMarquee 30s linear infinite;
         color: rgba(251,239,220,0.6);
     }
-    .top-bar--welcome .top-bar-track span {
-        white-space: nowrap;
-        padding-right: 3rem;
-    }
+    .top-bar--welcome .top-bar-track span { white-space: nowrap; padding-right: 3rem; }
     @keyframes srMarquee {
-        0%   { transform: translateX(0); }
-        100% { transform: translateX(-33.333%); }
-    }
-}
-/* Десктоп: marquee-елемент прихований */
-@media (min-width: 768px) {
-    .top-bar--welcome .top-bar-marquee {
-        display: none;
+        from { transform: translateX(0); }
+        to   { transform: translateX(-33.333%); }
     }
 }
 
-/* Режим 2: Launch */
+/* Launch */
 .top-bar--launch { justify-content: center; }
-.top-bar-launch-inner {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1.2rem;
-    width: 100%;
-}
+.top-bar-launch-inner { display: flex; align-items: center; justify-content: center; gap: 1.2rem; width: 100%; }
 .top-bar-label { opacity: 0.65; white-space: nowrap; }
 .timer { display: flex; align-items: center; gap: 0.25rem; }
-.timer-unit { display: flex; align-items: baseline; gap: 0.12rem; }
-.timer-box {
-    border: 1px solid rgba(251,239,220,0.35);
-    width: 1.55rem; height: 1.55rem;
-    display: flex; justify-content: center; align-items: center;
-    border-radius: 4px;
-    font-variant-numeric: tabular-nums;
-    font-size: 0.75rem;
-}
+.timer-unit { display: flex; align-items: baseline; gap: 0.1rem; }
+.timer-box { border: 1px solid rgba(251,239,220,0.35); width: 1.55rem; height: 1.55rem; display: flex; justify-content: center; align-items: center; border-radius: 4px; font-variant-numeric: tabular-nums; font-size: 0.75rem; }
 .timer-lbl { font-size: 0.6rem; opacity: 0.45; }
 .timer-sep { opacity: 0.35; margin: 0 0.05rem; align-self: center; font-size: 0.75rem; }
-.pre-order-btn {
-    background: var(--c-cream);
-    color: var(--c-header-bg);
-    padding: 0.2rem 0.85rem;
-    border-radius: 4px;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 0.75rem;
-    white-space: nowrap;
-    transition: opacity 0.2s;
-}
+.pre-order-btn { background: var(--c-cream); color: var(--c-header-bg); padding: 0.2rem 0.85rem; border-radius: 4px; text-decoration: none; font-weight: 500; font-size: 0.75rem; white-space: nowrap; transition: opacity 0.2s; }
 .pre-order-btn:hover { opacity: 0.85; }
 
 /* ─── MAIN HEADER ─── */
@@ -112,6 +73,7 @@ header.main-header {
     width: 100%;
     border-bottom: 1px solid rgba(251,239,220,0.05);
 }
+@media (max-width: 767px) { header.main-header { height: 4rem; } }
 
 .header-inner {
     height: 100%;
@@ -122,36 +84,23 @@ header.main-header {
 }
 
 /* ─── LOGO ─── */
-.logo-col {
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-    text-decoration: none;
-}
-.logo-col img {
-    width: 11.83rem;
-    height: auto;
-    display: block;
-    object-fit: contain;
-}
+.logo-col { display: flex; align-items: center; flex-shrink: 0; text-decoration: none; }
+.logo-col img { width: 11.83rem; height: auto; display: block; object-fit: contain; }
+@media (max-width: 1279px) { .logo-col img { width: 9.5rem; } }
+@media (max-width: 767px)  { .logo-col img { width: 8rem; } }
 
 /* ─── DESKTOP NAV ─── */
 .main-nav {
     display: flex;
     align-items: stretch;
-    gap: 0;
     flex: 1;
     justify-content: center;
     height: 100%;
 }
+@media (max-width: 1279px) { .main-nav { display: none; } }
 
-.nav-item {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
+.nav-item { position: relative; display: flex; align-items: center; }
 
-/* Посилання nav */
 .main-nav .nav-link {
     position: relative;
     display: flex;
@@ -168,7 +117,7 @@ header.main-header {
 }
 .main-nav .nav-link:hover { color: rgba(251,239,220,0.6); }
 
-/* Розділювачі | між пунктами */
+/* Розділювачі */
 .main-nav .nav-item:not(:last-child) .nav-link::after,
 .main-nav > .nav-link:not(:last-child)::after {
     content: '';
@@ -180,9 +129,7 @@ header.main-header {
 }
 
 /* Активна сторінка */
-.main-nav .nav-link.is-active {
-    color: var(--c-cream);
-}
+.main-nav .nav-link.is-active { color: var(--c-cream); }
 .main-nav .nav-link.is-active::before {
     content: '';
     position: absolute;
@@ -191,31 +138,23 @@ header.main-header {
     background: rgba(251,239,220,0.55);
 }
 
-/* ─── DESKTOP DROPDOWN (Somatic Tools) ─── */
-.nav-item--has-dropdown {
-    position: relative;
-}
+/* ─── DROPDOWN десктоп ─── */
+.nav-item--has-dropdown { position: relative; }
 
 .nav-dropdown {
     position: absolute;
-    top: 100%;
-    left: 0;
+    top: 100%; left: 0;
     background-color: var(--c-header-bg);
     border: 1px solid rgba(251,239,220,0.1);
     border-top: none;
     min-width: 14rem;
     opacity: 0;
     visibility: hidden;
-    transform: translateY(0);
     transition: opacity 0.18s ease, visibility 0.18s;
     z-index: 1100;
 }
-
 .nav-item--has-dropdown:hover .nav-dropdown,
-.nav-item--has-dropdown:focus-within .nav-dropdown {
-    opacity: 1;
-    visibility: visible;
-}
+.nav-item--has-dropdown:focus-within .nav-dropdown { opacity: 1; visibility: visible; }
 
 .nav-dropdown-item {
     display: flex;
@@ -232,37 +171,22 @@ header.main-header {
     transition: color 0.18s, background 0.18s;
 }
 .nav-dropdown-item:last-child { border-bottom: none; }
-.nav-dropdown-item:hover {
-    color: var(--c-cream);
-    background: rgba(251,239,220,0.03);
-}
-.nav-dropdown-item svg {
-    opacity: 0.35;
-    flex-shrink: 0;
-    transition: opacity 0.18s, transform 0.18s;
-}
-.nav-dropdown-item:hover svg {
-    opacity: 0.7;
-    transform: translateX(2px);
-}
+.nav-dropdown-item:hover { color: var(--c-cream); background: rgba(251,239,220,0.03); }
+.nav-dropdown-item svg { opacity: 0.35; flex-shrink: 0; transition: opacity 0.18s, transform 0.18s; }
+.nav-dropdown-item:hover svg { opacity: 0.7; transform: translateX(2px); }
 
 /* ─── HEADER ICONS ─── */
-.header-icons {
-    display: flex;
-    align-items: center;
-    gap: 0.9rem;
-    flex-shrink: 0;
-}
+.header-icons { display: flex; align-items: center; gap: 0.9rem; flex-shrink: 0; }
 
 /* ─── LANGUAGE SWITCHER ─── */
-.lang-switch {
-    position: relative;
-}
+.lang-switch { position: relative; }
 
 .lang-current-btn {
     display: flex;
     align-items: center;
     gap: 0.3rem;
+    /* Фіксована мінімальна ширина щоб розмір не стрибав при зміні мови */
+    min-width: 4rem;
     border: 1px solid rgba(251,239,220,0.35);
     padding: 0.25rem 0.6rem;
     border-radius: 4px;
@@ -271,47 +195,31 @@ header.main-header {
     cursor: pointer;
     background: none;
     color: var(--c-cream);
-    transition: border-color 0.2s, border-radius 0.01s;
     font-family: 'Jost', sans-serif;
     white-space: nowrap;
-    position: relative;
-    z-index: 1;
+    transition: border-color 0.2s;
 }
 .lang-current-btn:hover { border-color: rgba(251,239,220,0.7); }
-/* Коли список відкритий — прибираємо нижній radius щоб зливався зі списком */
 .lang-current-btn[aria-expanded="true"] {
     border-radius: 4px 4px 0 0;
-    border-bottom-color: var(--c-header-bg); /* "ховаємо" нижній border кнопки */
+    border-bottom-color: var(--c-header-bg);
 }
 
-.lang-chevron {
-    opacity: 0.5;
-    transition: transform 0.22s ease;
-    flex-shrink: 0;
-}
-.lang-current-btn[aria-expanded="true"] .lang-chevron {
-    transform: rotate(180deg);
-}
+.lang-chevron { opacity: 0.5; transition: transform 0.22s ease; flex-shrink: 0; }
+.lang-current-btn[aria-expanded="true"] .lang-chevron { transform: rotate(180deg); }
 
-/* Lang list — розкривається вниз від кнопки, по лівому краю */
 .lang-list {
     position: absolute;
-    top: 100%;          /* впритул до кнопки, без зазору */
-    left: 0;            /* вирівняний по лівому краю кнопки */
-    right: auto;
+    top: 100%; left: 0;
     min-width: 100%;
     z-index: 1200;
     display: flex;
     flex-direction: column;
-    /* Верхній border кнопки + нижній border кнопки + border списку = подвійна рамка.
-       Вирішення: список починається одразу від нижнього краю кнопки,
-       border-top у першого пункту прибрано */
 }
 .lang-list[hidden] { display: none; }
 
 .lang-option {
     display: block;
-    /* Єдиний border на весь блок — лівий, правий, нижній */
     border-left: 1px solid rgba(251,239,220,0.35);
     border-right: 1px solid rgba(251,239,220,0.35);
     border-bottom: 1px solid rgba(251,239,220,0.35);
@@ -331,23 +239,24 @@ header.main-header {
 .lang-option:hover { color: var(--c-cream); background: #333231; }
 .lang-option--active { color: var(--c-cream); }
 
-/* ─── BURGER BUTTON ─── */
+/* ─── BURGER ─── */
 .burger-btn {
     display: none;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 5px;
     width: 2.2rem; height: 2.2rem;
     background: none;
     border: none;
     cursor: pointer;
     padding: 0.3rem;
     border-radius: 4px;
-    transition: background 0.2s;
     flex-shrink: 0;
+    gap: 0;
 }
-.burger-btn:hover { background: rgba(251,239,220,0.05); }
+@media (max-width: 1279px) { .burger-btn { display: flex; } }
+@media (min-width: 1280px) { .burger-btn { display: none !important; } }
+
 .burger-line {
     display: block;
     width: 22px; height: 1.5px;
@@ -355,30 +264,33 @@ header.main-header {
     border-radius: 2px;
     transition: transform 0.28s ease, opacity 0.28s ease;
     transform-origin: center;
+    /* Рівні відступи між рисками через margin */
+    margin: 3px 0;
 }
-.burger-btn[aria-expanded="true"] .burger-line:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.burger-btn[aria-expanded="true"] .burger-line:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
 .burger-btn[aria-expanded="true"] .burger-line:nth-child(2) { opacity: 0; transform: scaleX(0); }
-.burger-btn[aria-expanded="true"] .burger-line:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+.burger-btn[aria-expanded="true"] .burger-line:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
 
-/* ═══════════════════════════════════
-   TABLET MENU (1024px)
-   Панель справа: 2 стовпці
-═══════════════════════════════════ */
+/* ══════════════════════════════
+   TABLET MENU
+══════════════════════════════ */
 .tablet-menu {
     position: fixed; inset: 0;
     z-index: 2000;
     pointer-events: none;
+    /* Схований через hidden attr + немає is-open */
 }
 .tablet-menu:not([hidden]) { pointer-events: all; }
+
+/* На мобайлі tablet-menu не показуємо */
+@media (max-width: 767px) { .tablet-menu { display: none !important; } }
 
 .tablet-menu-backdrop {
     position: absolute; inset: 0;
     background: transparent;
     transition: background 0.32s ease;
 }
-.tablet-menu:not([hidden]) .tablet-menu-backdrop {
-    background: rgba(0,0,0,0.5);
-}
+.tablet-menu.is-open .tablet-menu-backdrop { background: rgba(0,0,0,0.5); }
 
 .tablet-menu-panel {
     position: absolute;
@@ -391,9 +303,7 @@ header.main-header {
     flex-direction: column;
     overflow: hidden;
 }
-.tablet-menu:not([hidden]) .tablet-menu-panel {
-    transform: translateX(0);
-}
+.tablet-menu.is-open .tablet-menu-panel { transform: translateX(0); }
 
 .tablet-close-btn {
     position: absolute;
@@ -401,16 +311,11 @@ header.main-header {
     display: flex; align-items: center; justify-content: center;
     width: 2rem; height: 2rem;
     background: none; border: none;
-    cursor: pointer;
-    color: var(--c-cream);
-    border-radius: 4px;
-    transition: background 0.2s;
-    z-index: 1;
-    padding: 0;
+    cursor: pointer; color: var(--c-cream);
+    border-radius: 4px; padding: 0; z-index: 1;
 }
 .tablet-close-btn:hover { background: rgba(251,239,220,0.06); }
 
-/* Два стовпці */
 .tablet-menu-cols {
     position: relative;
     display: flex;
@@ -419,7 +324,7 @@ header.main-header {
     margin-top: 5rem;
 }
 
-/* Лівий стовпець — підменю (slide overlay поверх правої колонки) */
+/* Ліва панель підменю — ховається за лівий край */
 .tablet-submenu-col {
     position: absolute;
     top: 0; left: 0; bottom: 0;
@@ -432,10 +337,8 @@ header.main-header {
     transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
     z-index: 5;
 }
-.tablet-submenu-col.is-open {
-    transform: translateX(0);
-}
 .tablet-submenu-col::-webkit-scrollbar { display: none; }
+.tablet-submenu-col.is-open { transform: translateX(0); }
 
 .tablet-sub-link {
     display: flex;
@@ -453,11 +356,13 @@ header.main-header {
 .tablet-sub-link:hover { color: var(--c-cream); background: rgba(251,239,220,0.03); }
 .tablet-sub-link svg { opacity: 0.3; flex-shrink: 0; }
 
-/* Правий стовпець — навігація */
+/* Права панель — навігація */
 .tablet-nav-col {
     flex: 1;
     overflow-y: auto;
     scrollbar-width: none;
+    /* Зміщена правіше щоб не перекривалась підменю */
+    margin-left: 0;
 }
 .tablet-nav-col::-webkit-scrollbar { display: none; }
 
@@ -480,10 +385,9 @@ header.main-header {
 .tablet-nav-link.is-active { color: var(--c-cream); font-weight: 400; }
 .tnav-arrow { opacity: 0.3; flex-shrink: 0; }
 
-/* ═══════════════════════════════════
-   MOBILE MENU (390px)
-   Повна ширина, accordion підменю
-═══════════════════════════════════ */
+/* ══════════════════════════════
+   MOBILE MENU
+══════════════════════════════ */
 .mobile-menu {
     position: fixed; inset: 0;
     z-index: 2000;
@@ -491,14 +395,15 @@ header.main-header {
 }
 .mobile-menu:not([hidden]) { pointer-events: all; }
 
+/* На планшеті і десктопі mobile-menu не показуємо */
+@media (min-width: 768px) { .mobile-menu { display: none !important; } }
+
 .mobile-menu-backdrop {
     position: absolute; inset: 0;
     background: transparent;
     transition: background 0.32s ease;
 }
-.mobile-menu:not([hidden]) .mobile-menu-backdrop {
-    background: rgba(0,0,0,0.4);
-}
+.mobile-menu.is-open .mobile-menu-backdrop { background: rgba(0,0,0,0.4); }
 
 .mobile-menu-panel {
     position: absolute;
@@ -511,9 +416,7 @@ header.main-header {
     flex-direction: column;
     overflow: hidden;
 }
-.mobile-menu:not([hidden]) .mobile-menu-panel {
-    transform: translateX(0);
-}
+.mobile-menu.is-open .mobile-menu-panel { transform: translateX(0); }
 
 .mobile-menu-top {
     display: flex;
@@ -524,30 +427,19 @@ header.main-header {
     flex-shrink: 0;
 }
 .mobile-logo img { width: 8rem; height: auto; display: block; }
-.mobile-menu-controls {
-    display: flex; align-items: center; gap: 0.65rem;
-}
+.mobile-menu-controls { display: flex; align-items: center; gap: 0.65rem; }
 
 .mobile-close-btn {
     display: flex; align-items: center; justify-content: center;
     width: 2rem; height: 2rem;
     background: none; border: none;
-    cursor: pointer;
-    color: var(--c-cream);
-    border-radius: 4px;
-    transition: background 0.2s;
-    padding: 0;
+    cursor: pointer; color: var(--c-cream);
+    border-radius: 4px; padding: 0;
 }
 .mobile-close-btn:hover { background: rgba(251,239,220,0.06); }
 
-/* Mobile nav */
-.mobile-nav {
-    flex: 1;
-    overflow-y: auto;
-    scrollbar-width: none;
-}
+.mobile-nav { flex: 1; overflow-y: auto; scrollbar-width: none; }
 .mobile-nav::-webkit-scrollbar { display: none; }
-
 .mobile-nav-item { display: flex; flex-direction: column; }
 
 .mobile-nav-link {
@@ -571,14 +463,9 @@ header.main-header {
     font-family: 'Jost', sans-serif;
 }
 .mobile-nav-link:hover { background: rgba(251,239,220,0.02); color: rgba(251,239,220,0.75); }
-.mobile-nav-link.is-active { font-weight: 400; }
-
 .mnav-arrow { opacity: 0.3; flex-shrink: 0; }
 
-/* expand arrow прихований — використовуємо slide overlay */
-.mnav-expand-arrow { display: none; }
-
-/* Mobile submenu — slide overlay (замінює основний екран) */
+/* Mobile submenu — slide overlay */
 .mobile-submenu {
     position: absolute;
     inset: 0;
@@ -590,15 +477,9 @@ header.main-header {
     z-index: 10;
     overflow-y: auto;
 }
-.mobile-submenu[hidden] {
-    /* не display:none — бо треба transition */
-    /* hidden знімаємо через JS, transform повертаємо */
-}
-.mobile-submenu.is-open {
-    transform: translateX(0);
-}
+.mobile-submenu[hidden] { display: none; }
+.mobile-submenu.is-open { transform: translateX(0); }
 
-/* Шапка підменю — назва розділу + стрілка назад */
 .mobile-sub-header {
     display: flex;
     align-items: center;
@@ -607,21 +488,11 @@ header.main-header {
     border-bottom: 1px solid rgba(251,239,220,0.07);
     flex-shrink: 0;
 }
-.mobile-sub-title {
-    font-size: 1rem;
-    font-weight: 400;
-    color: var(--c-cream);
-    letter-spacing: 0.02em;
-}
+.mobile-sub-title { font-size: 1rem; font-weight: 400; color: var(--c-cream); letter-spacing: 0.02em; }
 .mobile-sub-back {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
     width: 2rem; height: 2rem;
-    background: none; border: none;
-    cursor: pointer;
-    color: var(--c-cream);
-    padding: 0;
+    background: none; border: none; cursor: pointer; color: var(--c-cream); padding: 0;
 }
 
 .mobile-sub-link {
@@ -638,32 +509,5 @@ header.main-header {
 }
 .mobile-sub-link:hover { color: var(--c-cream); background: rgba(251,239,220,0.02); }
 
-/* Lang switch в мобільному меню */
-.lang-switch--mobile .lang-list {
-    right: 0;
-    left: auto;
-}
-
-/* ═══════════════════════════════════
-   BREAKPOINTS
-═══════════════════════════════════ */
-
-/* Планшет: 768–1279px → бургер, ховаємо desktop nav */
-@media (max-width: 1279px) {
-    .main-nav { display: none; }
-    .burger-btn { display: flex; }
-    .logo-col img { width: 9.5rem; }
-}
-
-/* Мобайл: до 767px */
-@media (max-width: 767px) {
-    header.main-header { height: 4rem; }
-    .top-bar { height: 2.2rem; font-size: 0.7rem; }
-    .logo-col img { width: 8rem; }
-    .top-bar-label { display: none; }
-}
-
-/* Desktop 1280px+ — ховаємо бургер */
-@media (min-width: 1280px) {
-    .burger-btn { display: none; }
-}
+/* Lang в мобільному меню */
+.lang-switch--mobile .lang-list { right: 0; left: auto; }

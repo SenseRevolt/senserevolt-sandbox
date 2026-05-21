@@ -8,262 +8,230 @@
 
     ready(function () {
 
-
-
-
-
-        /* ─── BURGER → відкриває правильне меню ─── */
-        var burger = document.getElementById('burger-btn');
+        var burger     = document.getElementById('burger-btn');
         var tabletMenu = document.getElementById('tablet-menu');
         var mobileMenu = document.getElementById('mobile-menu');
 
-        function getActiveMenu() {
-            if (mobileMenu && getComputedStyle(mobileMenu).display !== 'none') return mobileMenu;
-            if (tabletMenu && getComputedStyle(tabletMenu).display !== 'none') return tabletMenu;
-            return null;
+        /* ── Яке меню активне по ширині екрану ── */
+        function activeMenu() {
+            return window.innerWidth <= 767 ? mobileMenu : tabletMenu;
         }
 
+        /* ── Відкрити меню ── */
         function openMenu() {
-            var menu = getActiveMenu();
-            if (!menu || !burger) return;
-            burger.setAttribute('aria-expanded', 'true');
+            var m = activeMenu();
+            if (!m) return;
+            m.removeAttribute('hidden');
+            requestAnimationFrame(function () {
+                m.classList.add('is-open');
+            });
+            if (burger) burger.setAttribute('aria-expanded', 'true');
             document.body.style.overflow = 'hidden';
-            menu.hidden = false;
-            menu.offsetHeight;
         }
 
-        function closeAllMenus() {
-            if (!burger) return;
-            burger.setAttribute('aria-expanded', 'false');
+        /* ── Закрити всі меню ── */
+        function closeMenus() {
+            [tabletMenu, mobileMenu].forEach(function (m) {
+                if (!m) return;
+                m.classList.remove('is-open');
+                m.addEventListener('transitionend', function h() {
+                    if (!m.classList.contains('is-open')) m.setAttribute('hidden', '');
+                    m.removeEventListener('transitionend', h);
+                }, { once: true });
+            });
+            if (burger) burger.setAttribute('aria-expanded', 'false');
             document.body.style.overflow = '';
+            closeTabletSub();
+        }
 
-            [tabletMenu, mobileMenu].forEach(function(menu) {
-                if (!menu || menu.hidden) return;
-                var panel = menu.querySelector('.tablet-menu-panel, .mobile-menu-panel');
-                if (panel) {
-                    panel.addEventListener('transitionend', function h() {
-                        menu.hidden = true;
-                        panel.removeEventListener('transitionend', h);
-                    }, { once: true });
-                } else {
-                    menu.hidden = true;
-                }
+        /* ── Burger ── */
+        if (burger) {
+            burger.addEventListener('click', function () {
+                if (this.getAttribute('aria-expanded') === 'true') closeMenus();
+                else openMenu();
             });
         }
 
-        if (burger) burger.addEventListener('click', function() {
-            var isOpen = this.getAttribute('aria-expanded') === 'true';
-            if (isOpen) closeAllMenus(); else openMenu();
+        /* ── Backdrop + close btns ── */
+        document.querySelectorAll('.tablet-menu-backdrop, .mobile-menu-backdrop').forEach(function (el) {
+            el.addEventListener('click', closeMenus);
+        });
+        document.querySelectorAll('.tablet-close-btn, .mobile-close-btn').forEach(function (el) {
+            el.addEventListener('click', closeMenus);
         });
 
-        /* Закрити по backdrop */
-        [tabletMenu, mobileMenu].forEach(function(menu) {
-            if (!menu) return;
-            var backdrop = menu.querySelector('.tablet-menu-backdrop, .mobile-menu-backdrop');
-            if (backdrop) backdrop.addEventListener('click', closeAllMenus);
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') closeMenus();
         });
 
-        /* Закрити по × */
-        document.querySelectorAll('.tablet-close-btn, .mobile-close-btn').forEach(function(btn) {
-            btn.addEventListener('click', closeAllMenus);
-        });
-
-        /* Escape */
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') closeAllMenus();
-        });
-
-        /* ─── TABLET MENU: підменю виїздить зліва поверх контенту ─── */
-
+        /* ════════════════════════════
+           TABLET: підменю slide зліва
+        ════════════════════════════ */
         var SUBMENUS = {
-            'somatic': [
-                { label: 'Our Method',  href: '/en/somatic-tools/our-method/' },
-                { label: 'All Kits',    href: '/en/somatic-tools/all-kits/' },
-                { label: 'Bundles',     href: '/en/somatic-tools/bundles/' },
-                { label: 'Extras',      href: '/en/somatic-tools/extras/' }
+            somatic: [
+                { label: 'Our Method', href: '/en/somatic-tools/our-method/' },
+                { label: 'All Kits',   href: '/en/somatic-tools/all-kits/' },
+                { label: 'Bundles',    href: '/en/somatic-tools/bundles/' },
+                { label: 'Extras',     href: '/en/somatic-tools/extras/' }
             ]
         };
 
-        var arrowSVG = '<svg width="7" height="12" viewBox="0 0 7 12" fill="none" aria-hidden="true"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-
-        /* Визначаємо baseurl з наявних посилань */
-        var sampleLink = document.querySelector('.main-nav .nav-link[href]');
+        /* baseurl з Jekyll */
         var baseurl = '';
-        if (sampleLink) {
-            var href = sampleLink.getAttribute('href');
-            var match = href.match(/^(.*?)\/en\//);
-            if (match) baseurl = match[1];
+        var sample = document.querySelector('.main-nav .nav-link[href]');
+        if (sample) {
+            var m = sample.getAttribute('href').match(/^(.*?)\/en\//);
+            if (m) baseurl = m[1];
         }
 
-        function openTabletSubmenu(key) {
+        var arrowR = '<svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+        function openTabletSub(key) {
             var col = document.getElementById('tablet-submenu-col');
             if (!col) return;
             var items = SUBMENUS[key] || [];
-            col.innerHTML = items.map(function(item) {
-                return '<a href="' + (baseurl || '') + item.href + '" class="tablet-sub-link">' +
-                       '<span>' + item.label + '</span>' + arrowSVG + '</a>';
+            col.innerHTML = items.map(function (it) {
+                return '<a href="' + baseurl + it.href + '" class="tablet-sub-link"><span>' + it.label + '</span>' + arrowR + '</a>';
             }).join('');
-            col.offsetHeight;
-            col.classList.add('is-open');
+            col.removeAttribute('hidden');
+            requestAnimationFrame(function () { col.classList.add('is-open'); });
         }
 
-        function closeTabletSubmenu() {
+        function closeTabletSub() {
             var col = document.getElementById('tablet-submenu-col');
             if (!col) return;
             col.classList.remove('is-open');
+            col.addEventListener('transitionend', function h() {
+                col.setAttribute('hidden', '');
+                col.removeEventListener('transitionend', h);
+            }, { once: true });
+            document.querySelectorAll('.tablet-nav-link').forEach(function (l) {
+                l.classList.remove('is-active');
+            });
         }
 
-        /* Клік по пункту з підменю → відкриває ліву панель */
-        document.querySelectorAll('.tablet-nav-link[data-has-sub]').forEach(function(link) {
-            link.addEventListener('click', function(e) {
+        document.querySelectorAll('.tablet-nav-link[data-has-sub]').forEach(function (link) {
+            link.addEventListener('click', function (e) {
                 e.preventDefault();
-                var key = this.getAttribute('data-has-sub');
-                /* Підсвічуємо активний */
-                document.querySelectorAll('.tablet-nav-link').forEach(function(l) {
-                    l.classList.toggle('is-active', l === link);
-                });
-                /* Відкриваємо/закриваємо підменю */
                 var col = document.getElementById('tablet-submenu-col');
-                if (col && col.classList.contains('is-open')) {
-                    closeTabletSubmenu();
+                var alreadyOpen = col && col.classList.contains('is-open') && this.classList.contains('is-active');
+                document.querySelectorAll('.tablet-nav-link').forEach(function (l) { l.classList.remove('is-active'); });
+                if (alreadyOpen) {
+                    closeTabletSub();
                 } else {
-                    openTabletSubmenu(key);
+                    this.classList.add('is-active');
+                    openTabletSub(this.getAttribute('data-has-sub'));
                 }
             });
         });
 
-        /* При закритті tablet menu — скидаємо підменю */
-        if (tabletMenu) {
-            var observer = new MutationObserver(function(mutations) {
-                mutations.forEach(function(m) {
-                    if (m.attributeName === 'hidden' && tabletMenu.hidden) {
-                        closeTabletSubmenu();
-                        document.querySelectorAll('.tablet-nav-link').forEach(function(l) {
-                            l.classList.remove('is-active');
-                        });
-                    }
-                });
-            });
-            observer.observe(tabletMenu, { attributes: true });
-        }
-
-        /* ─── MOBILE MENU: slide overlay підменю ─── */
-        document.querySelectorAll('.mobile-nav-trigger').forEach(function(trigger) {
-            trigger.addEventListener('click', function() {
-                var subId = this.getAttribute('aria-controls');
-                var sub = document.getElementById(subId);
+        /* ════════════════════════════
+           MOBILE: підменю slide overlay
+        ════════════════════════════ */
+        document.querySelectorAll('.mobile-nav-trigger').forEach(function (trigger) {
+            trigger.addEventListener('click', function () {
+                var sub = document.getElementById(this.getAttribute('aria-controls'));
                 if (!sub) return;
-                this.setAttribute('aria-expanded', 'true');
-                sub.hidden = false;
-                sub.offsetHeight; /* reflow */
-                sub.classList.add('is-open');
+                sub.removeAttribute('hidden');
+                requestAnimationFrame(function () { sub.classList.add('is-open'); });
+                trigger.setAttribute('aria-expanded', 'true');
             });
         });
 
-        /* Кнопка "назад" в підменю */
-        document.querySelectorAll('.mobile-sub-back').forEach(function(btn) {
-            btn.addEventListener('click', function() {
+        document.querySelectorAll('.mobile-sub-back').forEach(function (btn) {
+            btn.addEventListener('click', function () {
                 var sub = this.closest('.mobile-submenu');
                 if (!sub) return;
                 sub.classList.remove('is-open');
                 sub.addEventListener('transitionend', function h() {
-                    sub.hidden = true;
+                    sub.setAttribute('hidden', '');
                     sub.removeEventListener('transitionend', h);
                 }, { once: true });
-                /* Знімаємо expanded з тригера */
-                var triggerId = sub.id;
-                var trigger = document.querySelector('[aria-controls="' + triggerId + '"]');
+                var trigger = document.querySelector('[aria-controls="' + sub.id + '"]');
                 if (trigger) trigger.setAttribute('aria-expanded', 'false');
             });
         });
 
-        /* ─── LANGUAGE SWITCHER ─── */
-        document.querySelectorAll('.lang-switch').forEach(function(sw) {
-            var btn = sw.querySelector('.lang-current-btn');
+        /* ════════════════════════════
+           LANGUAGE SWITCHER
+        ════════════════════════════ */
+        document.querySelectorAll('.lang-switch').forEach(function (sw) {
+            var btn  = sw.querySelector('.lang-current-btn');
             var list = sw.querySelector('.lang-list');
             if (!btn || !list) return;
 
-            btn.addEventListener('click', function(e) {
+            btn.addEventListener('click', function (e) {
                 e.stopPropagation();
-                var isOpen = btn.getAttribute('aria-expanded') === 'true';
-                /* Закрити всі інші switcher-и */
-                document.querySelectorAll('.lang-current-btn').forEach(function(b) {
+                var open = btn.getAttribute('aria-expanded') === 'true';
+                /* закрити всі інші */
+                document.querySelectorAll('.lang-current-btn').forEach(function (b) {
                     if (b !== btn) {
                         b.setAttribute('aria-expanded', 'false');
-                        var l = b.parentElement.querySelector('.lang-list');
-                        if (l) l.hidden = true;
+                        var l = b.closest('.lang-switch').querySelector('.lang-list');
+                        if (l) l.setAttribute('hidden', '');
                     }
                 });
-                btn.setAttribute('aria-expanded', String(!isOpen));
-                list.hidden = isOpen;
+                if (open) {
+                    btn.setAttribute('aria-expanded', 'false');
+                    list.setAttribute('hidden', '');
+                } else {
+                    btn.setAttribute('aria-expanded', 'true');
+                    list.removeAttribute('hidden');
+                }
             });
 
-            /* Клік по мові */
-            list.querySelectorAll('.lang-option').forEach(function(opt) {
-                opt.addEventListener('click', function(e) {
+            list.querySelectorAll('.lang-option').forEach(function (opt) {
+                opt.addEventListener('click', function (e) {
                     e.preventDefault();
                     var lang = this.getAttribute('data-lang');
-                    /* Оновлюємо текст кнопки */
-                    sw.querySelectorAll('.lang-current-text').forEach(function(t) { t.textContent = lang; });
-                    /* Позначаємо активну */
-                    list.querySelectorAll('.lang-option').forEach(function(o) {
+                    /* фіксована ширина кнопки — беремо найширший варіант */
+                    sw.querySelectorAll('.lang-current-text').forEach(function (t) { t.textContent = lang; });
+                    list.querySelectorAll('.lang-option').forEach(function (o) {
                         o.classList.toggle('lang-option--active', o === opt);
                     });
                     btn.setAttribute('aria-expanded', 'false');
-                    list.hidden = true;
+                    list.setAttribute('hidden', '');
                 });
             });
         });
 
-        /* Клік поза switcher → закрити */
-        document.addEventListener('click', function() {
-            document.querySelectorAll('.lang-current-btn').forEach(function(btn) {
+        document.addEventListener('click', function () {
+            document.querySelectorAll('.lang-current-btn[aria-expanded="true"]').forEach(function (btn) {
                 btn.setAttribute('aria-expanded', 'false');
-                var l = btn.parentElement.querySelector('.lang-list');
-                if (l) l.hidden = true;
+                var l = btn.closest('.lang-switch').querySelector('.lang-list');
+                if (l) l.setAttribute('hidden', '');
             });
         });
 
-        /* ─── АКТИВНА СТОРІНКА — підсвітка ─── */
+        /* ════════════════════════════
+           АКТИВНА СТОРІНКА
+        ════════════════════════════ */
         var path = window.location.pathname;
+        document.querySelectorAll('.main-nav .nav-link, .tablet-nav-link, .mobile-nav-link, .mobile-sub-link').forEach(function (link) {
+            var href = link.getAttribute('href');
+            if (!href) return;
+            try {
+                var lp = new URL(href, window.location.origin).pathname;
+                if (lp !== '/' && path.startsWith(lp)) link.classList.add('is-active');
+            } catch (e) {}
+        });
 
-        function markActive(selector) {
-            document.querySelectorAll(selector).forEach(function(link) {
-                var href = link.getAttribute('href');
-                if (!href) return;
-                try {
-                    var lp = new URL(href, window.location.origin).pathname;
-                    if (lp !== '/' && path.startsWith(lp)) {
-                        link.classList.add('is-active');
-                    }
-                } catch(e) {}
-            });
-        }
-
-        markActive('.main-nav .nav-link');
-        markActive('.tablet-nav-link');
-        markActive('.mobile-nav-link');
-
-        /* ─── ТАЙМЕР ─── */
-        var LAUNCH_DATE = new Date('2025-12-31T00:00:00');
+        /* ════════════════════════════
+           ТАЙМЕР
+        ════════════════════════════ */
+        var LAUNCH = new Date('2025-12-31T00:00:00');
         var launchBar = document.querySelector('.top-bar--launch');
-        if (launchBar && launchBar.style.display !== 'none') {
-            function pad(n) { return n < 10 ? '0'+n : String(n); }
+        if (launchBar && getComputedStyle(launchBar).display !== 'none') {
+            function pad(n) { return n < 10 ? '0' + n : '' + n; }
             function tick() {
-                var diff = LAUNCH_DATE - new Date();
-                if (diff < 0) diff = 0;
-                var d = Math.floor(diff/86400000);
-                var h = Math.floor((diff%86400000)/3600000);
-                var m = Math.floor((diff%3600000)/60000);
-                var s = Math.floor((diff%60000)/1000);
-                var el = function(id) { return document.getElementById(id); };
-                if (el('tb-days'))  el('tb-days').textContent  = pad(d);
-                if (el('tb-hours')) el('tb-hours').textContent = pad(h);
-                if (el('tb-mins'))  el('tb-mins').textContent  = pad(m);
-                if (el('tb-secs'))  el('tb-secs').textContent  = pad(s);
+                var d = Math.max(0, LAUNCH - new Date());
+                var el = function (id) { return document.getElementById(id); };
+                if (el('tb-days'))  el('tb-days').textContent  = pad(Math.floor(d / 86400000));
+                if (el('tb-hours')) el('tb-hours').textContent = pad(Math.floor(d % 86400000 / 3600000));
+                if (el('tb-mins'))  el('tb-mins').textContent  = pad(Math.floor(d % 3600000 / 60000));
+                if (el('tb-secs'))  el('tb-secs').textContent  = pad(Math.floor(d % 60000 / 1000));
             }
-            tick();
-            setInterval(tick, 1000);
+            tick(); setInterval(tick, 1000);
         }
 
     });
