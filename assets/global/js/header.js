@@ -1,14 +1,6 @@
-/* ==============================
-   HEADER JS — SenseRevolt
-   Додати в scripts.html або підключити окремо
-============================== */
-
 (function () {
     'use strict';
 
-    // ─────────────────────────────────
-    // Утиліта: запускати після DOM ready
-    // ─────────────────────────────────
     function ready(fn) {
         if (document.readyState !== 'loading') fn();
         else document.addEventListener('DOMContentLoaded', fn);
@@ -16,169 +8,246 @@
 
     ready(function () {
 
-        // ─────────────────────────────────
-        // BURGER + MOBILE MENU
-        // ─────────────────────────────────
-        var burgerBtn   = document.querySelector('.burger-btn');
-        var mobileMenu  = document.getElementById('mobile-menu');
-        var closeBtn    = document.querySelector('.close-btn');
-        var backdrop    = document.querySelector('.mobile-menu-backdrop');
+        /* ─── ВИЗНАЧЕННЯ БРЕЙКПОІНТУ ─── */
+        function isTablet() { return window.innerWidth >= 768 && window.innerWidth <= 1279; }
+        function isMobile() { return window.innerWidth <= 767; }
+
+        /* ─── BURGER → відкриває правильне меню ─── */
+        var burger = document.getElementById('burger-btn');
+        var tabletMenu = document.getElementById('tablet-menu');
+        var mobileMenu = document.getElementById('mobile-menu');
 
         function openMenu() {
-            if (!mobileMenu || !burgerBtn) return;
-            mobileMenu.hidden = false;
-            burgerBtn.setAttribute('aria-expanded', 'true');
+            if (!burger) return;
+            burger.setAttribute('aria-expanded', 'true');
             document.body.style.overflow = 'hidden';
-            // Форсуємо reflow щоб transition спрацював
-            mobileMenu.offsetHeight;
+            if (isMobile()) {
+                if (mobileMenu) { mobileMenu.hidden = false; mobileMenu.offsetHeight; }
+            } else {
+                if (tabletMenu) { tabletMenu.hidden = false; tabletMenu.offsetHeight; }
+            }
         }
 
-        function closeMenu() {
-            if (!mobileMenu || !burgerBtn) return;
-            burgerBtn.setAttribute('aria-expanded', 'false');
+        function closeAllMenus() {
+            if (!burger) return;
+            burger.setAttribute('aria-expanded', 'false');
             document.body.style.overflow = '';
 
-            // Чекаємо завершення transition перед hidden
-            var panel = mobileMenu.querySelector('.mobile-menu-panel');
-            if (panel) {
-                panel.addEventListener('transitionend', function handler() {
-                    mobileMenu.hidden = true;
-                    // Закриваємо підменю якщо відкрите
-                    closeAllSubmenus();
-                    panel.removeEventListener('transitionend', handler);
-                }, { once: true });
-            } else {
-                mobileMenu.hidden = true;
-                closeAllSubmenus();
-            }
+            [tabletMenu, mobileMenu].forEach(function(menu) {
+                if (!menu || menu.hidden) return;
+                var panel = menu.querySelector('.tablet-menu-panel, .mobile-menu-panel');
+                if (panel) {
+                    panel.addEventListener('transitionend', function h() {
+                        menu.hidden = true;
+                        panel.removeEventListener('transitionend', h);
+                    }, { once: true });
+                } else {
+                    menu.hidden = true;
+                }
+            });
         }
 
-        if (burgerBtn) {
-            burgerBtn.addEventListener('click', function () {
+        if (burger) burger.addEventListener('click', function() {
+            var isOpen = this.getAttribute('aria-expanded') === 'true';
+            if (isOpen) closeAllMenus(); else openMenu();
+        });
+
+        /* Закрити по backdrop */
+        [tabletMenu, mobileMenu].forEach(function(menu) {
+            if (!menu) return;
+            var backdrop = menu.querySelector('.tablet-menu-backdrop, .mobile-menu-backdrop');
+            if (backdrop) backdrop.addEventListener('click', closeAllMenus);
+        });
+
+        /* Закрити по × */
+        document.querySelectorAll('.tablet-close-btn, .mobile-close-btn').forEach(function(btn) {
+            btn.addEventListener('click', closeAllMenus);
+        });
+
+        /* Escape */
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeAllMenus();
+        });
+
+        /* ─── TABLET MENU: підсвітка активного розділу в правому стовпці
+               + заповнення лівого стовпця підменю ─── */
+
+        var SUBMENUS = {
+            'somatic': [
+                { label: 'Our Method',  href: '/en/somatic-tools/our-method/' },
+                { label: 'All Kits',    href: '/en/somatic-tools/all-kits/' },
+                { label: 'Bundles',     href: '/en/somatic-tools/bundles/' },
+                { label: 'Extras',      href: '/en/somatic-tools/extras/' }
+            ]
+        };
+
+        var arrowSVG = '<svg width="7" height="12" viewBox="0 0 7 12" fill="none" aria-hidden="true"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+        function fillTabletSubmenu(key, baseurl) {
+            var col = document.getElementById('tablet-submenu-col');
+            if (!col) return;
+            var items = SUBMENUS[key] || [];
+            col.innerHTML = items.map(function(item) {
+                return '<a href="' + (baseurl || '') + item.href + '" class="tablet-sub-link">' +
+                       '<span>' + item.label + '</span>' + arrowSVG + '</a>';
+            }).join('');
+        }
+
+        /* Визначаємо baseurl з наявних посилань */
+        var sampleLink = document.querySelector('.main-nav .nav-link[href]');
+        var baseurl = '';
+        if (sampleLink) {
+            var href = sampleLink.getAttribute('href');
+            /* Jekyll baseurl — беремо все до /en/ */
+            var match = href.match(/^(.*?)\/en\//);
+            if (match) baseurl = match[1];
+        }
+
+        /* При відкритті tablet menu — показуємо підменю активного розділу */
+        if (tabletMenu) {
+            var observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(m) {
+                    if (m.attributeName === 'hidden' && !tabletMenu.hidden) {
+                        /* Знаходимо активний пункт */
+                        var active = tabletMenu.querySelector('.tablet-nav-link.is-active');
+                        var key = active ? active.getAttribute('data-has-sub') : null;
+                        if (!key) {
+                            /* Якщо немає активного — показуємо somatic за замовчуванням */
+                            key = 'somatic';
+                        }
+                        fillTabletSubmenu(key, baseurl);
+                        /* Підсвічуємо в правому стовпці */
+                        tabletMenu.querySelectorAll('.tablet-nav-link').forEach(function(l) {
+                            l.classList.toggle('is-active', l.getAttribute('data-has-sub') === key);
+                        });
+                    }
+                });
+            });
+            observer.observe(tabletMenu, { attributes: true });
+        }
+
+        /* Клік по пункту в правому стовпці → оновлює лівий */
+        document.querySelectorAll('.tablet-nav-link[data-has-sub]').forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                var key = this.getAttribute('data-has-sub');
+                fillTabletSubmenu(key, baseurl);
+                document.querySelectorAll('.tablet-nav-link').forEach(function(l) {
+                    l.classList.toggle('is-active', l === link);
+                });
+            });
+        });
+
+        /* ─── MOBILE MENU: accordion підменю ─── */
+        document.querySelectorAll('.mobile-nav-trigger').forEach(function(trigger) {
+            trigger.addEventListener('click', function() {
+                var subId = this.getAttribute('aria-controls');
+                var sub = document.getElementById(subId);
+                if (!sub) return;
+
                 var isOpen = this.getAttribute('aria-expanded') === 'true';
-                if (isOpen) closeMenu();
-                else openMenu();
+                /* Закрити всі інші */
+                document.querySelectorAll('.mobile-nav-trigger').forEach(function(t) {
+                    if (t !== trigger) {
+                        t.setAttribute('aria-expanded', 'false');
+                        var s = document.getElementById(t.getAttribute('aria-controls'));
+                        if (s) s.hidden = true;
+                    }
+                });
+
+                this.setAttribute('aria-expanded', String(!isOpen));
+                sub.hidden = isOpen;
             });
-        }
-
-        if (closeBtn) closeBtn.addEventListener('click', closeMenu);
-        if (backdrop) backdrop.addEventListener('click', closeMenu);
-
-        // Закрити на Escape
-        document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape' && mobileMenu && !mobileMenu.hidden) {
-                closeMenu();
-            }
         });
 
-        // ─────────────────────────────────
-        // MOBILE SUBMENU (slide-in)
-        // ─────────────────────────────────
-        function closeAllSubmenus() {
-            document.querySelectorAll('.mobile-submenu').forEach(function (sub) {
-                sub.hidden = true;
-                sub.style.transform = '';
+        /* ─── LANGUAGE SWITCHER ─── */
+        document.querySelectorAll('.lang-switch').forEach(function(sw) {
+            var btn = sw.querySelector('.lang-current-btn');
+            var list = sw.querySelector('.lang-list');
+            if (!btn || !list) return;
+
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                var isOpen = btn.getAttribute('aria-expanded') === 'true';
+                /* Закрити всі інші switcher-и */
+                document.querySelectorAll('.lang-current-btn').forEach(function(b) {
+                    if (b !== btn) {
+                        b.setAttribute('aria-expanded', 'false');
+                        var l = b.parentElement.querySelector('.lang-list');
+                        if (l) l.hidden = true;
+                    }
+                });
+                btn.setAttribute('aria-expanded', String(!isOpen));
+                list.hidden = isOpen;
             });
-            document.querySelectorAll('.mobile-nav-trigger').forEach(function (btn) {
+
+            /* Клік по мові */
+            list.querySelectorAll('.lang-option').forEach(function(opt) {
+                opt.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var lang = this.getAttribute('data-lang');
+                    /* Оновлюємо текст кнопки */
+                    sw.querySelectorAll('.lang-current-text').forEach(function(t) { t.textContent = lang; });
+                    /* Позначаємо активну */
+                    list.querySelectorAll('.lang-option').forEach(function(o) {
+                        o.classList.toggle('lang-option--active', o === opt);
+                    });
+                    btn.setAttribute('aria-expanded', 'false');
+                    list.hidden = true;
+                });
+            });
+        });
+
+        /* Клік поза switcher → закрити */
+        document.addEventListener('click', function() {
+            document.querySelectorAll('.lang-current-btn').forEach(function(btn) {
                 btn.setAttribute('aria-expanded', 'false');
-            });
-        }
-
-        document.querySelectorAll('.mobile-nav-trigger').forEach(function (trigger) {
-            trigger.addEventListener('click', function () {
-                var targetId = this.getAttribute('aria-controls');
-                var submenu  = document.getElementById(targetId);
-                if (!submenu) return;
-
-                submenu.hidden = false;
-                // Форсуємо reflow
-                submenu.offsetHeight;
-                this.setAttribute('aria-expanded', 'true');
+                var l = btn.parentElement.querySelector('.lang-list');
+                if (l) l.hidden = true;
             });
         });
 
-        document.querySelectorAll('.mobile-submenu-back').forEach(function (backBtn) {
-            backBtn.addEventListener('click', function () {
-                var submenu = this.closest('.mobile-submenu');
-                if (!submenu) return;
-
-                submenu.addEventListener('transitionend', function handler() {
-                    submenu.hidden = true;
-                    submenu.removeEventListener('transitionend', handler);
-                }, { once: true });
-
-                // Повертаємо transform назад — CSS transition підхопить
-                submenu.style.transform = 'translateX(100%)';
-
-                // Знімаємо aria-expanded з тригера
-                var triggerId = submenu.id;
-                var trigger = document.querySelector('[aria-controls="' + triggerId + '"]');
-                if (trigger) trigger.setAttribute('aria-expanded', 'false');
-            });
-        });
-
-        // ─────────────────────────────────
-        // ТАЙМЕР ЗВОРОТНОГО ВІДЛІКУ
-        // Встановити дату запуску нижче
-        // ─────────────────────────────────
-        var LAUNCH_DATE = new Date('2025-12-31T00:00:00'); // <-- змінити на реальну дату
-
-        var tbDays  = document.getElementById('tb-days');
-        var tbHours = document.getElementById('tb-hours');
-        var tbMins  = document.getElementById('tb-mins');
-        var tbSecs  = document.getElementById('tb-secs');
-
-        function pad(n) {
-            return n < 10 ? '0' + n : String(n);
-        }
-
-        function updateTimer() {
-            if (!tbDays || !tbHours || !tbMins || !tbSecs) return;
-            var now  = new Date();
-            var diff = LAUNCH_DATE - now;
-
-            if (diff <= 0) {
-                tbDays.textContent = tbHours.textContent = tbMins.textContent = tbSecs.textContent = '00';
-                return;
-            }
-
-            var d = Math.floor(diff / 86400000);
-            var h = Math.floor((diff % 86400000) / 3600000);
-            var m = Math.floor((diff % 3600000) / 60000);
-            var s = Math.floor((diff % 60000) / 1000);
-
-            tbDays.textContent  = pad(d);
-            tbHours.textContent = pad(h);
-            tbMins.textContent  = pad(m);
-            tbSecs.textContent  = pad(s);
-        }
-
-        // Таймер активний тільки якщо launch top-bar видимий
-        var launchBar = document.querySelector('.top-bar--launch');
-        if (launchBar && launchBar.style.display !== 'none') {
-            updateTimer();
-            setInterval(updateTimer, 1000);
-        }
-
-        // ─────────────────────────────────
-        // АКТИВНА СТОРІНКА — підсвітка nav
-        // ─────────────────────────────────
+        /* ─── АКТИВНА СТОРІНКА — підсвітка ─── */
         var path = window.location.pathname;
 
-        document.querySelectorAll('.main-nav .nav-link, .mobile-nav-link, .mobile-sub-link').forEach(function (link) {
-            var href = link.getAttribute('href');
-            if (!href) return;
+        function markActive(selector) {
+            document.querySelectorAll(selector).forEach(function(link) {
+                var href = link.getAttribute('href');
+                if (!href) return;
+                try {
+                    var lp = new URL(href, window.location.origin).pathname;
+                    if (lp !== '/' && path.startsWith(lp)) {
+                        link.classList.add('is-active');
+                    }
+                } catch(e) {}
+            });
+        }
 
-            // Порівнюємо pathname (без домену)
-            try {
-                var linkPath = new URL(href, window.location.origin).pathname;
-                // Точне співпадіння або вкладений шлях
-                if (path === linkPath || (linkPath !== '/' && path.startsWith(linkPath))) {
-                    link.classList.add('is-active');
-                }
-            } catch (e) {}
-        });
+        markActive('.main-nav .nav-link');
+        markActive('.tablet-nav-link');
+        markActive('.mobile-nav-link');
 
-    }); // end ready
+        /* ─── ТАЙМЕР ─── */
+        var LAUNCH_DATE = new Date('2025-12-31T00:00:00');
+        var launchBar = document.querySelector('.top-bar--launch');
+        if (launchBar && launchBar.style.display !== 'none') {
+            function pad(n) { return n < 10 ? '0'+n : String(n); }
+            function tick() {
+                var diff = LAUNCH_DATE - new Date();
+                if (diff < 0) diff = 0;
+                var d = Math.floor(diff/86400000);
+                var h = Math.floor((diff%86400000)/3600000);
+                var m = Math.floor((diff%3600000)/60000);
+                var s = Math.floor((diff%60000)/1000);
+                var el = function(id) { return document.getElementById(id); };
+                if (el('tb-days'))  el('tb-days').textContent  = pad(d);
+                if (el('tb-hours')) el('tb-hours').textContent = pad(h);
+                if (el('tb-mins'))  el('tb-mins').textContent  = pad(m);
+                if (el('tb-secs'))  el('tb-secs').textContent  = pad(s);
+            }
+            tick();
+            setInterval(tick, 1000);
+        }
 
+    });
 }());
