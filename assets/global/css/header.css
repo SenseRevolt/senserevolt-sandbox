@@ -328,7 +328,7 @@ header.main-header {
     white-space: nowrap;
 }
 .lang-option:last-child { border-radius: 0 0 3px 3px; }
-.lang-option:hover { color: var(--c-cream); background: rgba(251,239,220,0.04); }
+.lang-option:hover { color: var(--c-cream); background: #333231; }
 .lang-option--active { color: var(--c-cream); }
 
 /* ─── BURGER BUTTON ─── */
@@ -412,19 +412,28 @@ header.main-header {
 
 /* Два стовпці */
 .tablet-menu-cols {
+    position: relative;
     display: flex;
     flex: 1;
     overflow: hidden;
-    /* відступ зверху під хедер сайту */
     margin-top: 5rem;
 }
 
-/* Лівий стовпець — підменю */
+/* Лівий стовпець — підменю (slide overlay поверх правої колонки) */
 .tablet-submenu-col {
-    width: 45%;
+    position: absolute;
+    top: 0; left: 0; bottom: 0;
+    width: 55%;
+    background: #1e1d1c;
     border-right: 1px solid rgba(251,239,220,0.07);
     overflow-y: auto;
     scrollbar-width: none;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+    z-index: 5;
+}
+.tablet-submenu-col.is-open {
+    transform: translateX(0);
 }
 .tablet-submenu-col::-webkit-scrollbar { display: none; }
 
@@ -566,38 +575,67 @@ header.main-header {
 
 .mnav-arrow { opacity: 0.3; flex-shrink: 0; }
 
-/* Стрілка розкриття підменю (→ / ↓) */
-.mnav-expand-arrow {
-    margin-left: auto;
-    opacity: 0.35;
-    transition: transform 0.25s ease;
-    flex-shrink: 0;
-    order: -1; /* зліва від тексту */
+/* expand arrow прихований — використовуємо slide overlay */
+.mnav-expand-arrow { display: none; }
+
+/* Mobile submenu — slide overlay (замінює основний екран) */
+.mobile-submenu {
+    position: absolute;
+    inset: 0;
+    background: #262524;
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+    display: flex;
+    flex-direction: column;
+    z-index: 10;
+    overflow-y: auto;
 }
-.mobile-nav-trigger[aria-expanded="true"] .mnav-expand-arrow {
-    transform: rotate(180deg);
+.mobile-submenu[hidden] {
+    /* не display:none — бо треба transition */
+    /* hidden знімаємо через JS, transform повертаємо */
+}
+.mobile-submenu.is-open {
+    transform: translateX(0);
 }
 
-/* Mobile submenu — accordion */
-.mobile-submenu {
-    background: rgba(0,0,0,0.12);
-    border-bottom: 1px solid rgba(251,239,220,0.06);
+/* Шапка підменю — назва розділу + стрілка назад */
+.mobile-sub-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.4rem;
+    border-bottom: 1px solid rgba(251,239,220,0.07);
+    flex-shrink: 0;
 }
-.mobile-submenu[hidden] { display: none; }
+.mobile-sub-title {
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--c-cream);
+    letter-spacing: 0.02em;
+}
+.mobile-sub-back {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem; height: 2rem;
+    background: none; border: none;
+    cursor: pointer;
+    color: var(--c-cream);
+    padding: 0;
+}
 
 .mobile-sub-link {
     display: block;
-    padding: 0.75rem 1.8rem 0.75rem 2.5rem;
-    color: rgba(251,239,220,0.6);
+    padding: 0.95rem 1.4rem;
+    color: rgba(251,239,220,0.65);
     text-decoration: none;
-    font-size: 0.9rem;
+    font-size: 0.94rem;
     font-weight: 300;
     letter-spacing: 0.02em;
-    border-bottom: 1px solid rgba(251,239,220,0.04);
+    border-bottom: 1px solid rgba(251,239,220,0.06);
     transition: color 0.18s, background 0.18s;
     text-align: right;
 }
-.mobile-sub-link:last-child { border-bottom: none; }
 .mobile-sub-link:hover { color: var(--c-cream); background: rgba(251,239,220,0.02); }
 
 /* Lang switch в мобільному меню */
@@ -615,24 +653,17 @@ header.main-header {
     .main-nav { display: none; }
     .burger-btn { display: flex; }
     .logo-col img { width: 9.5rem; }
-    /* На планшеті — tablet-menu, mobile-menu прихований */
-    .mobile-menu { display: none !important; }
 }
 
-/* Мобайл: до 767px → mobile-menu, tablet-menu прихований */
+/* Мобайл: до 767px */
 @media (max-width: 767px) {
     header.main-header { height: 4rem; }
     .top-bar { height: 2.2rem; font-size: 0.7rem; }
     .logo-col img { width: 8rem; }
     .top-bar-label { display: none; }
-    /* На мобайлі — mobile-menu */
-    .tablet-menu { display: none !important; }
-    .mobile-menu { display: block !important; }
 }
 
-/* Desktop 1280px+ — ховаємо обидва мобільні меню */
+/* Desktop 1280px+ — ховаємо бургер */
 @media (min-width: 1280px) {
-    .tablet-menu { display: none !important; }
-    .mobile-menu { display: none !important; }
-    .burger-btn { display: none !important; }
+    .burger-btn { display: none; }
 }

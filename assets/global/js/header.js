@@ -73,8 +73,7 @@
             if (e.key === 'Escape') closeAllMenus();
         });
 
-        /* ─── TABLET MENU: підсвітка активного розділу в правому стовпці
-               + заповнення лівого стовпця підменю ─── */
+        /* ─── TABLET MENU: підменю виїздить зліва поверх контенту ─── */
 
         var SUBMENUS = {
             'somatic': [
@@ -87,7 +86,16 @@
 
         var arrowSVG = '<svg width="7" height="12" viewBox="0 0 7 12" fill="none" aria-hidden="true"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
-        function fillTabletSubmenu(key, baseurl) {
+        /* Визначаємо baseurl з наявних посилань */
+        var sampleLink = document.querySelector('.main-nav .nav-link[href]');
+        var baseurl = '';
+        if (sampleLink) {
+            var href = sampleLink.getAttribute('href');
+            var match = href.match(/^(.*?)\/en\//);
+            if (match) baseurl = match[1];
+        }
+
+        function openTabletSubmenu(key) {
             var col = document.getElementById('tablet-submenu-col');
             if (!col) return;
             var items = SUBMENUS[key] || [];
@@ -95,34 +103,43 @@
                 return '<a href="' + (baseurl || '') + item.href + '" class="tablet-sub-link">' +
                        '<span>' + item.label + '</span>' + arrowSVG + '</a>';
             }).join('');
+            col.offsetHeight;
+            col.classList.add('is-open');
         }
 
-        /* Визначаємо baseurl з наявних посилань */
-        var sampleLink = document.querySelector('.main-nav .nav-link[href]');
-        var baseurl = '';
-        if (sampleLink) {
-            var href = sampleLink.getAttribute('href');
-            /* Jekyll baseurl — беремо все до /en/ */
-            var match = href.match(/^(.*?)\/en\//);
-            if (match) baseurl = match[1];
+        function closeTabletSubmenu() {
+            var col = document.getElementById('tablet-submenu-col');
+            if (!col) return;
+            col.classList.remove('is-open');
         }
 
-        /* При відкритті tablet menu — показуємо підменю активного розділу */
+        /* Клік по пункту з підменю → відкриває ліву панель */
+        document.querySelectorAll('.tablet-nav-link[data-has-sub]').forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                var key = this.getAttribute('data-has-sub');
+                /* Підсвічуємо активний */
+                document.querySelectorAll('.tablet-nav-link').forEach(function(l) {
+                    l.classList.toggle('is-active', l === link);
+                });
+                /* Відкриваємо/закриваємо підменю */
+                var col = document.getElementById('tablet-submenu-col');
+                if (col && col.classList.contains('is-open')) {
+                    closeTabletSubmenu();
+                } else {
+                    openTabletSubmenu(key);
+                }
+            });
+        });
+
+        /* При закритті tablet menu — скидаємо підменю */
         if (tabletMenu) {
             var observer = new MutationObserver(function(mutations) {
                 mutations.forEach(function(m) {
-                    if (m.attributeName === 'hidden' && !tabletMenu.hidden) {
-                        /* Знаходимо активний пункт */
-                        var active = tabletMenu.querySelector('.tablet-nav-link.is-active');
-                        var key = active ? active.getAttribute('data-has-sub') : null;
-                        if (!key) {
-                            /* Якщо немає активного — показуємо somatic за замовчуванням */
-                            key = 'somatic';
-                        }
-                        fillTabletSubmenu(key, baseurl);
-                        /* Підсвічуємо в правому стовпці */
-                        tabletMenu.querySelectorAll('.tablet-nav-link').forEach(function(l) {
-                            l.classList.toggle('is-active', l.getAttribute('data-has-sub') === key);
+                    if (m.attributeName === 'hidden' && tabletMenu.hidden) {
+                        closeTabletSubmenu();
+                        document.querySelectorAll('.tablet-nav-link').forEach(function(l) {
+                            l.classList.remove('is-active');
                         });
                     }
                 });
@@ -130,37 +147,33 @@
             observer.observe(tabletMenu, { attributes: true });
         }
 
-        /* Клік по пункту в правому стовпці → оновлює лівий */
-        document.querySelectorAll('.tablet-nav-link[data-has-sub]').forEach(function(link) {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                var key = this.getAttribute('data-has-sub');
-                fillTabletSubmenu(key, baseurl);
-                document.querySelectorAll('.tablet-nav-link').forEach(function(l) {
-                    l.classList.toggle('is-active', l === link);
-                });
-            });
-        });
-
-        /* ─── MOBILE MENU: accordion підменю ─── */
+        /* ─── MOBILE MENU: slide overlay підменю ─── */
         document.querySelectorAll('.mobile-nav-trigger').forEach(function(trigger) {
             trigger.addEventListener('click', function() {
                 var subId = this.getAttribute('aria-controls');
                 var sub = document.getElementById(subId);
                 if (!sub) return;
+                this.setAttribute('aria-expanded', 'true');
+                sub.hidden = false;
+                sub.offsetHeight; /* reflow */
+                sub.classList.add('is-open');
+            });
+        });
 
-                var isOpen = this.getAttribute('aria-expanded') === 'true';
-                /* Закрити всі інші */
-                document.querySelectorAll('.mobile-nav-trigger').forEach(function(t) {
-                    if (t !== trigger) {
-                        t.setAttribute('aria-expanded', 'false');
-                        var s = document.getElementById(t.getAttribute('aria-controls'));
-                        if (s) s.hidden = true;
-                    }
-                });
-
-                this.setAttribute('aria-expanded', String(!isOpen));
-                sub.hidden = isOpen;
+        /* Кнопка "назад" в підменю */
+        document.querySelectorAll('.mobile-sub-back').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var sub = this.closest('.mobile-submenu');
+                if (!sub) return;
+                sub.classList.remove('is-open');
+                sub.addEventListener('transitionend', function h() {
+                    sub.hidden = true;
+                    sub.removeEventListener('transitionend', h);
+                }, { once: true });
+                /* Знімаємо expanded з тригера */
+                var triggerId = sub.id;
+                var trigger = document.querySelector('[aria-controls="' + triggerId + '"]');
+                if (trigger) trigger.setAttribute('aria-expanded', 'false');
             });
         });
 

@@ -215,15 +215,25 @@
                 <button class="mobile-nav-link mobile-nav-trigger" aria-expanded="false" aria-controls="mobile-sub-somatic">
                     <svg class="mnav-arrow" width="8" height="13" viewBox="0 0 8 13" fill="none" aria-hidden="true"><path d="M7 1L1 6.5l6 5.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     <span>Somatic Tools</span>
-                    <svg class="mnav-expand-arrow" width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 1l6 7 6-7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </button>
-                <div class="mobile-submenu" id="mobile-sub-somatic" hidden>
-                    <a href="{{ site.baseurl }}/en/somatic-tools/our-method/" class="mobile-sub-link">Our Method</a>
-                    <a href="{{ site.baseurl }}/en/somatic-tools/all-kits/" class="mobile-sub-link">All Kits</a>
-                    <a href="{{ site.baseurl }}/en/somatic-tools/bundles/" class="mobile-sub-link">Bundles</a>
-                    <a href="{{ site.baseurl }}/en/somatic-tools/extras/" class="mobile-sub-link">Extras</a>
-                </div>
             </div>
+
+        <!-- Somatic Tools підменю — slide overlay -->
+        <div class="mobile-submenu" id="mobile-sub-somatic" hidden>
+            <div class="mobile-sub-header">
+                <button class="mobile-sub-back" aria-label="Back to menu">
+                    <svg width="10" height="17" viewBox="0 0 10 17" fill="none" aria-hidden="true"><path d="M9 1L1 8.5l8 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                <span class="mobile-sub-title">Somatic Tools</span>
+                <span style="width:2rem;"></span>
+            </div>
+            <nav aria-label="Somatic Tools">
+                <a href="{{ site.baseurl }}/en/somatic-tools/our-method/" class="mobile-sub-link">Our Method</a>
+                <a href="{{ site.baseurl }}/en/somatic-tools/all-kits/" class="mobile-sub-link">All Kits</a>
+                <a href="{{ site.baseurl }}/en/somatic-tools/bundles/" class="mobile-sub-link">Bundles</a>
+                <a href="{{ site.baseurl }}/en/somatic-tools/extras/" class="mobile-sub-link">Extras</a>
+            </nav>
+        </div>
 
             <a href="{{ site.baseurl }}/en/sel-tools/all-books/" class="mobile-nav-link">
                 <svg class="mnav-arrow" width="8" height="13" viewBox="0 0 8 13" fill="none" aria-hidden="true"><path d="M7 1L1 6.5l6 5.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
