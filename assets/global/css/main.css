@@ -68,28 +68,7 @@ img {
     user-drag: none;            
 }
 
-/* HEADER & TOP BAR */
-.top-bar-wrapper { background-color: var(--c-header-bg); width: 100%; }
-.top-bar { height: 2.5rem; display: flex; align-items: center; border-bottom: 1px solid rgba(251, 239, 220, 0.08); font-size: 0.83rem; font-weight: 300; }
-.top-bar-content { display: flex; justify-content: center; align-items: center; gap: 1.11rem; width: 100%; }
-.timer { display: flex; align-items: center; gap: 0.44rem; }
-.timer-box { border: 1px solid rgba(251, 239, 220, 0.4); width: 1.55rem; height: 1.55rem; display: flex; justify-content: center; align-items: center; border-radius: 5px; font-variant-numeric: tabular-nums; }
-.pre-order-btn { background: var(--c-cream); color: var(--c-header-bg); padding: 0.16rem 0.77rem; border-radius: 4px; text-decoration: none; font-weight: 500; }
-header.main-header { height: 5rem; position: sticky; top: 0; background-color: var(--c-header-bg); z-index: 1000; width: 100%; border-bottom: 1px solid rgba(251, 239, 220, 0.05); }
-.header-inner { height: 100%; align-items: center; }
-.logo-col { grid-column: span 3; display: flex; align-items: center; }
-.logo-col img { width: 11.83rem; height: 2.55rem; display: block; object-fit: contain; }
-.main-nav { grid-column: span 7; display: flex; justify-content: center; align-items: center; gap: 0; }
-.main-nav a { position: relative; color: var(--c-cream); text-decoration: none; font-weight: 300; font-size: 1rem; padding: 0 1rem; line-height: 1; white-space: nowrap; transition: color 0.2s ease; }
-.main-nav a:hover { color: #b0aaa0; }
-.main-nav a:not(:last-child)::after { content: ''; position: absolute; right: 0; top: 50%; transform: translateY(-50%); width: 1px; height: 0.77rem; background-color: rgba(251, 239, 220, 0.3); }
-.header-icons { grid-column: span 2; display: flex; justify-content: flex-end; align-items: center; gap: 1.33rem; }
-.lang-switch { position: relative; border: 1px solid rgba(251, 239, 220, 0.4); padding: 0.22rem 0.55rem; border-radius: 4px; font-size: 0.88rem; font-weight: 300; cursor: pointer; user-select: none; transition: border-color 0.25s; }
-.lang-switch:hover { border-color: var(--c-cream); }
-.lang-dropdown { position: absolute; top: 100%; right: -1px; background-color: rgba(45, 44, 43, 0.96); border: 1px solid rgba(251, 239, 220, 0.15); border-radius: 4px; padding: 0.44rem 0; display: flex; flex-direction: column; min-width: 4.8rem; opacity: 0; visibility: hidden; transform: translateY(8px); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 1100; }
-.lang-switch:hover .lang-dropdown { opacity: 1; visibility: visible; transform: translateY(4px); }
-.lang-dropdown a { color: #9c958b; text-decoration: none; padding: 0.35rem 0.88rem; font-family: 'Jost', sans-serif; font-size: 0.83rem; font-weight: 400; transition: all 0.2s ease; text-align: left; display: block; }
-.lang-dropdown a:hover { color: var(--c-cream); background-color: rgba(251, 239, 220, 0.04); }
+/* HEADER STYLES → moved to header.css */
 
 /* BREADCRUMBS */
 .breadcrumbs-section { width: 100%; padding: 0.88rem 0; background-color: var(--c-body-bg); }
@@ -263,9 +242,9 @@ header.main-header { height: 5rem; position: sticky; top: 0; background-color: v
 }}
 
 /* RESPONSIVE MEDIA QUERIES */
-@media (max-width: 1440px) { :root { --gutter: 24px; } .main-nav a { font-size: 0.9rem; padding: 0 0.6rem; } }
-@media (max-width: 1279px) { .main-nav { display: none; } .logo-col { grid-column: span 6; } .header-icons { grid-column: span 6; } .timeline-container { overflow-x: auto; scrollbar-width: none; padding-bottom: 1rem; } .timeline-container::-webkit-scrollbar { display: none; } .timeline-line { width: 95rem; left: 4.5rem; right: 4.5rem; } .timeline-grid { width: 95rem; padding: 0 2rem; } .filter-row { flex-direction: column; gap: 0.83rem; margin-bottom: 0.83rem; } .status-group, .series-group { min-width: auto; margin-left: 0; } }
-@media (max-width: 767px) { html { font-size: 18px; } :root { --gutter: 16px; --margin: 16px; } header.main-header { height: 4rem; } .logo-col { grid-column: span 8; } .header-icons { grid-column: span 4; } .top-bar { height: auto; padding: 0.6rem 0; } .top-bar-content { flex-wrap: wrap; gap: 0.5rem; justify-content: center; font-size: 0.78rem; } .catalog-hero { height: auto; padding: 2.5rem 0; background-size: cover; } .catalog-title { font-size: 2rem; } .catalog-subtitle { font-size: 1.1rem; } .launch-schedule { height: auto; padding: 2.5rem 0; } .catalog-filters { padding: 2rem 0; } .filter-group { flex-direction: column; align-items: flex-start; gap: 0.44rem; width: 100%; } .pills-container { gap: 0.44rem; } .filter-pill { padding: 0.35rem 0.77rem; font-size: 0.83rem; } .products-grid { grid-template-columns: 1fr; row-gap: 3.5rem; } .lock-icon-container { width: 4.5rem; height: 4.5rem; margin-bottom: 0.8rem; } .lock-icon { width: 1rem; height: 1.25rem; } .notify-btn { padding: 0.7rem 0; } .notify-btn:hover { transform: scale(1.04); } .footer-content { flex-direction: column; text-align: center; } .footer-links { flex-direction: column; gap: 0.8rem; } }
+@media (max-width: 1440px) { :root { --gutter: 24px; } }
+@media (max-width: 1279px) { .timeline-container { overflow-x: auto; scrollbar-width: none; padding-bottom: 1rem; } .timeline-container::-webkit-scrollbar { display: none; } .timeline-line { width: 95rem; left: 4.5rem; right: 4.5rem; } .timeline-grid { width: 95rem; padding: 0 2rem; } .filter-row { flex-direction: column; gap: 0.83rem; margin-bottom: 0.83rem; } .status-group, .series-group { min-width: auto; margin-left: 0; } }
+@media (max-width: 767px) { html { font-size: 18px; } :root { --gutter: 16px; --margin: 16px; } .catalog-hero { height: auto; padding: 2.5rem 0; background-size: cover; } .catalog-title { font-size: 2rem; } .catalog-subtitle { font-size: 1.1rem; } .launch-schedule { height: auto; padding: 2.5rem 0; } .catalog-filters { padding: 2rem 0; } .filter-group { flex-direction: column; align-items: flex-start; gap: 0.44rem; width: 100%; } .pills-container { gap: 0.44rem; } .filter-pill { padding: 0.35rem 0.77rem; font-size: 0.83rem; } .products-grid { grid-template-columns: 1fr; row-gap: 3.5rem; } .lock-icon-container { width: 4.5rem; height: 4.5rem; margin-bottom: 0.8rem; } .lock-icon { width: 1rem; height: 1.25rem; } .notify-btn { padding: 0.7rem 0; } .notify-btn:hover { transform: scale(1.04); } .footer-content { flex-direction: column; text-align: center; } .footer-links { flex-direction: column; gap: 0.8rem; } }
 /* ==============================
    FOOTER STYLES
 ============================== */
