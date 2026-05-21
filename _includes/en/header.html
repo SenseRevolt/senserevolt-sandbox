@@ -1,30 +1,210 @@
+<!-- ==============================
+     TOP BAR — два режими:
+     Режим 1 (за замовчуванням): marquee-вітання
+     Режим 2 (launch): таймер + pre-order
+     Щоб перемкнути на launch: додай клас "top-bar--launch" до .top-bar-wrapper
+============================== -->
 <div class="top-bar-wrapper">
-    <div class="top-bar">
+    <div class="top-bar top-bar--welcome">
+        <div class="top-bar-marquee" aria-label="Welcome message">
+            <div class="top-bar-track">
+                <span>Welcome to a world where emotions make sense ✦ Tools for your nervous system and your child's inner life ✦ Made in Ukraine ✦</span>
+                <span aria-hidden="true">Welcome to a world where emotions make sense ✦ Tools for your nervous system and your child's inner life ✦ Made in Ukraine ✦</span>
+                <span aria-hidden="true">Welcome to a world where emotions make sense ✦ Tools for your nervous system and your child's inner life ✦ Made in Ukraine ✦</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="top-bar top-bar--launch" aria-label="Launch countdown" style="display:none;">
         <div class="container top-bar-content">
-            <span>Anger Kit Vol.2</span> | <span>Coming Soon</span>
-            <div class="timer">
-                <span class="timer-box">31</span>:<span class="timer-box">08</span>:<span class="timer-box">24</span>:<span class="timer-box">50</span>
+            <span class="top-bar-label">Anger Kit Vol.2 — Coming Soon</span>
+            <div class="timer" role="timer" aria-live="polite">
+                <div class="timer-unit"><span class="timer-box" id="tb-days">00</span><span class="timer-label">d</span></div>
+                <span class="timer-sep">:</span>
+                <div class="timer-unit"><span class="timer-box" id="tb-hours">00</span><span class="timer-label">h</span></div>
+                <span class="timer-sep">:</span>
+                <div class="timer-unit"><span class="timer-box" id="tb-mins">00</span><span class="timer-label">m</span></div>
+                <span class="timer-sep">:</span>
+                <div class="timer-unit"><span class="timer-box" id="tb-secs">00</span><span class="timer-label">s</span></div>
             </div>
             <a href="#" class="pre-order-btn">Pre-Order Now</a>
         </div>
     </div>
 </div>
-<header class="main-header" style="width: 100%;">
-    <div class="container grid header-inner" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-        
-        <div class="logo-col" style="display: flex; align-items: center;">
-            <img src="{{ site.baseurl }}/assets/global/senserevolt-logo.svg" alt="SenseRevolt Logo">
-        </div>
-        
-        <nav class="main-nav" style="display: flex; justify-content: center; align-items: center; flex-grow: 1;">
-            <a href="{{ site.baseurl }}/en/somatic-tools/all-kits/">Somatic Tools</a>
-            <a href="{{ site.baseurl }}/en/sel-tools/all-books/">SEL Tools for Kids</a>
-            <a href="{{ site.baseurl }}/en/for-pros/">For Pros</a>
-            <a href="{{ site.baseurl }}/en/blog/">Blog</a>
-            <a href="{{ site.baseurl }}/en/our-story/">Our Story</a>
-            <a href="{{ site.baseurl }}/en/faqs/">FAQs</a>
-            <a href="{{ site.baseurl }}/en/music/">Music</a>
+
+<!-- ==============================
+     MAIN HEADER
+============================== -->
+<header class="main-header" role="banner">
+    <div class="container header-inner">
+
+        <!-- LOGO -->
+        <a href="{{ site.baseurl }}/en/" class="logo-col" aria-label="SenseRevolt — Home">
+            <img src="{{ site.baseurl }}/assets/global/senserevolt-logo.svg" alt="SenseRevolt" width="213" height="46">
+        </a>
+
+        <!-- DESKTOP NAV -->
+        <nav class="main-nav" aria-label="Main navigation">
+            <!-- Somatic Tools з dropdown -->
+            <div class="nav-item nav-item--dropdown">
+                <a href="{{ site.baseurl }}/en/somatic-tools/all-kits/"
+                   class="nav-link"
+                   aria-haspopup="true"
+                   aria-expanded="false">
+                    Somatic Tools
+                    <svg class="nav-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+                        <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+                <div class="nav-dropdown" role="menu">
+                    <a href="{{ site.baseurl }}/en/somatic-tools/our-method/" class="nav-dropdown-item" role="menuitem">Our Method</a>
+                    <a href="{{ site.baseurl }}/en/somatic-tools/all-kits/" class="nav-dropdown-item" role="menuitem">All Kits</a>
+                    <a href="{{ site.baseurl }}/en/somatic-tools/bundles/" class="nav-dropdown-item" role="menuitem">Bundles</a>
+                    <a href="{{ site.baseurl }}/en/somatic-tools/extras/" class="nav-dropdown-item" role="menuitem">Extras</a>
+                </div>
+            </div>
+
+            <a href="{{ site.baseurl }}/en/sel-tools/all-books/" class="nav-link">SEL Tools for Kids</a>
+            <a href="{{ site.baseurl }}/en/for-pros/" class="nav-link">For Pros</a>
+            <a href="{{ site.baseurl }}/en/blog/" class="nav-link">Blog</a>
+            <a href="{{ site.baseurl }}/en/our-story/" class="nav-link">Our Story</a>
+            <a href="{{ site.baseurl }}/en/faqs/" class="nav-link">FAQs</a>
+            <a href="{{ site.baseurl }}/en/music/" class="nav-link">Music</a>
         </nav>
+
+        <!-- RIGHT: LANG + BURGER -->
+        <div class="header-icons">
+            <!-- Language switcher -->
+            <div class="lang-switch" role="navigation" aria-label="Language selector">
+                <span class="lang-current">En</span>
+                <svg class="lang-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+                    <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <div class="lang-dropdown" role="menu" aria-label="Select language">
+                    <a href="#" class="lang-option lang-option--active" role="menuitem" hreflang="en">En</a>
+                    <a href="#" class="lang-option" role="menuitem" hreflang="uk">Uk</a>
+                    <a href="#" class="lang-option" role="menuitem" hreflang="de">De</a>
+                    <a href="#" class="lang-option" role="menuitem" hreflang="fr">Fr</a>
+                    <a href="#" class="lang-option" role="menuitem" hreflang="es">Es</a>
+                </div>
+            </div>
+
+            <!-- Burger button (tablet + mobile) -->
+            <button class="burger-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+                <span class="burger-line"></span>
+                <span class="burger-line"></span>
+                <span class="burger-line"></span>
+            </button>
+        </div>
 
     </div>
 </header>
+
+<!-- ==============================
+     MOBILE / TABLET MENU OVERLAY
+============================== -->
+<div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu" hidden>
+    <div class="mobile-menu-backdrop"></div>
+    <div class="mobile-menu-panel">
+
+        <!-- Panel header -->
+        <div class="mobile-menu-top">
+            <a href="{{ site.baseurl }}/en/" class="mobile-logo" aria-label="SenseRevolt — Home">
+                <img src="{{ site.baseurl }}/assets/global/senserevolt-logo.svg" alt="SenseRevolt" width="160" height="34">
+            </a>
+            <div class="mobile-menu-controls">
+                <div class="lang-switch lang-switch--mobile" role="navigation" aria-label="Language">
+                    <span class="lang-current">En</span>
+                    <svg class="lang-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+                        <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <div class="lang-dropdown" role="menu">
+                        <a href="#" class="lang-option lang-option--active" role="menuitem" hreflang="en">En</a>
+                        <a href="#" class="lang-option" role="menuitem" hreflang="uk">Uk</a>
+                        <a href="#" class="lang-option" role="menuitem" hreflang="de">De</a>
+                        <a href="#" class="lang-option" role="menuitem" hreflang="fr">Fr</a>
+                        <a href="#" class="lang-option" role="menuitem" hreflang="es">Es</a>
+                    </div>
+                </div>
+                <button class="close-btn" aria-label="Close menu">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                        <path d="M2 2l16 16M18 2L2 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Nav list -->
+        <nav class="mobile-nav" aria-label="Mobile navigation">
+
+            <!-- Somatic Tools з підменю -->
+            <div class="mobile-nav-item mobile-nav-item--has-sub" data-submenu="somatic">
+                <button class="mobile-nav-link mobile-nav-trigger" aria-expanded="false" aria-controls="submenu-somatic">
+                    <svg class="mobile-nav-chevron" width="8" height="14" viewBox="0 0 8 14" fill="none" aria-hidden="true">
+                        <path d="M7 1L1 7l6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>Somatic Tools</span>
+                </button>
+            </div>
+
+            <a href="{{ site.baseurl }}/en/sel-tools/all-books/" class="mobile-nav-link">
+                <svg class="mobile-nav-chevron" width="8" height="14" viewBox="0 0 8 14" fill="none" aria-hidden="true">
+                    <path d="M7 1L1 7l6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>SEL Tools for Kids</span>
+            </a>
+
+            <a href="{{ site.baseurl }}/en/for-pros/" class="mobile-nav-link">
+                <svg class="mobile-nav-chevron" width="8" height="14" viewBox="0 0 8 14" fill="none" aria-hidden="true">
+                    <path d="M7 1L1 7l6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>For Pros</span>
+            </a>
+
+            <a href="{{ site.baseurl }}/en/our-story/" class="mobile-nav-link">
+                <svg class="mobile-nav-chevron" width="8" height="14" viewBox="0 0 8 14" fill="none" aria-hidden="true">
+                    <path d="M7 1L1 7l6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Our Story</span>
+            </a>
+
+            <a href="{{ site.baseurl }}/en/blog/" class="mobile-nav-link">
+                <svg class="mobile-nav-chevron" width="8" height="14" viewBox="0 0 8 14" fill="none" aria-hidden="true">
+                    <path d="M7 1L1 7l6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Blog</span>
+            </a>
+
+            <a href="{{ site.baseurl }}/en/faqs/" class="mobile-nav-link">
+                <svg class="mobile-nav-chevron" width="8" height="14" viewBox="0 0 8 14" fill="none" aria-hidden="true">
+                    <path d="M7 1L1 7l6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>FAQs</span>
+            </a>
+
+            <a href="{{ site.baseurl }}/en/music/" class="mobile-nav-link">
+                <svg class="mobile-nav-chevron" width="8" height="14" viewBox="0 0 8 14" fill="none" aria-hidden="true">
+                    <path d="M7 1L1 7l6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Music</span>
+            </a>
+        </nav>
+
+        <!-- Somatic Tools підменю (slideIn) -->
+        <div class="mobile-submenu" id="submenu-somatic" hidden>
+            <button class="mobile-submenu-back" aria-label="Back to main menu">
+                <svg width="8" height="14" viewBox="0 0 8 14" fill="none" aria-hidden="true">
+                    <path d="M7 1L1 7l6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Somatic Tools
+            </button>
+            <nav aria-label="Somatic Tools submenu">
+                <a href="{{ site.baseurl }}/en/somatic-tools/our-method/" class="mobile-sub-link">Our Method</a>
+                <a href="{{ site.baseurl }}/en/somatic-tools/all-kits/" class="mobile-sub-link">All Kits</a>
+                <a href="{{ site.baseurl }}/en/somatic-tools/bundles/" class="mobile-sub-link">Bundles</a>
+                <a href="{{ site.baseurl }}/en/somatic-tools/extras/" class="mobile-sub-link">Extras</a>
+            </nav>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,713 @@
+/* ==============================
+   HEADER.CSS — SenseRevolt
+   Підключати після main.css
+   Версії: 1600px / 1279px (tablet) / 767px (mobile)
+============================== */
+
+/* ──────────────────────────────
+   TOP BAR — спільне
+────────────────────────────── */
+.top-bar-wrapper {
+    background-color: var(--c-header-bg);
+    width: 100%;
+}
+
+.top-bar {
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(251, 239, 220, 0.08);
+    font-size: 0.78rem;
+    font-weight: 300;
+    letter-spacing: 0.03em;
+    overflow: hidden;
+}
+
+/* ──────────────────────────────
+   TOP BAR — РЕЖИМ 1: Marquee
+────────────────────────────── */
+.top-bar--welcome {
+    position: relative;
+}
+
+.top-bar-marquee {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        black 8%,
+        black 92%,
+        transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        black 8%,
+        black 92%,
+        transparent 100%
+    );
+}
+
+.top-bar-track {
+    display: inline-flex;
+    gap: 0;
+    animation: marqueeScroll 38s linear infinite;
+    color: rgba(251, 239, 220, 0.65);
+}
+
+.top-bar-track span {
+    padding-right: 4rem;
+    white-space: nowrap;
+}
+
+@keyframes marqueeScroll {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-33.333%); }
+}
+
+.top-bar-marquee:hover .top-bar-track {
+    animation-play-state: paused;
+}
+
+/* ──────────────────────────────
+   TOP BAR — РЕЖИМ 2: Launch / Таймер
+────────────────────────────── */
+.top-bar--launch {
+    justify-content: center;
+}
+
+.top-bar-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.2rem;
+    width: 100%;
+}
+
+.top-bar-label {
+    opacity: 0.7;
+    white-space: nowrap;
+}
+
+.timer {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.timer-unit {
+    display: flex;
+    align-items: baseline;
+    gap: 0.15rem;
+}
+
+.timer-box {
+    border: 1px solid rgba(251, 239, 220, 0.35);
+    width: 1.6rem;
+    height: 1.6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    font-variant-numeric: tabular-nums;
+    font-size: 0.78rem;
+}
+
+.timer-label {
+    font-size: 0.6rem;
+    opacity: 0.5;
+}
+
+.timer-sep {
+    opacity: 0.4;
+    margin: 0 0.05rem;
+    align-self: center;
+}
+
+.pre-order-btn {
+    background: var(--c-cream);
+    color: var(--c-header-bg);
+    padding: 0.2rem 0.85rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.78rem;
+    white-space: nowrap;
+    transition: opacity 0.2s;
+}
+
+.pre-order-btn:hover {
+    opacity: 0.85;
+}
+
+/* ──────────────────────────────
+   MAIN HEADER
+────────────────────────────── */
+header.main-header {
+    height: 5rem;
+    position: sticky;
+    top: 0;
+    background-color: var(--c-header-bg);
+    z-index: 1000;
+    width: 100%;
+    border-bottom: 1px solid rgba(251, 239, 220, 0.05);
+}
+
+.header-inner {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+/* ──────────────────────────────
+   LOGO
+────────────────────────────── */
+.logo-col {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    text-decoration: none;
+}
+
+.logo-col img {
+    width: 11.83rem;
+    height: auto;
+    display: block;
+    object-fit: contain;
+}
+
+/* ──────────────────────────────
+   DESKTOP NAV
+────────────────────────────── */
+.main-nav {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex: 1;
+    justify-content: center;
+}
+
+/* Звичайне посилання */
+.main-nav .nav-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: var(--c-cream);
+    text-decoration: none;
+    font-weight: 300;
+    font-size: 0.94rem;
+    padding: 0 0.9rem;
+    line-height: 5rem;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+    letter-spacing: 0.01em;
+}
+
+.main-nav .nav-link:hover {
+    color: rgba(251, 239, 220, 0.6);
+}
+
+/* Активна сторінка */
+.main-nav .nav-link.is-active {
+    color: var(--c-cream);
+}
+
+.main-nav .nav-link.is-active::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0.9rem;
+    right: 0.9rem;
+    height: 1px;
+    background-color: var(--c-cream);
+    opacity: 0.6;
+}
+
+/* Розділювачі між пунктами */
+.nav-item:not(:last-child) .nav-link::after,
+.main-nav > .nav-link:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 0.8rem;
+    background-color: rgba(251, 239, 220, 0.2);
+}
+
+/* Nav item wrapper для dropdown */
+.nav-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.nav-chevron {
+    flex-shrink: 0;
+    transition: transform 0.25s ease;
+    opacity: 0.5;
+}
+
+/* ──────────────────────────────
+   DESKTOP DROPDOWN
+────────────────────────────── */
+.nav-dropdown {
+    position: absolute;
+    top: calc(100% + 1px);
+    left: 0;
+    background-color: rgba(40, 39, 38, 0.97);
+    border: 1px solid rgba(251, 239, 220, 0.08);
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+    padding: 0.5rem 0;
+    min-width: 11rem;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(6px);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    z-index: 1100;
+}
+
+.nav-item--dropdown:hover .nav-dropdown,
+.nav-item--dropdown:focus-within .nav-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.nav-item--dropdown:hover .nav-link .nav-chevron,
+.nav-item--dropdown:focus-within .nav-link .nav-chevron {
+    transform: rotate(180deg);
+}
+
+.nav-dropdown-item {
+    display: block;
+    color: rgba(251, 239, 220, 0.65);
+    text-decoration: none;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.88rem;
+    font-weight: 300;
+    letter-spacing: 0.01em;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.nav-dropdown-item:hover {
+    color: var(--c-cream);
+    background-color: rgba(251, 239, 220, 0.04);
+    padding-left: 1.5rem;
+}
+
+/* ──────────────────────────────
+   HEADER ICONS (права частина)
+────────────────────────────── */
+.header-icons {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-shrink: 0;
+}
+
+/* ──────────────────────────────
+   LANGUAGE SWITCHER
+────────────────────────────── */
+.lang-switch {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    border: 1px solid rgba(251, 239, 220, 0.35);
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.83rem;
+    font-weight: 300;
+    cursor: pointer;
+    user-select: none;
+    transition: border-color 0.25s;
+    color: var(--c-cream);
+}
+
+.lang-switch:hover {
+    border-color: rgba(251, 239, 220, 0.7);
+}
+
+.lang-chevron {
+    opacity: 0.5;
+    transition: transform 0.25s ease;
+}
+
+.lang-switch:hover .lang-chevron {
+    transform: rotate(180deg);
+}
+
+.lang-dropdown {
+    position: absolute;
+    top: calc(100% + 4px);
+    right: -1px;
+    background-color: rgba(40, 39, 38, 0.97);
+    border: 1px solid rgba(251, 239, 220, 0.12);
+    border-radius: 4px;
+    padding: 0.4rem 0;
+    min-width: 4.5rem;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(6px);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    z-index: 1200;
+}
+
+.lang-switch:hover .lang-dropdown,
+.lang-switch:focus-within .lang-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.lang-option {
+    display: block;
+    color: rgba(251, 239, 220, 0.55);
+    text-decoration: none;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.83rem;
+    font-weight: 300;
+    transition: all 0.2s ease;
+}
+
+.lang-option:hover {
+    color: var(--c-cream);
+    background-color: rgba(251, 239, 220, 0.04);
+}
+
+.lang-option--active {
+    color: var(--c-cream);
+}
+
+/* ──────────────────────────────
+   BURGER BUTTON (прихований на desktop)
+────────────────────────────── */
+.burger-btn {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 2.2rem;
+    height: 2.2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.3rem;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.burger-btn:hover {
+    background: rgba(251, 239, 220, 0.06);
+}
+
+.burger-line {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background-color: var(--c-cream);
+    border-radius: 2px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform-origin: center;
+}
+
+/* Бургер → X коли меню відкрите */
+.burger-btn[aria-expanded="true"] .burger-line:nth-child(1) {
+    transform: translateY(6.5px) rotate(45deg);
+}
+.burger-btn[aria-expanded="true"] .burger-line:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+}
+.burger-btn[aria-expanded="true"] .burger-line:nth-child(3) {
+    transform: translateY(-6.5px) rotate(-45deg);
+}
+
+/* ──────────────────────────────
+   MOBILE MENU OVERLAY
+────────────────────────────── */
+.mobile-menu {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    pointer-events: none;
+}
+
+.mobile-menu:not([hidden]) {
+    pointer-events: all;
+}
+
+/* Backdrop */
+.mobile-menu-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0);
+    transition: background 0.35s ease;
+}
+
+.mobile-menu:not([hidden]) .mobile-menu-backdrop {
+    background: rgba(0, 0, 0, 0.55);
+}
+
+/* Panel */
+.mobile-menu-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(80vw, 400px);
+    background-color: #262524;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transform: translateX(100%);
+    transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mobile-menu:not([hidden]) .mobile-menu-panel {
+    transform: translateX(0);
+}
+
+/* Panel top bar */
+.mobile-menu-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 1.4rem;
+    border-bottom: 1px solid rgba(251, 239, 220, 0.07);
+    flex-shrink: 0;
+}
+
+.mobile-logo img {
+    width: 9rem;
+    height: auto;
+    display: block;
+}
+
+.mobile-menu-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.close-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--c-cream);
+    border-radius: 4px;
+    transition: background 0.2s;
+    padding: 0;
+}
+
+.close-btn:hover {
+    background: rgba(251, 239, 220, 0.06);
+}
+
+/* Mobile nav list */
+.mobile-nav {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.5rem 0;
+    scrollbar-width: none;
+}
+
+.mobile-nav::-webkit-scrollbar {
+    display: none;
+}
+
+.mobile-nav-link {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-direction: row-reverse;
+    gap: 0.75rem;
+    padding: 1rem 1.6rem;
+    color: var(--c-cream);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+    border-bottom: 1px solid rgba(251, 239, 220, 0.05);
+    transition: background 0.2s, color 0.2s;
+    background: none;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    width: 100%;
+    cursor: pointer;
+    text-align: right;
+}
+
+.mobile-nav-link:hover {
+    background: rgba(251, 239, 220, 0.03);
+    color: rgba(251, 239, 220, 0.8);
+}
+
+.mobile-nav-link.is-active {
+    color: var(--c-cream);
+    font-weight: 400;
+}
+
+.mobile-nav-chevron {
+    opacity: 0.35;
+    flex-shrink: 0;
+    /* стрілка дивиться вліво за дизайном */
+}
+
+/* ──────────────────────────────
+   MOBILE SUBMENU (slide-in panel)
+────────────────────────────── */
+.mobile-submenu {
+    position: absolute;
+    inset: 0;
+    background-color: #262524;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1;
+}
+
+.mobile-submenu:not([hidden]) {
+    transform: translateX(0);
+}
+
+.mobile-submenu-back {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 1.1rem 1.6rem;
+    color: var(--c-cream);
+    font-size: 1rem;
+    font-weight: 400;
+    background: none;
+    border: none;
+    border-bottom: 1px solid rgba(251, 239, 220, 0.07);
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    letter-spacing: 0.02em;
+}
+
+.mobile-submenu-back svg {
+    transform: rotate(180deg);
+    opacity: 0.5;
+}
+
+.mobile-submenu-back:hover {
+    background: rgba(251, 239, 220, 0.03);
+}
+
+.mobile-sub-link {
+    display: block;
+    padding: 0.9rem 1.6rem;
+    color: rgba(251, 239, 220, 0.7);
+    text-decoration: none;
+    font-size: 0.94rem;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+    border-bottom: 1px solid rgba(251, 239, 220, 0.05);
+    transition: all 0.2s ease;
+}
+
+.mobile-sub-link:hover {
+    color: var(--c-cream);
+    background: rgba(251, 239, 220, 0.03);
+    padding-left: 2rem;
+}
+
+/* ──────────────────────────────
+   TABLET: 1280px і менше
+────────────────────────────── */
+@media (max-width: 1279px) {
+    .main-nav {
+        display: none;
+    }
+
+    .burger-btn {
+        display: flex;
+    }
+
+    .logo-col img {
+        width: 9.5rem;
+    }
+}
+
+/* ──────────────────────────────
+   MOBILE: 767px і менше
+────────────────────────────── */
+@media (max-width: 767px) {
+    header.main-header {
+        height: 4rem;
+    }
+
+    .top-bar {
+        height: 2.2rem;
+        font-size: 0.72rem;
+    }
+
+    .logo-col img {
+        width: 8rem;
+    }
+
+    .top-bar-track span {
+        padding-right: 2rem;
+    }
+
+    /* Таймер на мобайлі — ховаємо label */
+    .top-bar-label {
+        display: none;
+    }
+}
+
+/* ──────────────────────────────
+   АКТИВНА СТОРІНКА — авто-підсвітка
+   через data-атрибут на <body>
+   Приклад: <body data-page="somatic-tools">
+────────────────────────────── */
+body[data-page="somatic-tools"] .main-nav a[href*="somatic-tools"],
+body[data-page="sel-tools"] .main-nav a[href*="sel-tools"],
+body[data-page="for-pros"] .main-nav a[href*="for-pros"],
+body[data-page="blog"] .main-nav a[href*="blog"],
+body[data-page="our-story"] .main-nav a[href*="our-story"],
+body[data-page="faqs"] .main-nav a[href*="faqs"],
+body[data-page="music"] .main-nav a[href*="music"] {
+    color: var(--c-cream);
+}
+
+body[data-page="somatic-tools"] .main-nav .nav-item--dropdown .nav-link::before,
+body[data-page="sel-tools"] .main-nav a[href*="sel-tools"]::before,
+body[data-page="for-pros"] .main-nav a[href*="for-pros"]::before,
+body[data-page="blog"] .main-nav a[href*="blog"]::before,
+body[data-page="our-story"] .main-nav a[href*="our-story"]::before,
+body[data-page="faqs"] .main-nav a[href*="faqs"]::before,
+body[data-page="music"] .main-nav a[href*="music"]::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0.9rem;
+    right: 0.9rem;
+    height: 1px;
+    background-color: var(--c-cream);
+    opacity: 0.5;
+}
