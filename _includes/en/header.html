@@ -1,4 +1,8 @@
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
 <style>
+[x-cloak]{display:none!important;}
+
 .sr-topbar-wrap{display:block;background:#2d2c2b;width:100%;}
 .sr-topbar{height:2.5rem;display:flex;align-items:center;justify-content:center;
   border-bottom:1px solid rgba(251,239,220,.08);overflow:hidden;width:100%;}
@@ -18,11 +22,9 @@
 .sr-hdr-in{max-width:1600px;width:100%;margin:0 auto;padding:0 20px;
   height:100%;display:flex;align-items:center;justify-content:space-between;gap:1rem;}
 
-/* LOGO */
 .sr-logo{flex-shrink:0;text-decoration:none;}
 .sr-logo img{width:11.83rem;height:auto;display:block;object-fit:contain;}
 
-/* DESKTOP NAV — центрований абсолютно */
 .sr-nav{position:absolute;left:50%;transform:translateX(-50%);
   display:flex;align-items:stretch;height:5rem;}
 .sr-ni{position:relative;display:flex;align-items:center;}
@@ -36,7 +38,6 @@
 .sr-nav>.sr-na:not(:last-child)::before{content:'';position:absolute;right:0;top:50%;
   transform:translateY(-50%);width:1px;height:.8rem;background:rgba(251,239,220,.2);}
 
-/* DESKTOP DROPDOWN */
 .sr-ni.dd{position:relative;}
 .sr-dd{position:absolute;top:100%;left:0;background:#2d2c2b;
   border:1px solid rgba(251,239,220,.1);border-top:none;min-width:14rem;
@@ -51,22 +52,20 @@
 .sr-da svg{opacity:.35;transition:transform .18s;}
 .sr-da:hover svg{transform:translateX(2px);opacity:.7;}
 
-/* RIGHT */
 .sr-hdr-r{display:flex;align-items:center;gap:.9rem;flex-shrink:0;}
 
 /* LANG */
-.sr-lang{position:relative;}
+.sr-lang-wrap{position:relative;}
 .sr-lb{display:flex;align-items:center;gap:.3rem;min-width:3.8rem;
   border:1px solid rgba(251,239,220,.35);padding:.25rem .6rem;border-radius:4px;
   font-family:'Jost',sans-serif;font-size:.83rem;font-weight:300;
   background:none;color:#fbefdc;cursor:pointer;transition:border-color .2s;white-space:nowrap;}
 .sr-lb:hover{border-color:rgba(251,239,220,.7);}
-.sr-lb[aria-expanded="true"]{border-radius:4px 4px 0 0;border-bottom-color:#2d2c2b;}
+.sr-lb.is-open{border-radius:4px 4px 0 0;border-bottom-color:#2d2c2b;}
 .sr-lc{opacity:.5;transition:transform .2s;flex-shrink:0;}
-.sr-lb[aria-expanded="true"] .sr-lc{transform:rotate(180deg);}
+.sr-lc.is-open{transform:rotate(180deg);}
 .sr-ll{position:absolute;top:100%;left:0;min-width:100%;z-index:300;
   display:flex;flex-direction:column;}
-.sr-ll[hidden]{display:none;}
 .sr-lo{display:block;border-left:1px solid rgba(251,239,220,.35);
   border-right:1px solid rgba(251,239,220,.35);
   border-bottom:1px solid rgba(251,239,220,.35);border-top:none;
@@ -82,17 +81,14 @@
   padding:.35rem;border-radius:4px;flex-shrink:0;}
 .sr-bg span{display:block;width:22px;height:1.5px;background:#fbefdc;border-radius:2px;
   margin:3px 0;transition:transform .28s,opacity .28s;transform-origin:center;}
-.sr-bg.open span:nth-child(1){transform:translateY(7.5px) rotate(45deg);}
-.sr-bg.open span:nth-child(2){opacity:0;transform:scaleX(0);}
-.sr-bg.open span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg);}
+.sr-bg.is-open span:nth-child(1){transform:translateY(7.5px) rotate(45deg);}
+.sr-bg.is-open span:nth-child(2){opacity:0;transform:scaleX(0);}
+.sr-bg.is-open span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg);}
 
-/* DROPDOWN MENU — випадає вниз під хедером */
-.sr-menu{display:none;position:fixed;top:0;left:0;right:0;bottom:0;
-  background:#262524;z-index:800;overflow-y:auto;flex-direction:column;
-  padding-top:7.5rem;}
-.sr-menu.open{display:flex;}
-
-.sr-menu-list{display:flex;flex-direction:column;padding:.5rem 0;}
+/* MOBILE MENU */
+.sr-menu{position:fixed;top:0;left:0;right:0;bottom:0;
+  background:#262524;z-index:800;overflow-y:auto;
+  display:flex;flex-direction:column;padding-top:7.5rem;}
 .sr-mlink{display:flex;align-items:center;justify-content:space-between;
   padding:1rem 1.4rem;color:#fbefdc;text-decoration:none;
   font-family:'Jost',sans-serif;font-size:1rem;font-weight:300;letter-spacing:.02em;
@@ -100,26 +96,20 @@
   background:none;border-left:none;border-right:none;border-top:none;
   width:100%;cursor:pointer;transition:background .18s;text-align:left;}
 .sr-mlink:hover{background:rgba(251,239,220,.03);}
-.sr-mlink svg{opacity:.3;flex-shrink:0;transition:transform .2s;}
-.sr-mlink.open svg{transform:rotate(90deg);}
-
-/* Підменю — розкривається вниз */
-.sr-msub{display:none;flex-direction:column;background:#1e1d1c;}
-.sr-msub.open{display:flex;}
+.sr-mlink svg{opacity:.35;transition:transform .2s;flex-shrink:0;}
+.sr-mlink.is-open svg{transform:rotate(90deg);}
+.sr-msub{display:flex;flex-direction:column;background:#1e1d1c;}
 .sr-mslink{display:block;padding:.85rem 2rem;color:rgba(251,239,220,.65);
   text-decoration:none;font-family:'Jost',sans-serif;font-size:.94rem;font-weight:300;
   border-bottom:1px solid rgba(251,239,220,.05);transition:color .18s,background .18s;}
 .sr-mslink:hover{color:#fbefdc;background:rgba(251,239,220,.03);}
 
-/* BREAKPOINTS */
 @media(min-width:1280px){
   .sr-bg{display:none!important;}
-  .sr-menu{display:none!important;}
 }
 @media(max-width:1279px){
   .sr-nav{display:none;}
   .sr-bg{display:flex;}
-  .sr-menu{top:5rem;}
 }
 @media(max-width:767px){
   .sr-header{height:4rem;}
@@ -133,8 +123,6 @@
 @media(max-width:1279px) and (min-width:768px){
   .sr-logo img{width:9.5rem;}
 }
-/* lang в меню */
-.sr-lang.r .sr-ll{right:0;left:auto;}
 </style>
 
 <!-- TOP BAR -->
@@ -152,12 +140,13 @@
 </div>
 
 <!-- HEADER -->
-<header class="sr-header">
+<header class="sr-header" x-data="{ langOpen: false, currentLang: 'En' }">
   <div class="sr-hdr-in">
     <a href="{{ site.baseurl }}/en/" class="sr-logo">
       <img src="{{ site.baseurl }}/assets/global/senserevolt-logo.svg" alt="SenseRevolt">
     </a>
-    <nav class="sr-nav" aria-label="Main navigation">
+
+    <nav class="sr-nav">
       <div class="sr-ni dd">
         <a href="{{ site.baseurl }}/en/somatic-tools/all-kits/" class="sr-na">Somatic Tools</a>
         <div class="sr-dd">
@@ -174,115 +163,61 @@
       <a href="{{ site.baseurl }}/en/faqs/" class="sr-na">FAQs</a>
       <a href="{{ site.baseurl }}/en/music/" class="sr-na">Music</a>
     </nav>
+
     <div class="sr-hdr-r">
-      <div class="sr-lang">
-        <button class="sr-lb" aria-expanded="false">
-          <span class="sr-lv">En</span>
-          <svg class="sr-lc" width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <!-- Lang -->
+      <div class="sr-lang-wrap" @click.outside="langOpen = false">
+        <button class="sr-lb" :class="{ 'is-open': langOpen }" @click="langOpen = !langOpen">
+          <span x-text="currentLang">En</span>
+          <svg class="sr-lc" :class="{ 'is-open': langOpen }" width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
-        <div class="sr-ll" hidden>
-          <a href="#" class="sr-lo" data-l="Uk">Uk</a>
-          <a href="#" class="sr-lo" data-l="De">De</a>
-          <a href="#" class="sr-lo" data-l="Fr">Fr</a>
-          <a href="#" class="sr-lo" data-l="Es">Es</a>
+        <div class="sr-ll" x-show="langOpen" x-cloak>
+          <a href="#" class="sr-lo" @click.prevent="currentLang='Uk'; langOpen=false">Uk</a>
+          <a href="#" class="sr-lo" @click.prevent="currentLang='De'; langOpen=false">De</a>
+          <a href="#" class="sr-lo" @click.prevent="currentLang='Fr'; langOpen=false">Fr</a>
+          <a href="#" class="sr-lo" @click.prevent="currentLang='Es'; langOpen=false">Es</a>
         </div>
       </div>
-      <button class="sr-bg" id="sr-burger" aria-label="Open menu" aria-expanded="false">
+      <!-- Burger -->
+      <button class="sr-bg" :class="{ 'is-open': $store.menu.open }"
+        @click="$store.menu.open = !$store.menu.open; $store.menu.open ? document.body.style.overflow='hidden' : document.body.style.overflow=''">
         <span></span><span></span><span></span>
       </button>
     </div>
   </div>
 </header>
 
-<!-- DROPDOWN MENU -->
-<nav class="sr-menu" id="sr-menu" aria-label="Mobile navigation">
-  <div class="sr-menu-list">
-    <!-- Somatic Tools з підменю -->
-    <button class="sr-mlink" id="sr-som-btn">
+<!-- MOBILE MENU -->
+<nav class="sr-menu" x-data x-show="$store.menu.open" x-cloak @keydown.escape.window="$store.menu.open = false">
+  <div x-data="{ somOpen: false }">
+    <!-- Somatic Tools -->
+    <button class="sr-mlink" :class="{ 'is-open': somOpen }" @click="somOpen = !somOpen">
       Somatic Tools
       <svg width="8" height="13" viewBox="0 0 8 13" fill="none"><path d="M1 1l6.5 6-6.5 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
-    <div class="sr-msub" id="sr-som-sub">
+    <div class="sr-msub" x-show="somOpen">
       <a href="{{ site.baseurl }}/en/somatic-tools/our-method/" class="sr-mslink">Our Method</a>
       <a href="{{ site.baseurl }}/en/somatic-tools/all-kits/" class="sr-mslink">All Kits</a>
       <a href="{{ site.baseurl }}/en/somatic-tools/bundles/" class="sr-mslink">Bundles</a>
       <a href="{{ site.baseurl }}/en/somatic-tools/extras/" class="sr-mslink">Extras</a>
     </div>
-    <a href="{{ site.baseurl }}/en/sel-tools/all-books/" class="sr-mlink">SEL Tools for Kids</a>
-    <a href="{{ site.baseurl }}/en/for-pros/" class="sr-mlink">For Pros</a>
-    <a href="{{ site.baseurl }}/en/blog/" class="sr-mlink">Blog</a>
-    <a href="{{ site.baseurl }}/en/our-story/" class="sr-mlink">Our Story</a>
-    <a href="{{ site.baseurl }}/en/faqs/" class="sr-mlink">FAQs</a>
-    <a href="{{ site.baseurl }}/en/music/" class="sr-mlink">Music</a>
   </div>
+  <a href="{{ site.baseurl }}/en/sel-tools/all-books/" class="sr-mlink">SEL Tools for Kids</a>
+  <a href="{{ site.baseurl }}/en/for-pros/" class="sr-mlink">For Pros</a>
+  <a href="{{ site.baseurl }}/en/blog/" class="sr-mlink">Blog</a>
+  <a href="{{ site.baseurl }}/en/our-story/" class="sr-mlink">Our Story</a>
+  <a href="{{ site.baseurl }}/en/faqs/" class="sr-mlink">FAQs</a>
+  <a href="{{ site.baseurl }}/en/music/" class="sr-mlink">Music</a>
 </nav>
 
 <script>
-(function(){
-  var burger = document.getElementById('sr-burger');
-  var menu   = document.getElementById('sr-menu');
-  var somBtn = document.getElementById('sr-som-btn');
-  var somSub = document.getElementById('sr-som-sub');
-
-  // Burger toggle
-  burger.addEventListener('click', function(){
-    var isOpen = menu.classList.contains('open');
-    if(isOpen){
-      menu.classList.remove('open');
-      burger.classList.remove('open');
-      burger.setAttribute('aria-expanded','false');
-      document.body.style.overflow = '';
-    } else {
-      menu.classList.add('open');
-      burger.classList.add('open');
-      burger.setAttribute('aria-expanded','true');
-      document.body.style.overflow = 'hidden';
-    }
-  });
-
-  // Somatic Tools підменю
-  somBtn.addEventListener('click', function(){
-    var isOpen = somSub.classList.contains('open');
-    somSub.classList.toggle('open');
-    somBtn.classList.toggle('open');
-  });
-
-  // Lang switcher
-  document.querySelectorAll('.sr-lang').forEach(function(sw){
-    var btn  = sw.querySelector('.sr-lb');
-    var list = sw.querySelector('.sr-ll');
-    btn.addEventListener('click', function(e){
-      e.stopPropagation();
-      var isOpen = this.getAttribute('aria-expanded') === 'true';
-      document.querySelectorAll('.sr-lb[aria-expanded="true"]').forEach(function(b){
-        if(b !== btn){
-          b.setAttribute('aria-expanded','false');
-          b.closest('.sr-lang').querySelector('.sr-ll').setAttribute('hidden','');
-        }
-      });
-      this.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
-      isOpen ? list.setAttribute('hidden','') : list.removeAttribute('hidden');
-    });
-    list.querySelectorAll('.sr-lo').forEach(function(opt){
-      opt.addEventListener('click', function(e){
-        e.preventDefault();
-        var lang = this.getAttribute('data-l');
-        document.querySelectorAll('.sr-lv').forEach(function(t){ t.textContent = lang; });
-        btn.setAttribute('aria-expanded','false');
-        list.setAttribute('hidden','');
-      });
-    });
-  });
-  document.addEventListener('click', function(){
-    document.querySelectorAll('.sr-lb[aria-expanded="true"]').forEach(function(btn){
-      btn.setAttribute('aria-expanded','false');
-      btn.closest('.sr-lang').querySelector('.sr-ll').setAttribute('hidden','');
-    });
-  });
-
-  // Активна сторінка
+document.addEventListener('alpine:init', function() {
+  Alpine.store('menu', { open: false });
+});
+// Активна сторінка
+document.addEventListener('DOMContentLoaded', function(){
   var path = window.location.pathname;
-  document.querySelectorAll('.sr-na, .sr-mlink, .sr-mslink, .sr-da').forEach(function(a){
+  document.querySelectorAll('.sr-na,.sr-mlink,.sr-mslink,.sr-da').forEach(function(a){
     var href = a.getAttribute('href');
     if(!href) return;
     try{
@@ -290,5 +225,5 @@
       if(lp !== '/' && path.startsWith(lp)) a.classList.add('act');
     }catch(e){}
   });
-})();
+});
 </script>
