@@ -87,8 +87,9 @@
 .sr-bg.open span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg);}
 
 /* DROPDOWN MENU — випадає вниз під хедером */
-.sr-menu{display:none;position:fixed;top:5rem;left:0;right:0;bottom:0;
-  background:#262524;z-index:800;overflow-y:auto;flex-direction:column;}
+.sr-menu{display:none;position:fixed;top:0;left:0;right:0;bottom:0;
+  background:#262524;z-index:800;overflow-y:auto;flex-direction:column;
+  padding-top:7.5rem;}
 .sr-menu.open{display:flex;}
 
 .sr-menu-list{display:flex;flex-direction:column;padding:.5rem 0;}
@@ -127,7 +128,7 @@
   .sr-tb-text{display:none;}
   .sr-tb-marq{display:block;}
   .sr-tb-track{animation:srM 32s linear infinite;}
-  .sr-menu{top:4rem;}
+  .sr-menu{padding-top:6.2rem;}
 }
 @media(max-width:1279px) and (min-width:768px){
   .sr-logo img{width:9.5rem;}
@@ -194,7 +195,7 @@
 </header>
 
 <!-- DROPDOWN MENU -->
-<nav class="sr-menu" id="sr-menu" aria-label="Mobile navigation" hidden>
+<nav class="sr-menu" id="sr-menu" aria-label="Mobile navigation">
   <div class="sr-menu-list">
     <!-- Somatic Tools з підменю -->
     <button class="sr-mlink" id="sr-som-btn">
@@ -228,12 +229,10 @@
     var isOpen = menu.classList.contains('open');
     if(isOpen){
       menu.classList.remove('open');
-      menu.setAttribute('hidden','');
       burger.classList.remove('open');
       burger.setAttribute('aria-expanded','false');
       document.body.style.overflow = '';
     } else {
-      menu.removeAttribute('hidden');
       menu.classList.add('open');
       burger.classList.add('open');
       burger.setAttribute('aria-expanded','true');
