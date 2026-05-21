@@ -8,24 +8,28 @@
 
     ready(function () {
 
-        /* ─── ВИЗНАЧЕННЯ БРЕЙКПОІНТУ ─── */
-        function isTablet() { return window.innerWidth >= 768 && window.innerWidth <= 1279; }
-        function isMobile() { return window.innerWidth <= 767; }
+
+
+
 
         /* ─── BURGER → відкриває правильне меню ─── */
         var burger = document.getElementById('burger-btn');
         var tabletMenu = document.getElementById('tablet-menu');
         var mobileMenu = document.getElementById('mobile-menu');
 
+        function getActiveMenu() {
+            if (mobileMenu && getComputedStyle(mobileMenu).display !== 'none') return mobileMenu;
+            if (tabletMenu && getComputedStyle(tabletMenu).display !== 'none') return tabletMenu;
+            return null;
+        }
+
         function openMenu() {
-            if (!burger) return;
+            var menu = getActiveMenu();
+            if (!menu || !burger) return;
             burger.setAttribute('aria-expanded', 'true');
             document.body.style.overflow = 'hidden';
-            if (isMobile()) {
-                if (mobileMenu) { mobileMenu.hidden = false; mobileMenu.offsetHeight; }
-            } else {
-                if (tabletMenu) { tabletMenu.hidden = false; tabletMenu.offsetHeight; }
-            }
+            menu.hidden = false;
+            menu.offsetHeight;
         }
 
         function closeAllMenus() {

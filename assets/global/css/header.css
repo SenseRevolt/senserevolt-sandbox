@@ -20,7 +20,10 @@
     overflow: hidden;
 }
 
-/* Режим 1: Статичне вітання */
+/* Режим 1: Статичне вітання — десктоп */
+.top-bar--welcome {
+    overflow: hidden;
+}
 .top-bar--welcome .top-bar-text {
     color: rgba(251,239,220,0.6);
     text-align: center;
@@ -28,6 +31,40 @@
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
+}
+
+/* Мобайл: бігучий рядок */
+@media (max-width: 767px) {
+    .top-bar--welcome .top-bar-text {
+        display: none;
+    }
+    .top-bar--welcome .top-bar-marquee {
+        display: block;
+        width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
+        mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+    }
+    .top-bar--welcome .top-bar-track {
+        display: inline-flex;
+        animation: srMarquee 28s linear infinite;
+        color: rgba(251,239,220,0.6);
+    }
+    .top-bar--welcome .top-bar-track span {
+        white-space: nowrap;
+        padding-right: 3rem;
+    }
+    @keyframes srMarquee {
+        0%   { transform: translateX(0); }
+        100% { transform: translateX(-33.333%); }
+    }
+}
+/* Десктоп: marquee-елемент прихований */
+@media (min-width: 768px) {
+    .top-bar--welcome .top-bar-marquee {
+        display: none;
+    }
 }
 
 /* Режим 2: Launch */
@@ -163,14 +200,14 @@ header.main-header {
     position: absolute;
     top: 100%;
     left: 0;
-    background-color: #2a2928;
-    border: 1px solid rgba(251,239,220,0.08);
+    background-color: var(--c-header-bg);
+    border: 1px solid rgba(251,239,220,0.1);
     border-top: none;
-    min-width: 13rem;
+    min-width: 14rem;
     opacity: 0;
     visibility: hidden;
-    transform: translateY(4px);
-    transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s;
+    transform: translateY(0);
+    transition: opacity 0.18s ease, visibility 0.18s;
     z-index: 1100;
 }
 
@@ -178,19 +215,20 @@ header.main-header {
 .nav-item--has-dropdown:focus-within .nav-dropdown {
     opacity: 1;
     visibility: visible;
-    transform: translateY(0);
 }
 
 .nav-dropdown-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.85rem 1.2rem;
-    color: rgba(251,239,220,0.7);
+    padding: 1rem 1.4rem;
+    color: rgba(251,239,220,0.75);
     text-decoration: none;
-    font-size: 0.88rem;
+    font-size: 0.94rem;
     font-weight: 300;
-    border-bottom: 1px solid rgba(251,239,220,0.05);
+    font-family: 'Jost', sans-serif;
+    letter-spacing: 0.01em;
+    border-bottom: 1px solid rgba(251,239,220,0.07);
     transition: color 0.18s, background 0.18s;
 }
 .nav-dropdown-item:last-child { border-bottom: none; }
@@ -199,7 +237,7 @@ header.main-header {
     background: rgba(251,239,220,0.03);
 }
 .nav-dropdown-item svg {
-    opacity: 0.3;
+    opacity: 0.35;
     flex-shrink: 0;
     transition: opacity 0.18s, transform 0.18s;
 }
@@ -233,11 +271,18 @@ header.main-header {
     cursor: pointer;
     background: none;
     color: var(--c-cream);
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, border-radius 0.01s;
     font-family: 'Jost', sans-serif;
     white-space: nowrap;
+    position: relative;
+    z-index: 1;
 }
 .lang-current-btn:hover { border-color: rgba(251,239,220,0.7); }
+/* Коли список відкритий — прибираємо нижній radius щоб зливався зі списком */
+.lang-current-btn[aria-expanded="true"] {
+    border-radius: 4px 4px 0 0;
+    border-bottom-color: var(--c-header-bg); /* "ховаємо" нижній border кнопки */
+}
 
 .lang-chevron {
     opacity: 0.5;
@@ -248,34 +293,42 @@ header.main-header {
     transform: rotate(180deg);
 }
 
-/* Lang list — accordion вниз, кожен пункт окремий блок */
+/* Lang list — розкривається вниз від кнопки, по лівому краю */
 .lang-list {
     position: absolute;
-    top: calc(100% + 2px);
-    right: 0;
+    top: 100%;          /* впритул до кнопки, без зазору */
+    left: 0;            /* вирівняний по лівому краю кнопки */
+    right: auto;
     min-width: 100%;
     z-index: 1200;
     display: flex;
     flex-direction: column;
+    /* Верхній border кнопки + нижній border кнопки + border списку = подвійна рамка.
+       Вирішення: список починається одразу від нижнього краю кнопки,
+       border-top у першого пункту прибрано */
 }
 .lang-list[hidden] { display: none; }
 
 .lang-option {
     display: block;
-    border: 1px solid rgba(251,239,220,0.15);
+    /* Єдиний border на весь блок — лівий, правий, нижній */
+    border-left: 1px solid rgba(251,239,220,0.35);
+    border-right: 1px solid rgba(251,239,220,0.35);
+    border-bottom: 1px solid rgba(251,239,220,0.35);
     border-top: none;
-    padding: 0.3rem 0.6rem;
-    background: #2a2928;
-    color: rgba(251,239,220,0.55);
+    padding: 0.28rem 0.6rem;
+    background: var(--c-header-bg);
+    color: rgba(251,239,220,0.6);
     text-decoration: none;
     font-size: 0.83rem;
     font-weight: 300;
-    text-align: center;
+    text-align: left;
     transition: color 0.18s, background 0.18s;
     font-family: 'Jost', sans-serif;
+    white-space: nowrap;
 }
-.lang-option:last-child { border-radius: 0 0 4px 4px; }
-.lang-option:hover { color: var(--c-cream); background: rgba(251,239,220,0.05); }
+.lang-option:last-child { border-radius: 0 0 3px 3px; }
+.lang-option:hover { color: var(--c-cream); background: rgba(251,239,220,0.04); }
 .lang-option--active { color: var(--c-cream); }
 
 /* ─── BURGER BUTTON ─── */
