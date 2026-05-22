@@ -10,7 +10,7 @@
    ============================================================ */
 
 /* ── TOP BAR ── */
-.sr-tbw{background:#2d2c2b;width:100%;}
+.sr-tbw{background-color:#2d2c2b;width:100%;opacity:1;position:relative;z-index:899;}
 .sr-tb{height:2.5rem;display:flex;align-items:center;justify-content:center;
   border-bottom:1px solid rgba(251,239,220,.08);overflow:hidden;
   font-family:'Jost',sans-serif;font-size:.78rem;font-weight:300;
@@ -26,9 +26,10 @@
 @keyframes srMarq{from{transform:translateX(0)}to{transform:translateX(-33.333%)}}
 
 /* ── HEADER ── */
-.sr-h{background:#2d2c2b;position:sticky;top:0;z-index:900;width:100%;
+.sr-h{background-color:#2d2c2b;position:sticky;top:0;z-index:900;width:100%;
   border-bottom:1px solid rgba(251,239,220,.05);
-  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  opacity:1;}
 .sr-h a,.sr-h button,.sr-m a,.sr-m button{
   -webkit-tap-highlight-color:transparent;
   outline:none;
@@ -119,13 +120,13 @@
 
 /* ── MOBILE/TABLET MENU (випадає вниз) ── */
 .sr-m{position:fixed;
-  top:7.5rem;left:0;right:0;
-  height:calc(100vh - 7.5rem);
+  top:0;left:0;right:0;bottom:0;
   background:#262524;z-index:800;
   overflow-y:auto;overflow-x:hidden;
   -webkit-overflow-scrolling:touch;
   overscroll-behavior:contain;
   display:none;flex-direction:column;
+  padding-top:var(--header-total-h, 120px);
   padding-bottom:3rem;
   -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
 .sr-m.is-open{display:block;}
@@ -172,7 +173,7 @@
   .sr-tb-c{display:none;}
   .sr-tb-marq{display:block;}
   .sr-tb-track{animation:srMarq 32s linear infinite;}
-  .sr-m{top:6.2rem;height:calc(100vh - 6.2rem);padding-bottom:2rem;}
+  .sr-m{padding-bottom:2rem;}
   .sr-m .sr-ml{padding-left:1rem;}
   .sr-m .sr-msl{padding-left:2rem;}
   .sr-n{display:none;}
@@ -378,6 +379,18 @@
 document.addEventListener('alpine:init', function(){
   Alpine.store('menu', { open: false });
 });
+
+// Динамічна висота хедера для правильного позиціонування меню
+function updateHeaderHeight(){
+  var topbar = document.querySelector('.sr-tbw');
+  var header = document.querySelector('.sr-h');
+  if(!topbar || !header) return;
+  var total = topbar.offsetHeight + header.offsetHeight;
+  document.documentElement.style.setProperty('--header-total-h', total + 'px');
+}
+window.addEventListener('load', updateHeaderHeight);
+window.addEventListener('resize', updateHeaderHeight);
+document.addEventListener('DOMContentLoaded', updateHeaderHeight);
 document.addEventListener('DOMContentLoaded', function(){
   var path = window.location.pathname.replace(/\/$/, '');
   // Збираємо всі лінки і їхні шляхи

@@ -29,6 +29,12 @@
 .sr-h{background:#2d2c2b;position:sticky;top:0;z-index:900;width:100%;
   border-bottom:1px solid rgba(251,239,220,.05);
   -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+.sr-h a,.sr-h button,.sr-m a,.sr-m button{
+  -webkit-tap-highlight-color:transparent;
+  outline:none;
+}
+.sr-h a:focus,.sr-h button:focus,.sr-m a:focus,.sr-m button:focus{outline:none;}
+.sr-h a:focus-visible,.sr-h button:focus-visible{outline:1px solid rgba(251,239,220,.3);outline-offset:2px;}
 .sr-h-in{max-width:var(--max-width,1600px);width:100%;margin:0 auto;padding:0 var(--margin,20px);
   height:5rem;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:1rem;}
 
@@ -38,7 +44,15 @@
 }
 
 /* ── LOGO ── */
-.sr-logo{justify-self:start;text-decoration:none;flex-shrink:0;}
+.sr-logo,.sr-logo:focus,.sr-logo:active,.sr-logo:focus-visible,.sr-logo:focus-within{
+  justify-self:start;text-decoration:none;flex-shrink:0;
+  outline:none!important;border:none!important;box-shadow:none!important;
+  -webkit-tap-highlight-color:transparent!important;
+}
+.sr-logo img,.sr-logo img:focus,.sr-logo img:active{
+  outline:none!important;border:none!important;box-shadow:none!important;
+  -webkit-tap-highlight-color:transparent!important;
+}
 .sr-logo img{width:11.83rem;height:auto;display:block;}
 
 /* ── DESKTOP NAV ── */
@@ -59,15 +73,14 @@
 .sr-dd{position:absolute;top:100%;left:0;background:#2d2c2b;
   border:1px solid rgba(251,239,220,.1);border-top:none;min-width:14rem;
   opacity:0;visibility:hidden;transition:opacity .18s,visibility .18s;z-index:200;}
-.sr-ni.dd:hover .sr-dd,.sr-ni.dd:focus-within .sr-dd{opacity:1;visibility:visible;}
-.sr-da{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.4rem;
+.sr-ni.dd:hover .sr-dd,.sr-ni.dd:focus-within .sr-dd,.sr-dd.force-open{opacity:1;visibility:visible;}
+.sr-da{display:block;padding:1rem 1.4rem;
   color:rgba(251,239,220,.75);text-decoration:none;font-family:'Jost',sans-serif;
   font-size:.94rem;font-weight:300;border-bottom:1px solid rgba(251,239,220,.07);
   transition:color .18s,background .18s;}
 .sr-da:last-child{border-bottom:none;}
 .sr-da:hover{color:#fbefdc;background:rgba(251,239,220,.03);}
-.sr-da svg{opacity:.35;transition:transform .18s;}
-.sr-da:hover svg{transform:translateX(2px);opacity:.7;}
+
 
 /* ── RIGHT ── */
 .sr-r{display:flex;align-items:center;gap:.9rem;justify-self:end;flex-shrink:0;}
@@ -83,7 +96,8 @@
 .sr-lc{opacity:.5;transition:transform .2s;flex-shrink:0;}
 .sr-lc.op{transform:rotate(180deg);}
 .sr-ll{position:absolute;top:100%;left:0;min-width:100%;z-index:300;
-  display:flex;flex-direction:column;}
+  display:none;flex-direction:column;}
+.sr-ll.is-open{display:flex;}
 .sr-lo{display:block;border-left:1px solid rgba(251,239,220,.35);
   border-right:1px solid rgba(251,239,220,.35);
   border-bottom:1px solid rgba(251,239,220,.35);border-top:none;
@@ -104,10 +118,18 @@
 .sr-bg.op span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg);}
 
 /* ── MOBILE/TABLET MENU (випадає вниз) ── */
-.sr-m{position:fixed;top:0;left:0;right:0;bottom:0;
-  background:#262524;z-index:800;overflow-y:auto;
-  display:flex;flex-direction:column;padding-top:7.5rem;
+.sr-m{position:fixed;
+  top:7.5rem;left:0;right:0;
+  height:calc(100vh - 7.5rem);
+  background:#262524;z-index:800;
+  overflow-y:auto;overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior:contain;
+  display:none;flex-direction:column;
+  padding-bottom:3rem;
   -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+.sr-m.is-open{display:block;}
+.sr-m > div,.sr-m > a{display:block;width:100%;}
 .sr-ml{display:flex;align-items:center;justify-content:space-between;
   padding:1rem 1.4rem;color:#fbefdc;text-decoration:none;
   font-family:'Jost',sans-serif;font-size:1rem;font-weight:300;letter-spacing:.02em;
@@ -117,7 +139,8 @@
 .sr-ml:hover{background:rgba(251,239,220,.03);}
 .sr-ml svg{opacity:.35;transition:transform .2s;flex-shrink:0;}
 .sr-ml.op svg{transform:rotate(90deg);}
-.sr-ms{display:flex;flex-direction:column;background:#1e1d1c;}
+.sr-ms{display:none;flex-direction:column;background:#1e1d1c;}
+.sr-ms.is-open{display:flex;}
 .sr-msl{display:block;padding:.85rem 2rem;color:rgba(251,239,220,.65);
   text-decoration:none;font-family:'Jost',sans-serif;font-size:.94rem;font-weight:300;
   border-bottom:1px solid rgba(251,239,220,.05);transition:color .18s,background .18s;}
@@ -149,11 +172,16 @@
   .sr-tb-c{display:none;}
   .sr-tb-marq{display:block;}
   .sr-tb-track{animation:srMarq 32s linear infinite;}
-  .sr-m{padding-top:6.2rem;}
+  .sr-m{top:6.2rem;height:calc(100vh - 6.2rem);padding-bottom:2rem;}
   .sr-m .sr-ml{padding-left:1rem;}
   .sr-m .sr-msl{padding-left:2rem;}
   .sr-n{display:none;}
   .sr-bg{display:flex;}
+}
+/* Ландшафт телефону — компактніше */
+@media (max-height:500px) and (orientation:landscape){
+  .sr-m .sr-ml{padding-top:.7rem;padding-bottom:.7rem;}
+  .sr-m .sr-msl{padding-top:.55rem;padding-bottom:.55rem;}
 }
 
 /* Планшет */
@@ -169,13 +197,13 @@
 <div class="sr-tbw">
   <div class="sr-tb">
     <div class="sr-tb-c">
-      <span>Welcome to a world where emotions make sense ✦ Tools for your nervous system and your child's inner life ✦ Made in Ukraine</span>
+      <span>Welcome to a world where understanding yourself and your child starts with better tools</span>
     </div>
     <div class="sr-tb-marq" aria-hidden="true">
       <div class="sr-tb-track">
-        <span>Welcome to a world where emotions make sense ✦ Tools for your nervous system and your child's inner life ✦ Made in Ukraine ✦ </span>
-        <span>Welcome to a world where emotions make sense ✦ Tools for your nervous system and your child's inner life ✦ Made in Ukraine ✦ </span>
-        <span>Welcome to a world where emotions make sense ✦ Tools for your nervous system and your child's inner life ✦ Made in Ukraine ✦ </span>
+        <span>Welcome to a world where understanding yourself and your child starts with better tools ✦ </span>
+        <span>Welcome to a world where understanding yourself and your child starts with better tools ✦ </span>
+        <span>Welcome to a world where understanding yourself and your child starts with better tools ✦ </span>
       </div>
     </div>
   </div>
@@ -189,21 +217,82 @@
     </a>
 
     <nav class="sr-n">
-      <div class="sr-ni dd">
-        <a href="{{ site.baseurl }}/en/somatic-tools/all-kits/" class="sr-na">Somatic Tools</a>
-        <div class="sr-dd">
-          <a href="{{ site.baseurl }}/en/somatic-tools/our-method/" class="sr-da"><span>Our Method</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          <a href="{{ site.baseurl }}/en/somatic-tools/all-kits/" class="sr-da"><span>All Kits</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          <a href="{{ site.baseurl }}/en/somatic-tools/bundles/" class="sr-da"><span>Bundles</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          <a href="{{ site.baseurl }}/en/somatic-tools/extras/" class="sr-da"><span>Extras</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <!-- Somatic Tools -->
+      <div class="sr-ni dd" x-data="{open:false}" @mouseleave="open=false" @click.outside="open=false">
+        <a href="{{ site.baseurl }}/en/somatic-tools/all-kits/" class="sr-na"
+           @click="
+              var isHoverable = window.matchMedia('(hover: hover)').matches;
+              if(!isHoverable && !open){
+                $event.preventDefault();
+                $event.stopPropagation();
+                open = true;
+              }
+            "
+           @mouseenter="if(window.matchMedia('(hover: hover)').matches) open=true">Somatic Tools</a>
+        <div class="sr-dd" :class="{'force-open':open}">
+          <a href="{{ site.baseurl }}/en/somatic-tools/our-method/" class="sr-da"><span>Our Method</span></a>
+          <a href="{{ site.baseurl }}/en/somatic-tools/all-kits/" class="sr-da"><span>All Kits</span></a>
+          <a href="{{ site.baseurl }}/en/somatic-tools/bundles/" class="sr-da"><span>Bundles</span></a>
+          <a href="{{ site.baseurl }}/en/somatic-tools/extras/" class="sr-da"><span>Extras</span></a>
         </div>
       </div>
-      <a href="{{ site.baseurl }}/en/sel-tools/all-books/" class="sr-na">SEL Tools for Kids</a>
-      <a href="{{ site.baseurl }}/en/for-pros/" class="sr-na">For Pros</a>
+      <!-- SEL Tools for Kids -->
+      <div class="sr-ni dd" x-data="{open:false}" @mouseleave="open=false" @click.outside="open=false">
+        <a href="{{ site.baseurl }}/en/sel-tools/all-books/" class="sr-na"
+           @click="
+              var isHoverable = window.matchMedia('(hover: hover)').matches;
+              if(!isHoverable && !open){
+                $event.preventDefault();
+                $event.stopPropagation();
+                open = true;
+              }
+            "
+           @mouseenter="if(window.matchMedia('(hover: hover)').matches) open=true">SEL Tools for Kids</a>
+        <div class="sr-dd" :class="{'force-open':open}">
+          <a href="{{ site.baseurl }}/en/sel-tools/our-method/" class="sr-da"><span>Our Method</span></a>
+          <a href="{{ site.baseurl }}/en/sel-tools/all-books/" class="sr-da"><span>All Books</span></a>
+          <a href="{{ site.baseurl }}/en/sel-tools/bundles/" class="sr-da"><span>Bundles</span></a>
+          <a href="{{ site.baseurl }}/en/sel-tools/extras/" class="sr-da"><span>Extras</span></a>
+        </div>
+      </div>
+      <!-- For Pros -->
+      <div class="sr-ni dd" x-data="{open:false}" @mouseleave="open=false" @click.outside="open=false">
+        <a href="{{ site.baseurl }}/en/for-pros/" class="sr-na"
+           @click="
+              var isHoverable = window.matchMedia('(hover: hover)').matches;
+              if(!isHoverable && !open){
+                $event.preventDefault();
+                $event.stopPropagation();
+                open = true;
+              }
+            "
+           @mouseenter="if(window.matchMedia('(hover: hover)').matches) open=true">For Pros</a>
+        <div class="sr-dd" :class="{'force-open':open}">
+          <a href="{{ site.baseurl }}/en/for-pros/pro-kits/" class="sr-da"><span>Pro Kits</span></a>
+          <a href="{{ site.baseurl }}/en/for-pros/bundles/" class="sr-da"><span>Bundles</span></a>
+          <a href="{{ site.baseurl }}/en/for-pros/group-pricing/" class="sr-da"><span>Group Pricing</span></a>
+        </div>
+      </div>
       <a href="{{ site.baseurl }}/en/blog/" class="sr-na">Blog</a>
       <a href="{{ site.baseurl }}/en/our-story/" class="sr-na">Our Story</a>
       <a href="{{ site.baseurl }}/en/faqs/" class="sr-na">FAQs</a>
-      <a href="{{ site.baseurl }}/en/music/" class="sr-na">Music</a>
+      <!-- Music -->
+      <div class="sr-ni dd" x-data="{open:false}" @mouseleave="open=false" @click.outside="open=false">
+        <a href="{{ site.baseurl }}/en/music/" class="sr-na"
+           @click="
+              var isHoverable = window.matchMedia('(hover: hover)').matches;
+              if(!isHoverable && !open){
+                $event.preventDefault();
+                $event.stopPropagation();
+                open = true;
+              }
+            "
+           @mouseenter="if(window.matchMedia('(hover: hover)').matches) open=true">Music</a>
+        <div class="sr-dd" :class="{'force-open':open}">
+          <a href="{{ site.baseurl }}/en/music/somatic-music/" class="sr-da"><span>Somatic Music</span></a>
+          <a href="{{ site.baseurl }}/en/music/kids-songs/" class="sr-da"><span>Kids Songs</span></a>
+        </div>
+      </div>
     </nav>
 
     <div class="sr-r">
@@ -212,7 +301,7 @@
           <span x-text="currentLang">En</span>
           <svg class="sr-lc" :class="{'op':langOpen}" width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
-        <div class="sr-ll" x-show="langOpen" x-cloak>
+        <div class="sr-ll" :class="{'is-open':langOpen}" x-cloak>
           <a href="#" class="sr-lo" @click.prevent.stop="currentLang='Uk';langOpen=false">Uk</a>
           <a href="#" class="sr-lo" @click.prevent.stop="currentLang='De';langOpen=false">De</a>
           <a href="#" class="sr-lo" @click.prevent.stop="currentLang='Fr';langOpen=false">Fr</a>
@@ -220,7 +309,7 @@
         </div>
       </div>
       <button class="sr-bg" :class="{'op':$store.menu.open}"
-        @click.stop="$store.menu.open=!$store.menu.open; $store.menu.open ? document.body.style.overflow='hidden' : document.body.style.overflow=''">
+        @click.stop="$store.menu.open=!$store.menu.open">
         <span></span><span></span><span></span>
       </button>
     </div>
@@ -228,26 +317,61 @@
 </header>
 
 <!-- MOBILE/TABLET MENU -->
-<nav class="sr-m" x-data x-show="$store.menu.open" x-cloak
-  @keydown.escape.window="$store.menu.open=false; document.body.style.overflow=''">
-  <div x-data="{somOpen:false}">
-    <button class="sr-ml" :class="{'op':somOpen}" @click.stop="somOpen=!somOpen">
+<nav class="sr-m" :class="{'is-open':$store.menu.open}"
+  x-data
+  @keydown.escape.window="$store.menu.open=false">
+  <!-- Somatic Tools -->
+  <div x-data="{open:false}">
+    <button class="sr-ml" :class="{'op':open}" @click.stop="open=!open">
       Somatic Tools
       <svg width="8" height="13" viewBox="0 0 8 13" fill="none"><path d="M1 1l6.5 6-6.5 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
-    <div class="sr-ms" x-show="somOpen" x-cloak>
+    <div class="sr-ms" :class="{'is-open':open}" x-cloak>
       <a href="{{ site.baseurl }}/en/somatic-tools/our-method/" class="sr-msl">Our Method</a>
       <a href="{{ site.baseurl }}/en/somatic-tools/all-kits/" class="sr-msl">All Kits</a>
       <a href="{{ site.baseurl }}/en/somatic-tools/bundles/" class="sr-msl">Bundles</a>
       <a href="{{ site.baseurl }}/en/somatic-tools/extras/" class="sr-msl">Extras</a>
     </div>
   </div>
-  <a href="{{ site.baseurl }}/en/sel-tools/all-books/" class="sr-ml">SEL Tools for Kids</a>
-  <a href="{{ site.baseurl }}/en/for-pros/" class="sr-ml">For Pros</a>
+  <!-- SEL Tools for Kids -->
+  <div x-data="{open:false}">
+    <button class="sr-ml" :class="{'op':open}" @click.stop="open=!open">
+      SEL Tools for Kids
+      <svg width="8" height="13" viewBox="0 0 8 13" fill="none"><path d="M1 1l6.5 6-6.5 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="sr-ms" :class="{'is-open':open}" x-cloak>
+      <a href="{{ site.baseurl }}/en/sel-tools/our-method/" class="sr-msl">Our Method</a>
+      <a href="{{ site.baseurl }}/en/sel-tools/all-books/" class="sr-msl">All Books</a>
+      <a href="{{ site.baseurl }}/en/sel-tools/bundles/" class="sr-msl">Bundles</a>
+      <a href="{{ site.baseurl }}/en/sel-tools/extras/" class="sr-msl">Extras</a>
+    </div>
+  </div>
+  <!-- For Pros -->
+  <div x-data="{open:false}">
+    <button class="sr-ml" :class="{'op':open}" @click.stop="open=!open">
+      For Pros
+      <svg width="8" height="13" viewBox="0 0 8 13" fill="none"><path d="M1 1l6.5 6-6.5 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="sr-ms" :class="{'is-open':open}" x-cloak>
+      <a href="{{ site.baseurl }}/en/for-pros/pro-kits/" class="sr-msl">Pro Kits</a>
+      <a href="{{ site.baseurl }}/en/for-pros/bundles/" class="sr-msl">Bundles</a>
+      <a href="{{ site.baseurl }}/en/for-pros/group-pricing/" class="sr-msl">Group Pricing</a>
+    </div>
+  </div>
   <a href="{{ site.baseurl }}/en/blog/" class="sr-ml">Blog</a>
   <a href="{{ site.baseurl }}/en/our-story/" class="sr-ml">Our Story</a>
   <a href="{{ site.baseurl }}/en/faqs/" class="sr-ml">FAQs</a>
-  <a href="{{ site.baseurl }}/en/music/" class="sr-ml">Music</a>
+  <!-- Music -->
+  <div x-data="{open:false}">
+    <button class="sr-ml" :class="{'op':open}" @click.stop="open=!open">
+      Music
+      <svg width="8" height="13" viewBox="0 0 8 13" fill="none"><path d="M1 1l6.5 6-6.5 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="sr-ms" :class="{'is-open':open}" x-cloak>
+      <a href="{{ site.baseurl }}/en/music/somatic-music/" class="sr-msl">Somatic Music</a>
+      <a href="{{ site.baseurl }}/en/music/kids-songs/" class="sr-msl">Kids Songs</a>
+    </div>
+  </div>
 </nav>
 
 <script>
@@ -255,14 +379,37 @@ document.addEventListener('alpine:init', function(){
   Alpine.store('menu', { open: false });
 });
 document.addEventListener('DOMContentLoaded', function(){
-  var path = window.location.pathname;
+  var path = window.location.pathname.replace(/\/$/, '');
+  // Збираємо всі лінки і їхні шляхи
+  var allLinks = [];
   document.querySelectorAll('.sr-na,.sr-ml,.sr-msl,.sr-da').forEach(function(a){
     var href = a.getAttribute('href');
-    if(!href) return;
+    if(!href || href === '#') return;
     try{
-      var lp = new URL(href, window.location.origin).pathname;
-      if(lp !== '/' && path.startsWith(lp)) a.classList.add('act');
+      var lp = new URL(href, window.location.origin).pathname.replace(/\/$/, '');
+      if(lp === '' || lp === '/') return;
+      allLinks.push({el: a, path: lp});
     }catch(e){}
   });
+  // Знаходимо найдовший шлях що співпадає з поточним
+  var best = null;
+  allLinks.forEach(function(item){
+    if(path === item.path || path.indexOf(item.path + '/') === 0){
+      if(!best || item.path.length > best.path.length){
+        best = item;
+      }
+    }
+  });
+  // Підсвічуємо тільки найдовший матч (найточніший)
+  // Плюс підсвічуємо батьківський пункт меню (sr-na) у відповідного розділу
+  if(best){
+    best.el.classList.add('act');
+    // Якщо це пункт dropdown — підсвітимо і батьківський sr-na
+    var parent = best.el.closest('.sr-ni');
+    if(parent){
+      var parentLink = parent.querySelector('.sr-na');
+      if(parentLink && parentLink !== best.el) parentLink.classList.add('act');
+    }
+  }
 });
 </script>
