@@ -83,8 +83,7 @@
 .sr-lc{opacity:.5;transition:transform .2s;flex-shrink:0;}
 .sr-lc.op{transform:rotate(180deg);}
 .sr-ll{position:absolute;top:100%;left:0;min-width:100%;z-index:300;
-  display:none;flex-direction:column;}
-.sr-ll.is-open{display:flex;}
+  display:flex;flex-direction:column;}
 .sr-lo{display:block;border-left:1px solid rgba(251,239,220,.35);
   border-right:1px solid rgba(251,239,220,.35);
   border-bottom:1px solid rgba(251,239,220,.35);border-top:none;
@@ -106,10 +105,9 @@
 
 /* ── MOBILE/TABLET MENU (випадає вниз) ── */
 .sr-m{position:fixed;top:0;left:0;right:0;bottom:0;
-  background:#262524;z-index:800;overflow-y:auto;-webkit-overflow-scrolling:touch;
-  display:none;flex-direction:column;padding-top:7.5rem;padding-bottom:2rem;
+  background:#262524;z-index:800;overflow-y:auto;
+  display:flex;flex-direction:column;padding-top:7.5rem;
   -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
-.sr-m.is-open{display:flex;}
 .sr-ml{display:flex;align-items:center;justify-content:space-between;
   padding:1rem 1.4rem;color:#fbefdc;text-decoration:none;
   font-family:'Jost',sans-serif;font-size:1rem;font-weight:300;letter-spacing:.02em;
@@ -119,8 +117,7 @@
 .sr-ml:hover{background:rgba(251,239,220,.03);}
 .sr-ml svg{opacity:.35;transition:transform .2s;flex-shrink:0;}
 .sr-ml.op svg{transform:rotate(90deg);}
-.sr-ms{display:none;flex-direction:column;background:#1e1d1c;}
-.sr-ms.is-open{display:flex;}
+.sr-ms{display:flex;flex-direction:column;background:#1e1d1c;}
 .sr-msl{display:block;padding:.85rem 2rem;color:rgba(251,239,220,.65);
   text-decoration:none;font-family:'Jost',sans-serif;font-size:.94rem;font-weight:300;
   border-bottom:1px solid rgba(251,239,220,.05);transition:color .18s,background .18s;}
@@ -152,17 +149,11 @@
   .sr-tb-c{display:none;}
   .sr-tb-marq{display:block;}
   .sr-tb-track{animation:srMarq 32s linear infinite;}
-  .sr-m{padding-top:6.2rem;padding-bottom:2rem;}
+  .sr-m{padding-top:6.2rem;}
   .sr-m .sr-ml{padding-left:1rem;}
   .sr-m .sr-msl{padding-left:2rem;}
   .sr-n{display:none;}
   .sr-bg{display:flex;}
-}
-/* Ландшафт телефону окремо — менший padding-top щоб меню вміщалось */
-@media (max-height:500px) and (orientation:landscape){
-  .sr-m{padding-top:5rem;}
-  .sr-m .sr-ml{padding-top:.7rem;padding-bottom:.7rem;}
-  .sr-m .sr-msl{padding-top:.6rem;padding-bottom:.6rem;}
 }
 
 /* Планшет */
@@ -221,7 +212,7 @@
           <span x-text="currentLang">En</span>
           <svg class="sr-lc" :class="{'op':langOpen}" width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
-        <div class="sr-ll" :class="{'is-open':langOpen}" x-cloak>
+        <div class="sr-ll" x-show="langOpen" x-cloak>
           <a href="#" class="sr-lo" @click.prevent.stop="currentLang='Uk';langOpen=false">Uk</a>
           <a href="#" class="sr-lo" @click.prevent.stop="currentLang='De';langOpen=false">De</a>
           <a href="#" class="sr-lo" @click.prevent.stop="currentLang='Fr';langOpen=false">Fr</a>
@@ -237,14 +228,14 @@
 </header>
 
 <!-- MOBILE/TABLET MENU -->
-<nav class="sr-m" x-data :class="{'is-open':$store.menu.open}" x-cloak
+<nav class="sr-m" x-data x-show="$store.menu.open" x-cloak
   @keydown.escape.window="$store.menu.open=false; document.body.style.overflow=''">
   <div x-data="{somOpen:false}">
     <button class="sr-ml" :class="{'op':somOpen}" @click.stop="somOpen=!somOpen">
       Somatic Tools
       <svg width="8" height="13" viewBox="0 0 8 13" fill="none"><path d="M1 1l6.5 6-6.5 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
-    <div class="sr-ms" :class="{'is-open':somOpen}" x-cloak>
+    <div class="sr-ms" x-show="somOpen" x-cloak>
       <a href="{{ site.baseurl }}/en/somatic-tools/our-method/" class="sr-msl">Our Method</a>
       <a href="{{ site.baseurl }}/en/somatic-tools/all-kits/" class="sr-msl">All Kits</a>
       <a href="{{ site.baseurl }}/en/somatic-tools/bundles/" class="sr-msl">Bundles</a>
