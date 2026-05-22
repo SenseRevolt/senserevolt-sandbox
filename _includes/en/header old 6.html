@@ -352,36 +352,17 @@ document.addEventListener('alpine:init', function(){
 });
 document.addEventListener('DOMContentLoaded', function(){
   var path = window.location.pathname.replace(/\/$/, '');
-  // Збираємо всі лінки і їхні шляхи
-  var allLinks = [];
   document.querySelectorAll('.sr-na,.sr-ml,.sr-msl,.sr-da').forEach(function(a){
     var href = a.getAttribute('href');
     if(!href || href === '#') return;
     try{
       var lp = new URL(href, window.location.origin).pathname.replace(/\/$/, '');
       if(lp === '' || lp === '/') return;
-      allLinks.push({el: a, path: lp});
+      // точне співпадіння АБО path починається з lp + слеш (повний сегмент)
+      if(path === lp || path.indexOf(lp + '/') === 0){
+        a.classList.add('act');
+      }
     }catch(e){}
   });
-  // Знаходимо найдовший шлях що співпадає з поточним
-  var best = null;
-  allLinks.forEach(function(item){
-    if(path === item.path || path.indexOf(item.path + '/') === 0){
-      if(!best || item.path.length > best.path.length){
-        best = item;
-      }
-    }
-  });
-  // Підсвічуємо тільки найдовший матч (найточніший)
-  // Плюс підсвічуємо батьківський пункт меню (sr-na) у відповідного розділу
-  if(best){
-    best.el.classList.add('act');
-    // Якщо це пункт dropdown — підсвітимо і батьківський sr-na
-    var parent = best.el.closest('.sr-ni');
-    if(parent){
-      var parentLink = parent.querySelector('.sr-na');
-      if(parentLink && parentLink !== best.el) parentLink.classList.add('act');
-    }
-  }
 });
 </script>
