@@ -29,12 +29,6 @@
 .sr-h{background:#2d2c2b;position:sticky;top:0;z-index:900;width:100%;
   border-bottom:1px solid rgba(251,239,220,.05);
   -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
-.sr-h a,.sr-h button,.sr-m a,.sr-m button{
-  -webkit-tap-highlight-color:transparent;
-  outline:none;
-}
-.sr-h a:focus,.sr-h button:focus,.sr-m a:focus,.sr-m button:focus{outline:none;}
-.sr-h a:focus-visible,.sr-h button:focus-visible{outline:1px solid rgba(251,239,220,.3);outline-offset:2px;}
 .sr-h-in{max-width:var(--max-width,1600px);width:100%;margin:0 auto;padding:0 var(--margin,20px);
   height:5rem;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:1rem;}
 
@@ -44,15 +38,7 @@
 }
 
 /* ── LOGO ── */
-.sr-logo,.sr-logo:focus,.sr-logo:active,.sr-logo:focus-visible,.sr-logo:focus-within{
-  justify-self:start;text-decoration:none;flex-shrink:0;
-  outline:none!important;border:none!important;box-shadow:none!important;
-  -webkit-tap-highlight-color:transparent!important;
-}
-.sr-logo img,.sr-logo img:focus,.sr-logo img:active{
-  outline:none!important;border:none!important;box-shadow:none!important;
-  -webkit-tap-highlight-color:transparent!important;
-}
+.sr-logo{justify-self:start;text-decoration:none;flex-shrink:0;}
 .sr-logo img{width:11.83rem;height:auto;display:block;}
 
 /* ── DESKTOP NAV ── */
@@ -73,7 +59,7 @@
 .sr-dd{position:absolute;top:100%;left:0;background:#2d2c2b;
   border:1px solid rgba(251,239,220,.1);border-top:none;min-width:14rem;
   opacity:0;visibility:hidden;transition:opacity .18s,visibility .18s;z-index:200;}
-.sr-ni.dd:hover .sr-dd,.sr-ni.dd:focus-within .sr-dd,.sr-dd.force-open{opacity:1;visibility:visible;}
+.sr-ni.dd:hover .sr-dd,.sr-ni.dd:focus-within .sr-dd{opacity:1;visibility:visible;}
 .sr-da{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.4rem;
   color:rgba(251,239,220,.75);text-decoration:none;font-family:'Jost',sans-serif;
   font-size:.94rem;font-weight:300;border-bottom:1px solid rgba(251,239,220,.07);
@@ -121,15 +107,14 @@
 /* ── MOBILE/TABLET MENU (випадає вниз) ── */
 .sr-m{position:fixed;top:0;left:0;right:0;bottom:0;
   background:#262524;z-index:800;
-  overflow-y:auto;overflow-x:hidden;
+  overflow-y:scroll;overflow-x:hidden;
   -webkit-overflow-scrolling:touch;
   overscroll-behavior:contain;
   display:none;flex-direction:column;
   padding-top:7.5rem;padding-bottom:3rem;
-  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
-  transform:translateZ(0);will-change:transform;}
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
 .sr-m.is-open{display:block;}
-.sr-m > div,.sr-m > a{display:block;width:100%;}
+.sr-m > div,.sr-m > a{display:block;}
 .sr-ml{display:flex;align-items:center;justify-content:space-between;
   padding:1rem 1.4rem;color:#fbefdc;text-decoration:none;
   font-family:'Jost',sans-serif;font-size:1rem;font-weight:300;letter-spacing:.02em;
@@ -219,11 +204,9 @@
 
     <nav class="sr-n">
       <!-- Somatic Tools -->
-      <div class="sr-ni dd" x-data="{open:false}" @mouseleave="open=false">
-        <a href="{{ site.baseurl }}/en/somatic-tools/all-kits/" class="sr-na"
-           @click="if(!('ontouchstart' in window) || open){return true;} $event.preventDefault(); open=true;"
-           @mouseenter="open=true">Somatic Tools</a>
-        <div class="sr-dd" :class="{'force-open':open}">
+      <div class="sr-ni dd">
+        <a href="{{ site.baseurl }}/en/somatic-tools/all-kits/" class="sr-na">Somatic Tools</a>
+        <div class="sr-dd">
           <a href="{{ site.baseurl }}/en/somatic-tools/our-method/" class="sr-da"><span>Our Method</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           <a href="{{ site.baseurl }}/en/somatic-tools/all-kits/" class="sr-da"><span>All Kits</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           <a href="{{ site.baseurl }}/en/somatic-tools/bundles/" class="sr-da"><span>Bundles</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
@@ -231,11 +214,9 @@
         </div>
       </div>
       <!-- SEL Tools for Kids -->
-      <div class="sr-ni dd" x-data="{open:false}" @mouseleave="open=false">
-        <a href="{{ site.baseurl }}/en/sel-tools/all-books/" class="sr-na"
-           @click="if(!('ontouchstart' in window) || open){return true;} $event.preventDefault(); open=true;"
-           @mouseenter="open=true">SEL Tools for Kids</a>
-        <div class="sr-dd" :class="{'force-open':open}">
+      <div class="sr-ni dd">
+        <a href="{{ site.baseurl }}/en/sel-tools/all-books/" class="sr-na">SEL Tools for Kids</a>
+        <div class="sr-dd">
           <a href="{{ site.baseurl }}/en/sel-tools/our-method/" class="sr-da"><span>Our Method</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           <a href="{{ site.baseurl }}/en/sel-tools/all-books/" class="sr-da"><span>All Books</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           <a href="{{ site.baseurl }}/en/sel-tools/bundles/" class="sr-da"><span>Bundles</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
@@ -243,11 +224,9 @@
         </div>
       </div>
       <!-- For Pros -->
-      <div class="sr-ni dd" x-data="{open:false}" @mouseleave="open=false">
-        <a href="{{ site.baseurl }}/en/for-pros/" class="sr-na"
-           @click="if(!('ontouchstart' in window) || open){return true;} $event.preventDefault(); open=true;"
-           @mouseenter="open=true">For Pros</a>
-        <div class="sr-dd" :class="{'force-open':open}">
+      <div class="sr-ni dd">
+        <a href="{{ site.baseurl }}/en/for-pros/" class="sr-na">For Pros</a>
+        <div class="sr-dd">
           <a href="{{ site.baseurl }}/en/for-pros/pro-kits/" class="sr-da"><span>Pro Kits</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           <a href="{{ site.baseurl }}/en/for-pros/bundles/" class="sr-da"><span>Bundles</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           <a href="{{ site.baseurl }}/en/for-pros/group-pricing/" class="sr-da"><span>Group Pricing</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
@@ -257,11 +236,9 @@
       <a href="{{ site.baseurl }}/en/our-story/" class="sr-na">Our Story</a>
       <a href="{{ site.baseurl }}/en/faqs/" class="sr-na">FAQs</a>
       <!-- Music -->
-      <div class="sr-ni dd" x-data="{open:false}" @mouseleave="open=false">
-        <a href="{{ site.baseurl }}/en/music/" class="sr-na"
-           @click="if(!('ontouchstart' in window) || open){return true;} $event.preventDefault(); open=true;"
-           @mouseenter="open=true">Music</a>
-        <div class="sr-dd" :class="{'force-open':open}">
+      <div class="sr-ni dd">
+        <a href="{{ site.baseurl }}/en/music/" class="sr-na">Music</a>
+        <div class="sr-dd">
           <a href="{{ site.baseurl }}/en/music/somatic-music/" class="sr-da"><span>Somatic Music</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           <a href="{{ site.baseurl }}/en/music/kids-songs/" class="sr-da"><span>Kids Songs</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </div>
@@ -282,7 +259,7 @@
         </div>
       </div>
       <button class="sr-bg" :class="{'op':$store.menu.open}"
-        @click.stop="$store.menu.open=!$store.menu.open">
+        @click.stop="$store.menu.open=!$store.menu.open; $store.menu.open ? document.body.style.overflow='hidden' : document.body.style.overflow=''">
         <span></span><span></span><span></span>
       </button>
     </div>
@@ -291,7 +268,7 @@
 
 <!-- MOBILE/TABLET MENU -->
 <nav class="sr-m" x-data :class="{'is-open':$store.menu.open}" x-cloak
-  @keydown.escape.window="$store.menu.open=false">
+  @keydown.escape.window="$store.menu.open=false; document.body.style.overflow=''">
   <!-- Somatic Tools -->
   <div x-data="{open:false}">
     <button class="sr-ml" :class="{'op':open}" @click.stop="open=!open">
@@ -351,17 +328,13 @@ document.addEventListener('alpine:init', function(){
   Alpine.store('menu', { open: false });
 });
 document.addEventListener('DOMContentLoaded', function(){
-  var path = window.location.pathname.replace(/\/$/, '');
+  var path = window.location.pathname;
   document.querySelectorAll('.sr-na,.sr-ml,.sr-msl,.sr-da').forEach(function(a){
     var href = a.getAttribute('href');
-    if(!href || href === '#') return;
+    if(!href) return;
     try{
-      var lp = new URL(href, window.location.origin).pathname.replace(/\/$/, '');
-      if(lp === '' || lp === '/') return;
-      // точне співпадіння АБО path починається з lp + слеш (повний сегмент)
-      if(path === lp || path.indexOf(lp + '/') === 0){
-        a.classList.add('act');
-      }
+      var lp = new URL(href, window.location.origin).pathname;
+      if(lp !== '/' && path.startsWith(lp)) a.classList.add('act');
     }catch(e){}
   });
 });
