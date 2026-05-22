@@ -18,7 +18,8 @@
 
 .sr-header{display:block;height:5rem;position:sticky;top:0;
   background:#2d2c2b;z-index:900;width:100%;
-  border-bottom:1px solid rgba(251,239,220,.05);}
+  border-bottom:1px solid rgba(251,239,220,.05);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
 .sr-hdr-in{max-width:1600px;width:100%;margin:0 auto;padding:0 clamp(16px,1.5vw,40px);
   height:100%;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:.5rem;}
 
@@ -30,7 +31,8 @@
 .sr-na{position:relative;display:flex;align-items:center;color:#fbefdc;
   text-decoration:none;font-family:'Jost',sans-serif;font-weight:300;
   font-size:clamp(.72rem,.7vw,.94rem);
-  padding:0 clamp(.35rem,.45vw,.9rem);height:100%;white-space:nowrap;transition:color .2s;}
+  padding:0 clamp(.35rem,.45vw,.9rem);height:100%;white-space:nowrap;transition:color .2s;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
 .sr-na:hover{color:rgba(251,239,220,.55);}
 .sr-na.act::after{content:'';position:absolute;bottom:0;left:.9rem;right:.9rem;
   height:1px;background:rgba(251,239,220,.55);}
