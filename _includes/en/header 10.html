@@ -119,42 +119,18 @@
 .sr-bg.op span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg);}
 
 /* ── MOBILE/TABLET MENU (випадає вниз) ── */
-/* Fullscreen overlay menu */
-.sr-m{position:fixed;top:0;left:0;right:0;bottom:0;
-  background:#262524;z-index:1000;
-  display:none;flex-direction:column;
-  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
-.sr-m.is-open{display:flex;}
-
-/* Власний хедер меню */
-.sr-m-head{
-  flex-shrink:0;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 1.5rem;
-  height:5rem;
-  background:#2d2c2b;
-  border-bottom:1px solid rgba(251,239,220,.08);
-}
-.sr-m-logo{flex-shrink:0;text-decoration:none;outline:none;}
-.sr-m-logo img{width:9.5rem;height:auto;display:block;outline:none;border:none;}
-.sr-m-head-r{display:flex;align-items:center;gap:.9rem;}
-.sr-m-close{
-  display:flex;align-items:center;justify-content:center;
-  width:2.2rem;height:2.2rem;
-  background:none;border:none;cursor:pointer;
-  color:#fbefdc;padding:0;border-radius:4px;
-}
-.sr-m-close:hover{background:rgba(251,239,220,.05);}
-
-/* Скролювана частина списку */
-.sr-m-list{
-  flex:1;
+.sr-m{position:fixed;
+  top:0;left:0;right:0;bottom:0;
+  background:#262524;z-index:800;
   overflow-y:auto;overflow-x:hidden;
   -webkit-overflow-scrolling:touch;
   overscroll-behavior:contain;
+  display:none;flex-direction:column;
+  padding-top:var(--header-total-h, 120px);
   padding-bottom:3rem;
-}
-.sr-m-list > div,.sr-m-list > a{display:block;width:100%;}
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+.sr-m.is-open{display:block;}
+.sr-m > div,.sr-m > a{display:block;width:100%;}
 .sr-ml{display:flex;align-items:center;justify-content:space-between;
   padding:1rem 1.4rem;color:#fbefdc;text-decoration:none;
   font-family:'Jost',sans-serif;font-size:1rem;font-weight:300;letter-spacing:.02em;
@@ -197,7 +173,7 @@
   .sr-tb-c{display:none;}
   .sr-tb-marq{display:block;}
   .sr-tb-track{animation:srMarq 32s linear infinite;}
-  .sr-m-head{height:4rem;padding:0 1rem;} .sr-m-logo img{width:8rem;}
+  .sr-m{padding-bottom:2rem;}
   .sr-m .sr-ml{padding-left:1rem;}
   .sr-m .sr-msl{padding-left:2rem;}
   .sr-n{display:none;}
@@ -205,10 +181,8 @@
 }
 /* Ландшафт телефону — компактніше */
 @media (max-height:500px) and (orientation:landscape){
-  .sr-m-head{height:3.5rem;}
-  .sr-m-logo img{width:7rem;}
-  .sr-m .sr-ml{padding-top:.6rem;padding-bottom:.6rem;}
-  .sr-m .sr-msl{padding-top:.5rem;padding-bottom:.5rem;}
+  .sr-m .sr-ml{padding-top:.7rem;padding-bottom:.7rem;}
+  .sr-m .sr-msl{padding-top:.55rem;padding-bottom:.55rem;}
 }
 
 /* Планшет */
@@ -248,13 +222,14 @@
       <div class="sr-ni dd" x-data="{open:false}" @mouseleave="open=false" @click.outside="open=false">
         <a href="{{ site.baseurl }}/en/somatic-tools/all-kits/" class="sr-na"
            @click="
-              if(document.body.classList.contains('is-touch') && !open){
+              var isHoverable = window.matchMedia('(hover: hover)').matches;
+              if(!isHoverable && !open){
                 $event.preventDefault();
                 $event.stopPropagation();
                 open = true;
               }
             "
-           @mouseenter="if(!document.body.classList.contains('is-touch')) open=true">Somatic Tools</a>
+           @mouseenter="if(window.matchMedia('(hover: hover)').matches) open=true">Somatic Tools</a>
         <div class="sr-dd" :class="{'force-open':open}">
           <a href="{{ site.baseurl }}/en/somatic-tools/our-method/" class="sr-da"><span>Our Method</span></a>
           <a href="{{ site.baseurl }}/en/somatic-tools/all-kits/" class="sr-da"><span>All Kits</span></a>
@@ -266,13 +241,14 @@
       <div class="sr-ni dd" x-data="{open:false}" @mouseleave="open=false" @click.outside="open=false">
         <a href="{{ site.baseurl }}/en/sel-tools/all-books/" class="sr-na"
            @click="
-              if(document.body.classList.contains('is-touch') && !open){
+              var isHoverable = window.matchMedia('(hover: hover)').matches;
+              if(!isHoverable && !open){
                 $event.preventDefault();
                 $event.stopPropagation();
                 open = true;
               }
             "
-           @mouseenter="if(!document.body.classList.contains('is-touch')) open=true">SEL Tools for Kids</a>
+           @mouseenter="if(window.matchMedia('(hover: hover)').matches) open=true">SEL Tools for Kids</a>
         <div class="sr-dd" :class="{'force-open':open}">
           <a href="{{ site.baseurl }}/en/sel-tools/our-method/" class="sr-da"><span>Our Method</span></a>
           <a href="{{ site.baseurl }}/en/sel-tools/all-books/" class="sr-da"><span>All Books</span></a>
@@ -284,13 +260,14 @@
       <div class="sr-ni dd" x-data="{open:false}" @mouseleave="open=false" @click.outside="open=false">
         <a href="{{ site.baseurl }}/en/for-pros/" class="sr-na"
            @click="
-              if(document.body.classList.contains('is-touch') && !open){
+              var isHoverable = window.matchMedia('(hover: hover)').matches;
+              if(!isHoverable && !open){
                 $event.preventDefault();
                 $event.stopPropagation();
                 open = true;
               }
             "
-           @mouseenter="if(!document.body.classList.contains('is-touch')) open=true">For Pros</a>
+           @mouseenter="if(window.matchMedia('(hover: hover)').matches) open=true">For Pros</a>
         <div class="sr-dd" :class="{'force-open':open}">
           <a href="{{ site.baseurl }}/en/for-pros/pro-kits/" class="sr-da"><span>Pro Kits</span></a>
           <a href="{{ site.baseurl }}/en/for-pros/bundles/" class="sr-da"><span>Bundles</span></a>
@@ -304,13 +281,14 @@
       <div class="sr-ni dd" x-data="{open:false}" @mouseleave="open=false" @click.outside="open=false">
         <a href="{{ site.baseurl }}/en/music/" class="sr-na"
            @click="
-              if(document.body.classList.contains('is-touch') && !open){
+              var isHoverable = window.matchMedia('(hover: hover)').matches;
+              if(!isHoverable && !open){
                 $event.preventDefault();
                 $event.stopPropagation();
                 open = true;
               }
             "
-           @mouseenter="if(!document.body.classList.contains('is-touch')) open=true">Music</a>
+           @mouseenter="if(window.matchMedia('(hover: hover)').matches) open=true">Music</a>
         <div class="sr-dd" :class="{'force-open':open}">
           <a href="{{ site.baseurl }}/en/music/somatic-music/" class="sr-da"><span>Somatic Music</span></a>
           <a href="{{ site.baseurl }}/en/music/kids-songs/" class="sr-da"><span>Kids Songs</span></a>
@@ -332,44 +310,17 @@
         </div>
       </div>
       <button class="sr-bg" :class="{'op':$store.menu.open}"
-        @click.stop="$store.menu.open=!$store.menu.open; lockBodyScroll($store.menu.open)">
+        @click.stop="$store.menu.open=!$store.menu.open">
         <span></span><span></span><span></span>
       </button>
     </div>
   </div>
 </header>
 
-<!-- MOBILE/TABLET MENU — fullscreen overlay -->
-<div class="sr-m" :class="{'is-open':$store.menu.open}"
+<!-- MOBILE/TABLET MENU -->
+<nav class="sr-m" :class="{'is-open':$store.menu.open}"
   x-data
-  @keydown.escape.window="$store.menu.open=false; lockBodyScroll(false)">
-  <!-- Власний хедер меню (sticky всередині overlay) -->
-  <div class="sr-m-head">
-    <a href="{{ site.baseurl }}/en/" class="sr-m-logo">
-      <img src="{{ site.baseurl }}/assets/global/senserevolt-logo.svg" alt="SenseRevolt">
-    </a>
-    <div class="sr-m-head-r">
-      <!-- Лангуага в меню -->
-      <div class="sr-lw" x-data="{open:false}" @click.outside="open=false">
-        <button class="sr-lb" :class="{'op':open}" @click="open=!open">
-          <span class="sr-lv">En</span>
-          <svg class="sr-lc" :class="{'op':open}" width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <div class="sr-ll" :class="{'is-open':open}">
-          <a href="#" class="sr-lo" @click.prevent.stop="$root.querySelectorAll('.sr-lv').forEach(t=>t.textContent='Uk');open=false">Uk</a>
-          <a href="#" class="sr-lo" @click.prevent.stop="$root.querySelectorAll('.sr-lv').forEach(t=>t.textContent='De');open=false">De</a>
-          <a href="#" class="sr-lo" @click.prevent.stop="$root.querySelectorAll('.sr-lv').forEach(t=>t.textContent='Fr');open=false">Fr</a>
-          <a href="#" class="sr-lo" @click.prevent.stop="$root.querySelectorAll('.sr-lv').forEach(t=>t.textContent='Es');open=false">Es</a>
-        </div>
-      </div>
-      <!-- Закрити -->
-      <button class="sr-m-close" @click="$store.menu.open=false; lockBodyScroll(false)" aria-label="Close menu">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 2l16 16M18 2L2 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-      </button>
-    </div>
-  </div>
-  <!-- Скролювана частина зі списком -->
-  <nav class="sr-m-list">
+  @keydown.escape.window="$store.menu.open=false">
   <!-- Somatic Tools -->
   <div x-data="{open:false}">
     <button class="sr-ml" :class="{'op':open}" @click.stop="open=!open">
@@ -422,32 +373,24 @@
       <a href="{{ site.baseurl }}/en/music/kids-songs/" class="sr-msl">Kids Songs</a>
     </div>
   </div>
-  </nav>
-</div>
+</nav>
 
 <script>
 document.addEventListener('alpine:init', function(){
   Alpine.store('menu', { open: false });
 });
 
-// Body scroll lock коли меню відкрите
-function lockBodyScroll(lock){document.body.style.overflow=lock?"hidden":"";}
-
-// Touch detection — додаємо клас на body
-(function(){
-  function setTouchClass(){
-    if(('ontouchstart' in window) || navigator.maxTouchPoints > 0 || window.matchMedia('(pointer:coarse)').matches){
-      document.body.classList.add('is-touch');
-    } else {
-      document.body.classList.remove('is-touch');
-    }
-  }
-  setTouchClass();
-  // Перевіряємо на першому реальному touch event теж (на випадок detached детекції)
-  window.addEventListener('touchstart', function(){
-    document.body.classList.add('is-touch');
-  }, {once:true, passive:true});
-})();
+// Динамічна висота хедера для правильного позиціонування меню
+function updateHeaderHeight(){
+  var topbar = document.querySelector('.sr-tbw');
+  var header = document.querySelector('.sr-h');
+  if(!topbar || !header) return;
+  var total = topbar.offsetHeight + header.offsetHeight;
+  document.documentElement.style.setProperty('--header-total-h', total + 'px');
+}
+window.addEventListener('load', updateHeaderHeight);
+window.addEventListener('resize', updateHeaderHeight);
+document.addEventListener('DOMContentLoaded', updateHeaderHeight);
 document.addEventListener('DOMContentLoaded', function(){
   var path = window.location.pathname.replace(/\/$/, '');
   // Збираємо всі лінки і їхні шляхи
