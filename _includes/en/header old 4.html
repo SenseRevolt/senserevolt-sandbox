@@ -106,15 +106,10 @@
 
 /* ── MOBILE/TABLET MENU (випадає вниз) ── */
 .sr-m{position:fixed;top:0;left:0;right:0;bottom:0;
-  background:#262524;z-index:800;
-  overflow-y:scroll;overflow-x:hidden;
-  -webkit-overflow-scrolling:touch;
-  overscroll-behavior:contain;
-  display:none;flex-direction:column;
-  padding-top:7.5rem;padding-bottom:3rem;
+  background:#262524;z-index:800;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  display:none;flex-direction:column;padding-top:7.5rem;padding-bottom:2rem;
   -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
-.sr-m.is-open{display:block;}
-.sr-m > div,.sr-m > a{display:block;}
+.sr-m.is-open{display:flex;}
 .sr-ml{display:flex;align-items:center;justify-content:space-between;
   padding:1rem 1.4rem;color:#fbefdc;text-decoration:none;
   font-family:'Jost',sans-serif;font-size:1rem;font-weight:300;letter-spacing:.02em;
@@ -163,11 +158,11 @@
   .sr-n{display:none;}
   .sr-bg{display:flex;}
 }
-/* Ландшафт телефону — компактний padding, гарантовано скролиться */
+/* Ландшафт телефону окремо — менший padding-top щоб меню вміщалось */
 @media (max-height:500px) and (orientation:landscape){
-  .sr-m{padding-top:4.5rem;padding-bottom:3rem;}
+  .sr-m{padding-top:5rem;}
   .sr-m .sr-ml{padding-top:.7rem;padding-bottom:.7rem;}
-  .sr-m .sr-msl{padding-top:.55rem;padding-bottom:.55rem;}
+  .sr-m .sr-msl{padding-top:.6rem;padding-bottom:.6rem;}
 }
 
 /* Планшет */
@@ -203,7 +198,6 @@
     </a>
 
     <nav class="sr-n">
-      <!-- Somatic Tools -->
       <div class="sr-ni dd">
         <a href="{{ site.baseurl }}/en/somatic-tools/all-kits/" class="sr-na">Somatic Tools</a>
         <div class="sr-dd">
@@ -213,36 +207,12 @@
           <a href="{{ site.baseurl }}/en/somatic-tools/extras/" class="sr-da"><span>Extras</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </div>
       </div>
-      <!-- SEL Tools for Kids -->
-      <div class="sr-ni dd">
-        <a href="{{ site.baseurl }}/en/sel-tools/all-books/" class="sr-na">SEL Tools for Kids</a>
-        <div class="sr-dd">
-          <a href="{{ site.baseurl }}/en/sel-tools/our-method/" class="sr-da"><span>Our Method</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          <a href="{{ site.baseurl }}/en/sel-tools/all-books/" class="sr-da"><span>All Books</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          <a href="{{ site.baseurl }}/en/sel-tools/bundles/" class="sr-da"><span>Bundles</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          <a href="{{ site.baseurl }}/en/sel-tools/extras/" class="sr-da"><span>Extras</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        </div>
-      </div>
-      <!-- For Pros -->
-      <div class="sr-ni dd">
-        <a href="{{ site.baseurl }}/en/for-pros/" class="sr-na">For Pros</a>
-        <div class="sr-dd">
-          <a href="{{ site.baseurl }}/en/for-pros/pro-kits/" class="sr-da"><span>Pro Kits</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          <a href="{{ site.baseurl }}/en/for-pros/bundles/" class="sr-da"><span>Bundles</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          <a href="{{ site.baseurl }}/en/for-pros/group-pricing/" class="sr-da"><span>Group Pricing</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        </div>
-      </div>
+      <a href="{{ site.baseurl }}/en/sel-tools/all-books/" class="sr-na">SEL Tools for Kids</a>
+      <a href="{{ site.baseurl }}/en/for-pros/" class="sr-na">For Pros</a>
       <a href="{{ site.baseurl }}/en/blog/" class="sr-na">Blog</a>
       <a href="{{ site.baseurl }}/en/our-story/" class="sr-na">Our Story</a>
       <a href="{{ site.baseurl }}/en/faqs/" class="sr-na">FAQs</a>
-      <!-- Music -->
-      <div class="sr-ni dd">
-        <a href="{{ site.baseurl }}/en/music/" class="sr-na">Music</a>
-        <div class="sr-dd">
-          <a href="{{ site.baseurl }}/en/music/somatic-music/" class="sr-da"><span>Somatic Music</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          <a href="{{ site.baseurl }}/en/music/kids-songs/" class="sr-da"><span>Kids Songs</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        </div>
-      </div>
+      <a href="{{ site.baseurl }}/en/music/" class="sr-na">Music</a>
     </nav>
 
     <div class="sr-r">
@@ -269,58 +239,24 @@
 <!-- MOBILE/TABLET MENU -->
 <nav class="sr-m" x-data :class="{'is-open':$store.menu.open}" x-cloak
   @keydown.escape.window="$store.menu.open=false; document.body.style.overflow=''">
-  <!-- Somatic Tools -->
-  <div x-data="{open:false}">
-    <button class="sr-ml" :class="{'op':open}" @click.stop="open=!open">
+  <div x-data="{somOpen:false}">
+    <button class="sr-ml" :class="{'op':somOpen}" @click.stop="somOpen=!somOpen">
       Somatic Tools
       <svg width="8" height="13" viewBox="0 0 8 13" fill="none"><path d="M1 1l6.5 6-6.5 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
-    <div class="sr-ms" :class="{'is-open':open}" x-cloak>
+    <div class="sr-ms" :class="{'is-open':somOpen}" x-cloak>
       <a href="{{ site.baseurl }}/en/somatic-tools/our-method/" class="sr-msl">Our Method</a>
       <a href="{{ site.baseurl }}/en/somatic-tools/all-kits/" class="sr-msl">All Kits</a>
       <a href="{{ site.baseurl }}/en/somatic-tools/bundles/" class="sr-msl">Bundles</a>
       <a href="{{ site.baseurl }}/en/somatic-tools/extras/" class="sr-msl">Extras</a>
     </div>
   </div>
-  <!-- SEL Tools for Kids -->
-  <div x-data="{open:false}">
-    <button class="sr-ml" :class="{'op':open}" @click.stop="open=!open">
-      SEL Tools for Kids
-      <svg width="8" height="13" viewBox="0 0 8 13" fill="none"><path d="M1 1l6.5 6-6.5 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </button>
-    <div class="sr-ms" :class="{'is-open':open}" x-cloak>
-      <a href="{{ site.baseurl }}/en/sel-tools/our-method/" class="sr-msl">Our Method</a>
-      <a href="{{ site.baseurl }}/en/sel-tools/all-books/" class="sr-msl">All Books</a>
-      <a href="{{ site.baseurl }}/en/sel-tools/bundles/" class="sr-msl">Bundles</a>
-      <a href="{{ site.baseurl }}/en/sel-tools/extras/" class="sr-msl">Extras</a>
-    </div>
-  </div>
-  <!-- For Pros -->
-  <div x-data="{open:false}">
-    <button class="sr-ml" :class="{'op':open}" @click.stop="open=!open">
-      For Pros
-      <svg width="8" height="13" viewBox="0 0 8 13" fill="none"><path d="M1 1l6.5 6-6.5 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </button>
-    <div class="sr-ms" :class="{'is-open':open}" x-cloak>
-      <a href="{{ site.baseurl }}/en/for-pros/pro-kits/" class="sr-msl">Pro Kits</a>
-      <a href="{{ site.baseurl }}/en/for-pros/bundles/" class="sr-msl">Bundles</a>
-      <a href="{{ site.baseurl }}/en/for-pros/group-pricing/" class="sr-msl">Group Pricing</a>
-    </div>
-  </div>
+  <a href="{{ site.baseurl }}/en/sel-tools/all-books/" class="sr-ml">SEL Tools for Kids</a>
+  <a href="{{ site.baseurl }}/en/for-pros/" class="sr-ml">For Pros</a>
   <a href="{{ site.baseurl }}/en/blog/" class="sr-ml">Blog</a>
   <a href="{{ site.baseurl }}/en/our-story/" class="sr-ml">Our Story</a>
   <a href="{{ site.baseurl }}/en/faqs/" class="sr-ml">FAQs</a>
-  <!-- Music -->
-  <div x-data="{open:false}">
-    <button class="sr-ml" :class="{'op':open}" @click.stop="open=!open">
-      Music
-      <svg width="8" height="13" viewBox="0 0 8 13" fill="none"><path d="M1 1l6.5 6-6.5 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </button>
-    <div class="sr-ms" :class="{'is-open':open}" x-cloak>
-      <a href="{{ site.baseurl }}/en/music/somatic-music/" class="sr-msl">Somatic Music</a>
-      <a href="{{ site.baseurl }}/en/music/kids-songs/" class="sr-msl">Kids Songs</a>
-    </div>
-  </div>
+  <a href="{{ site.baseurl }}/en/music/" class="sr-ml">Music</a>
 </nav>
 
 <script>
