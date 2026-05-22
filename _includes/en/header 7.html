@@ -74,13 +74,14 @@
   border:1px solid rgba(251,239,220,.1);border-top:none;min-width:14rem;
   opacity:0;visibility:hidden;transition:opacity .18s,visibility .18s;z-index:200;}
 .sr-ni.dd:hover .sr-dd,.sr-ni.dd:focus-within .sr-dd,.sr-dd.force-open{opacity:1;visibility:visible;}
-.sr-da{display:block;padding:1rem 1.4rem;
+.sr-da{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.4rem;
   color:rgba(251,239,220,.75);text-decoration:none;font-family:'Jost',sans-serif;
   font-size:.94rem;font-weight:300;border-bottom:1px solid rgba(251,239,220,.07);
   transition:color .18s,background .18s;}
 .sr-da:last-child{border-bottom:none;}
 .sr-da:hover{color:#fbefdc;background:rgba(251,239,220,.03);}
-
+.sr-da svg{opacity:.35;transition:transform .18s;}
+.sr-da:hover svg{transform:translateX(2px);opacity:.7;}
 
 /* ── RIGHT ── */
 .sr-r{display:flex;align-items:center;gap:.9rem;justify-self:end;flex-shrink:0;}
@@ -118,16 +119,15 @@
 .sr-bg.op span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg);}
 
 /* ── MOBILE/TABLET MENU (випадає вниз) ── */
-.sr-m{position:fixed;
-  top:7.5rem;  /* починається ПІСЛЯ хедера */
-  left:0;right:0;bottom:0;
+.sr-m{position:fixed;top:0;left:0;right:0;bottom:0;
   background:#262524;z-index:800;
   overflow-y:auto;overflow-x:hidden;
   -webkit-overflow-scrolling:touch;
   overscroll-behavior:contain;
   display:none;flex-direction:column;
-  padding-bottom:3rem;
-  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+  padding-top:7.5rem;padding-bottom:3rem;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  transform:translateZ(0);will-change:transform;}
 .sr-m.is-open{display:block;}
 .sr-m > div,.sr-m > a{display:block;width:100%;}
 .sr-ml{display:flex;align-items:center;justify-content:space-between;
@@ -172,14 +172,15 @@
   .sr-tb-c{display:none;}
   .sr-tb-marq{display:block;}
   .sr-tb-track{animation:srMarq 32s linear infinite;}
-  .sr-m{top:6.2rem;padding-bottom:2rem;}
+  .sr-m{padding-top:6.2rem;padding-bottom:2rem;}
   .sr-m .sr-ml{padding-left:1rem;}
   .sr-m .sr-msl{padding-left:2rem;}
   .sr-n{display:none;}
   .sr-bg{display:flex;}
 }
-/* Ландшафт телефону — компактніше */
+/* Ландшафт телефону — компактний padding, гарантовано скролиться */
 @media (max-height:500px) and (orientation:landscape){
+  .sr-m{padding-top:4.5rem;padding-bottom:3rem;}
   .sr-m .sr-ml{padding-top:.7rem;padding-bottom:.7rem;}
   .sr-m .sr-msl{padding-top:.55rem;padding-bottom:.55rem;}
 }
@@ -218,79 +219,51 @@
 
     <nav class="sr-n">
       <!-- Somatic Tools -->
-      <div class="sr-ni dd" x-data="{open:false}" @mouseleave="open=false" @click.outside="open=false">
+      <div class="sr-ni dd" x-data="{open:false}" @mouseleave="open=false">
         <a href="{{ site.baseurl }}/en/somatic-tools/all-kits/" class="sr-na"
-           @click="
-              var isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
-              if(isTouch && !open){
-                $event.preventDefault();
-                $event.stopPropagation();
-                open = true;
-              }
-            "
+           @click="if(!('ontouchstart' in window) || open){return true;} $event.preventDefault(); open=true;"
            @mouseenter="open=true">Somatic Tools</a>
         <div class="sr-dd" :class="{'force-open':open}">
-          <a href="{{ site.baseurl }}/en/somatic-tools/our-method/" class="sr-da"><span>Our Method</span></a>
-          <a href="{{ site.baseurl }}/en/somatic-tools/all-kits/" class="sr-da"><span>All Kits</span></a>
-          <a href="{{ site.baseurl }}/en/somatic-tools/bundles/" class="sr-da"><span>Bundles</span></a>
-          <a href="{{ site.baseurl }}/en/somatic-tools/extras/" class="sr-da"><span>Extras</span></a>
+          <a href="{{ site.baseurl }}/en/somatic-tools/our-method/" class="sr-da"><span>Our Method</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a href="{{ site.baseurl }}/en/somatic-tools/all-kits/" class="sr-da"><span>All Kits</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a href="{{ site.baseurl }}/en/somatic-tools/bundles/" class="sr-da"><span>Bundles</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a href="{{ site.baseurl }}/en/somatic-tools/extras/" class="sr-da"><span>Extras</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </div>
       </div>
       <!-- SEL Tools for Kids -->
-      <div class="sr-ni dd" x-data="{open:false}" @mouseleave="open=false" @click.outside="open=false">
+      <div class="sr-ni dd" x-data="{open:false}" @mouseleave="open=false">
         <a href="{{ site.baseurl }}/en/sel-tools/all-books/" class="sr-na"
-           @click="
-              var isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
-              if(isTouch && !open){
-                $event.preventDefault();
-                $event.stopPropagation();
-                open = true;
-              }
-            "
+           @click="if(!('ontouchstart' in window) || open){return true;} $event.preventDefault(); open=true;"
            @mouseenter="open=true">SEL Tools for Kids</a>
         <div class="sr-dd" :class="{'force-open':open}">
-          <a href="{{ site.baseurl }}/en/sel-tools/our-method/" class="sr-da"><span>Our Method</span></a>
-          <a href="{{ site.baseurl }}/en/sel-tools/all-books/" class="sr-da"><span>All Books</span></a>
-          <a href="{{ site.baseurl }}/en/sel-tools/bundles/" class="sr-da"><span>Bundles</span></a>
-          <a href="{{ site.baseurl }}/en/sel-tools/extras/" class="sr-da"><span>Extras</span></a>
+          <a href="{{ site.baseurl }}/en/sel-tools/our-method/" class="sr-da"><span>Our Method</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a href="{{ site.baseurl }}/en/sel-tools/all-books/" class="sr-da"><span>All Books</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a href="{{ site.baseurl }}/en/sel-tools/bundles/" class="sr-da"><span>Bundles</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a href="{{ site.baseurl }}/en/sel-tools/extras/" class="sr-da"><span>Extras</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </div>
       </div>
       <!-- For Pros -->
-      <div class="sr-ni dd" x-data="{open:false}" @mouseleave="open=false" @click.outside="open=false">
+      <div class="sr-ni dd" x-data="{open:false}" @mouseleave="open=false">
         <a href="{{ site.baseurl }}/en/for-pros/" class="sr-na"
-           @click="
-              var isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
-              if(isTouch && !open){
-                $event.preventDefault();
-                $event.stopPropagation();
-                open = true;
-              }
-            "
+           @click="if(!('ontouchstart' in window) || open){return true;} $event.preventDefault(); open=true;"
            @mouseenter="open=true">For Pros</a>
         <div class="sr-dd" :class="{'force-open':open}">
-          <a href="{{ site.baseurl }}/en/for-pros/pro-kits/" class="sr-da"><span>Pro Kits</span></a>
-          <a href="{{ site.baseurl }}/en/for-pros/bundles/" class="sr-da"><span>Bundles</span></a>
-          <a href="{{ site.baseurl }}/en/for-pros/group-pricing/" class="sr-da"><span>Group Pricing</span></a>
+          <a href="{{ site.baseurl }}/en/for-pros/pro-kits/" class="sr-da"><span>Pro Kits</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a href="{{ site.baseurl }}/en/for-pros/bundles/" class="sr-da"><span>Bundles</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a href="{{ site.baseurl }}/en/for-pros/group-pricing/" class="sr-da"><span>Group Pricing</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </div>
       </div>
       <a href="{{ site.baseurl }}/en/blog/" class="sr-na">Blog</a>
       <a href="{{ site.baseurl }}/en/our-story/" class="sr-na">Our Story</a>
       <a href="{{ site.baseurl }}/en/faqs/" class="sr-na">FAQs</a>
       <!-- Music -->
-      <div class="sr-ni dd" x-data="{open:false}" @mouseleave="open=false" @click.outside="open=false">
+      <div class="sr-ni dd" x-data="{open:false}" @mouseleave="open=false">
         <a href="{{ site.baseurl }}/en/music/" class="sr-na"
-           @click="
-              var isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
-              if(isTouch && !open){
-                $event.preventDefault();
-                $event.stopPropagation();
-                open = true;
-              }
-            "
+           @click="if(!('ontouchstart' in window) || open){return true;} $event.preventDefault(); open=true;"
            @mouseenter="open=true">Music</a>
         <div class="sr-dd" :class="{'force-open':open}">
-          <a href="{{ site.baseurl }}/en/music/somatic-music/" class="sr-da"><span>Somatic Music</span></a>
-          <a href="{{ site.baseurl }}/en/music/kids-songs/" class="sr-da"><span>Kids Songs</span></a>
+          <a href="{{ site.baseurl }}/en/music/somatic-music/" class="sr-da"><span>Somatic Music</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a href="{{ site.baseurl }}/en/music/kids-songs/" class="sr-da"><span>Kids Songs</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </div>
       </div>
     </nav>
