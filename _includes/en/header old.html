@@ -24,21 +24,7 @@
 
 /* Desktop: grid — точне центрування nav */
 .sr-hdr-in{max-width:1600px;width:100%;margin:0 auto;padding:0 2rem;
-  height:100%;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
-  min-width:0;}
-/* 1920+ — масштабуємо */
-@media(min-width:1920px){
-  .sr-hdr-in{max-width:1920px;}
-  .sr-logo img{width:13rem;}
-  .sr-header{height:5.5rem;}
-}
-/* 2560+ */
-@media(min-width:2560px){
-  .sr-hdr-in{max-width:2400px;}
-  .sr-logo img{width:15rem;}
-  .sr-header{height:6rem;}
-  .sr-na{font-size:1.05rem;padding:0 1.1rem;}
-}
+  height:100%;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;}
 
 /* Планшет/мобайл: flex — лого зліва, права частина справа, nav прихований */
 @media(max-width:1279px){
@@ -46,33 +32,29 @@
 }
 
 /* LOGO */
-.sr-logo{text-decoration:none;justify-self:start;flex-shrink:0;min-width:0;}
+.sr-logo{text-decoration:none;justify-self:start;flex-shrink:0;}
 .sr-logo img{width:11.83rem;height:auto;display:block;object-fit:contain;}
 @media(max-width:1279px){.sr-logo img{width:9.5rem;}}
 @media(max-width:767px){.sr-logo img{width:8rem;}}
 
 /* DESKTOP NAV */
-.sr-nav{display:flex;align-items:stretch;height:5rem;justify-content:center;min-width:0;overflow:hidden;}
+.sr-nav{display:flex;align-items:stretch;height:5rem;justify-content:center;}
 .sr-ni{position:relative;display:flex;align-items:center;}
 .sr-na{position:relative;display:flex;align-items:center;color:#fbefdc;
   text-decoration:none;font-family:'Jost',sans-serif;font-weight:300;font-size:.94rem;
-  padding:0 .7rem;height:100%;white-space:nowrap;transition:color .2s;
+  padding:0 .9rem;height:100%;white-space:nowrap;transition:color .2s;
   -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
-/* від 1500px — нормальні відступи */
-@media(min-width:1500px){
-  .sr-na{padding:0 .9rem;}
-}
 .sr-na:hover{color:rgba(251,239,220,.55);}
-.sr-na.act::after{content:'';position:absolute;bottom:0;left:.7rem;right:.7rem;
+.sr-na.act::after{content:'';position:absolute;bottom:0;left:.9rem;right:.9rem;
   height:1px;background:rgba(251,239,220,.55);}
-@media(min-width:1500px){
-  .sr-na.act::after{left:.9rem;right:.9rem;}
-}
 .sr-ni:not(:last-child) .sr-na::before,
 .sr-nav>.sr-na:not(:last-child)::before{content:'';position:absolute;right:0;top:50%;
   transform:translateY(-50%);width:1px;height:.8rem;background:rgba(251,239,220,.2);}
 
-/* nav шрифт однаковий з dropdown на всіх десктопних розмірах */
+/* На великих екранах 1600+ зменшуємо шрифт і відступи пропорційно */
+@media(min-width:1600px){
+  .sr-na{font-size:.88rem;padding:0 .75rem;}
+}
 
 /* DROPDOWN */
 .sr-ni.dd{position:relative;}
