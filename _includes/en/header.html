@@ -1,197 +1,228 @@
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+<style>
+[x-cloak]{display:none!important;}
+
+.sr-topbar-wrap{display:block;background:#2d2c2b;width:100%;}
+.sr-topbar{height:2.5rem;display:flex;align-items:center;justify-content:center;
+  border-bottom:1px solid rgba(251,239,220,.08);overflow:hidden;width:100%;}
+.sr-tb-text{font-family:'Jost',sans-serif;font-size:.78rem;font-weight:300;
+  letter-spacing:.03em;color:rgba(251,239,220,.6);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 1rem;}
+.sr-tb-marq{display:none;width:100%;overflow:hidden;white-space:nowrap;
+  font-family:'Jost',sans-serif;font-size:.72rem;font-weight:300;
+  letter-spacing:.03em;color:rgba(251,239,220,.6);}
+.sr-tb-track{display:inline-flex;}
+.sr-tb-track span{white-space:nowrap;padding-right:3rem;}
+@keyframes srM{from{transform:translateX(0)}to{transform:translateX(-33.333%)}}
+
+.sr-header{display:block;height:5rem;position:sticky;top:0;
+  background:#2d2c2b;z-index:900;width:100%;
+  border-bottom:1px solid rgba(251,239,220,.05);}
+.sr-hdr-in{max-width:1600px;width:100%;margin:0 auto;padding:0 20px;
+  height:100%;display:flex;align-items:center;justify-content:space-between;gap:1rem;}
+
+.sr-logo{flex-shrink:0;text-decoration:none;}
+.sr-logo img{width:11.83rem;height:auto;display:block;object-fit:contain;}
+
+.sr-nav{display:flex;align-items:stretch;height:5rem;flex:1;justify-content:center;}
+.sr-ni{position:relative;display:flex;align-items:center;}
+.sr-na{position:relative;display:flex;align-items:center;color:#fbefdc;
+  text-decoration:none;font-family:'Jost',sans-serif;font-weight:300;font-size:.94rem;
+  padding:0 .9rem;height:100%;white-space:nowrap;transition:color .2s;}
+.sr-na:hover{color:rgba(251,239,220,.55);}
+.sr-na.act::after{content:'';position:absolute;bottom:0;left:.9rem;right:.9rem;
+  height:1px;background:rgba(251,239,220,.55);}
+.sr-ni:not(:last-child) .sr-na::before,
+.sr-nav>.sr-na:not(:last-child)::before{content:'';position:absolute;right:0;top:50%;
+  transform:translateY(-50%);width:1px;height:.8rem;background:rgba(251,239,220,.2);}
+
+.sr-ni.dd{position:relative;}
+.sr-dd{position:absolute;top:100%;left:0;background:#2d2c2b;
+  border:1px solid rgba(251,239,220,.1);border-top:none;min-width:14rem;
+  opacity:0;visibility:hidden;transition:opacity .18s,visibility .18s;z-index:200;}
+.sr-ni.dd:hover .sr-dd,.sr-ni.dd:focus-within .sr-dd{opacity:1;visibility:visible;}
+.sr-da{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.4rem;
+  color:rgba(251,239,220,.75);text-decoration:none;font-family:'Jost',sans-serif;
+  font-size:.94rem;font-weight:300;border-bottom:1px solid rgba(251,239,220,.07);
+  transition:color .18s,background .18s;}
+.sr-da:last-child{border-bottom:none;}
+.sr-da:hover{color:#fbefdc;background:rgba(251,239,220,.03);}
+.sr-da svg{opacity:.35;transition:transform .18s;}
+.sr-da:hover svg{transform:translateX(2px);opacity:.7;}
+
+.sr-hdr-r{display:flex;align-items:center;gap:.9rem;flex-shrink:0;}
+
+/* LANG */
+.sr-lang-wrap{position:relative;}
+.sr-lb{display:flex;align-items:center;gap:.3rem;min-width:3.8rem;
+  border:1px solid rgba(251,239,220,.35);padding:.25rem .6rem;border-radius:4px;
+  font-family:'Jost',sans-serif;font-size:.83rem;font-weight:300;
+  background:none;color:#fbefdc;cursor:pointer;transition:border-color .2s;white-space:nowrap;}
+.sr-lb:hover{border-color:rgba(251,239,220,.7);}
+.sr-lb.is-open{border-radius:4px 4px 0 0;border-bottom-color:#2d2c2b;}
+.sr-lc{opacity:.5;transition:transform .2s;flex-shrink:0;}
+.sr-lc.is-open{transform:rotate(180deg);}
+.sr-ll{position:absolute;top:100%;left:0;min-width:100%;z-index:300;
+  display:flex;flex-direction:column;}
+.sr-lo{display:block;border-left:1px solid rgba(251,239,220,.35);
+  border-right:1px solid rgba(251,239,220,.35);
+  border-bottom:1px solid rgba(251,239,220,.35);border-top:none;
+  padding:.28rem .6rem;background:#2d2c2b;color:rgba(251,239,220,.6);
+  text-decoration:none;font-family:'Jost',sans-serif;font-size:.83rem;font-weight:300;
+  white-space:nowrap;transition:color .18s,background .18s;}
+.sr-lo:last-child{border-radius:0 0 3px 3px;}
+.sr-lo:hover{color:#fbefdc;background:#333231;}
+
+/* BURGER */
+.sr-bg{display:none;flex-direction:column;justify-content:center;align-items:center;
+  width:2.2rem;height:2.2rem;background:none;border:none;cursor:pointer;
+  padding:.35rem;border-radius:4px;flex-shrink:0;}
+.sr-bg span{display:block;width:22px;height:1.5px;background:#fbefdc;border-radius:2px;
+  margin:3px 0;transition:transform .28s,opacity .28s;transform-origin:center;}
+.sr-bg.is-open span:nth-child(1){transform:translateY(7.5px) rotate(45deg);}
+.sr-bg.is-open span:nth-child(2){opacity:0;transform:scaleX(0);}
+.sr-bg.is-open span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg);}
+
+/* MOBILE MENU */
+.sr-menu{position:fixed;top:0;left:0;right:0;bottom:0;
+  background:#262524;z-index:800;overflow-y:auto;
+  display:flex;flex-direction:column;padding-top:7.5rem;}
+.sr-mlink{display:flex;align-items:center;justify-content:space-between;
+  padding:1rem 1.4rem;color:#fbefdc;text-decoration:none;
+  font-family:'Jost',sans-serif;font-size:1rem;font-weight:300;letter-spacing:.02em;
+  border-bottom:1px solid rgba(251,239,220,.06);
+  background:none;border-left:none;border-right:none;border-top:none;
+  width:100%;cursor:pointer;transition:background .18s;text-align:left;}
+.sr-mlink:hover{background:rgba(251,239,220,.03);}
+.sr-mlink svg{opacity:.35;transition:transform .2s;flex-shrink:0;}
+.sr-mlink.is-open svg{transform:rotate(90deg);}
+.sr-msub{display:flex;flex-direction:column;background:#1e1d1c;}
+.sr-mslink{display:block;padding:.85rem 2rem;color:rgba(251,239,220,.65);
+  text-decoration:none;font-family:'Jost',sans-serif;font-size:.94rem;font-weight:300;
+  border-bottom:1px solid rgba(251,239,220,.05);transition:color .18s,background .18s;}
+.sr-mslink:hover{color:#fbefdc;background:rgba(251,239,220,.03);}
+
+@media(min-width:1280px){
+  .sr-bg{display:none!important;}
+}
+@media(max-width:1279px){
+  .sr-nav{display:none;}
+  .sr-bg{display:flex;}
+}
+@media(max-width:767px){
+  .sr-header{height:4rem;}
+  .sr-logo img{width:8rem;}
+  .sr-topbar{height:2.2rem;}
+  .sr-tb-text{display:none;}
+  .sr-tb-marq{display:block;}
+  .sr-tb-track{animation:srM 32s linear infinite;}
+  .sr-menu{padding-top:6.2rem;}
+}
+@media(max-width:1279px) and (min-width:768px){
+  .sr-logo img{width:9.5rem;}
+}
+</style>
+
 <!-- TOP BAR -->
 <div class="sr-topbar-wrap">
-    <!-- Режим вітання (активний) -->
-    <div class="sr-topbar sr-topbar--welcome">
-        <div class="sr-container">
-            <span class="sr-topbar-text">Welcome to a world where emotions make sense ✦ Tools for your nervous system and your child's inner life ✦ Made in Ukraine</span>
-        </div>
-        <div class="sr-topbar-marquee" aria-hidden="true">
-            <div class="sr-topbar-track">
-                <span>Welcome to a world where emotions make sense ✦ Tools for your nervous system and your child's inner life ✦ Made in Ukraine ✦ &nbsp;&nbsp;&nbsp;</span><span>Welcome to a world where emotions make sense ✦ Tools for your nervous system and your child's inner life ✦ Made in Ukraine ✦ &nbsp;&nbsp;&nbsp;</span><span>Welcome to a world where emotions make sense ✦ Tools for your nervous system and your child's inner life ✦ Made in Ukraine ✦ &nbsp;&nbsp;&nbsp;</span>
-            </div>
-        </div>
+  <div class="sr-topbar">
+    <span class="sr-tb-text">Welcome to a world where emotions make sense ✦ Tools for your nervous system and your child's inner life ✦ Made in Ukraine</span>
+    <div class="sr-tb-marq" aria-hidden="true">
+      <div class="sr-tb-track">
+        <span>Welcome to a world where emotions make sense ✦ Tools for your nervous system and your child's inner life ✦ Made in Ukraine ✦ </span>
+        <span>Welcome to a world where emotions make sense ✦ Tools for your nervous system and your child's inner life ✦ Made in Ukraine ✦ </span>
+        <span>Welcome to a world where emotions make sense ✦ Tools for your nervous system and your child's inner life ✦ Made in Ukraine ✦ </span>
+      </div>
     </div>
-    <!-- Режим таймера (прихований; прибери style="display:none" коли треба) -->
-    <div class="sr-topbar sr-topbar--launch" style="display:none">
-        <div class="sr-container sr-topbar-launch-inner">
-            <span class="sr-topbar-label">Anger Kit Vol.2 — Coming Soon</span>
-            <div class="sr-timer">
-                <span class="sr-timer-box" id="tb-days">00</span><span class="sr-timer-sep">:</span><span class="sr-timer-box" id="tb-hours">00</span><span class="sr-timer-sep">:</span><span class="sr-timer-box" id="tb-mins">00</span><span class="sr-timer-sep">:</span><span class="sr-timer-box" id="tb-secs">00</span>
-            </div>
-            <a href="#" class="sr-preorder-btn">Pre-Order Now</a>
-        </div>
-    </div>
+  </div>
 </div>
 
-<!-- MAIN HEADER -->
-<header class="sr-header" role="banner">
-    <div class="sr-container sr-header-inner">
+<!-- HEADER -->
+<header class="sr-header" x-data="{ langOpen: false, currentLang: 'En' }">
+  <div class="sr-hdr-in">
+    <a href="{{ site.baseurl }}/en/" class="sr-logo">
+      <img src="{{ site.baseurl }}/assets/global/senserevolt-logo.svg" alt="SenseRevolt">
+    </a>
 
-        <!-- LOGO -->
-        <a href="{{ site.baseurl }}/en/" class="sr-logo" aria-label="SenseRevolt">
-            <img src="{{ site.baseurl }}/assets/global/senserevolt-logo.svg" alt="SenseRevolt" width="213" height="46">
-        </a>
-
-        <!-- DESKTOP NAV -->
-        <nav class="sr-nav" aria-label="Main navigation">
-            <div class="sr-nav-item sr-nav-item--dd">
-                <a href="{{ site.baseurl }}/en/somatic-tools/all-kits/" class="sr-nav-link">Somatic Tools</a>
-                <div class="sr-dropdown">
-                    <a href="{{ site.baseurl }}/en/somatic-tools/our-method/" class="sr-dd-link"><span>Our Method</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-                    <a href="{{ site.baseurl }}/en/somatic-tools/all-kits/" class="sr-dd-link"><span>All Kits</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-                    <a href="{{ site.baseurl }}/en/somatic-tools/bundles/" class="sr-dd-link"><span>Bundles</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-                    <a href="{{ site.baseurl }}/en/somatic-tools/extras/" class="sr-dd-link"><span>Extras</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-                </div>
-            </div>
-            <a href="{{ site.baseurl }}/en/sel-tools/all-books/" class="sr-nav-link">SEL Tools for Kids</a>
-            <a href="{{ site.baseurl }}/en/for-pros/" class="sr-nav-link">For Pros</a>
-            <a href="{{ site.baseurl }}/en/blog/" class="sr-nav-link">Blog</a>
-            <a href="{{ site.baseurl }}/en/our-story/" class="sr-nav-link">Our Story</a>
-            <a href="{{ site.baseurl }}/en/faqs/" class="sr-nav-link">FAQs</a>
-            <a href="{{ site.baseurl }}/en/music/" class="sr-nav-link">Music</a>
-        </nav>
-
-        <!-- RIGHT -->
-        <div class="sr-header-right">
-            <!-- Мова -->
-            <div class="sr-lang" id="sr-lang">
-                <button class="sr-lang-btn" id="sr-lang-btn" aria-expanded="false">
-                    <span class="sr-lang-current">En</span>
-                    <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </button>
-                <div class="sr-lang-list" id="sr-lang-list" hidden>
-                    <a href="#" class="sr-lang-opt" data-lang="Uk" hreflang="uk">Uk</a>
-                    <a href="#" class="sr-lang-opt" data-lang="De" hreflang="de">De</a>
-                    <a href="#" class="sr-lang-opt" data-lang="Fr" hreflang="fr">Fr</a>
-                    <a href="#" class="sr-lang-opt" data-lang="Es" hreflang="es">Es</a>
-                </div>
-            </div>
-            <!-- Бургер -->
-            <button class="sr-burger" id="sr-burger" aria-label="Open menu" aria-expanded="false">
-                <span></span><span></span><span></span>
-            </button>
+    <nav class="sr-nav">
+      <div class="sr-ni dd">
+        <a href="{{ site.baseurl }}/en/somatic-tools/all-kits/" class="sr-na">Somatic Tools</a>
+        <div class="sr-dd">
+          <a href="{{ site.baseurl }}/en/somatic-tools/our-method/" class="sr-da"><span>Our Method</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a href="{{ site.baseurl }}/en/somatic-tools/all-kits/" class="sr-da"><span>All Kits</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a href="{{ site.baseurl }}/en/somatic-tools/bundles/" class="sr-da"><span>Bundles</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a href="{{ site.baseurl }}/en/somatic-tools/extras/" class="sr-da"><span>Extras</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </div>
+      </div>
+      <a href="{{ site.baseurl }}/en/sel-tools/all-books/" class="sr-na">SEL Tools for Kids</a>
+      <a href="{{ site.baseurl }}/en/for-pros/" class="sr-na">For Pros</a>
+      <a href="{{ site.baseurl }}/en/blog/" class="sr-na">Blog</a>
+      <a href="{{ site.baseurl }}/en/our-story/" class="sr-na">Our Story</a>
+      <a href="{{ site.baseurl }}/en/faqs/" class="sr-na">FAQs</a>
+      <a href="{{ site.baseurl }}/en/music/" class="sr-na">Music</a>
+    </nav>
+
+    <div class="sr-hdr-r">
+      <!-- Lang -->
+      <div class="sr-lang-wrap" @click.outside="langOpen = false">
+        <button class="sr-lb" :class="{ 'is-open': langOpen }" @click="langOpen = !langOpen">
+          <span x-text="currentLang">En</span>
+          <svg class="sr-lc" :class="{ 'is-open': langOpen }" width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="sr-ll" x-show="langOpen" x-cloak>
+          <a href="#" class="sr-lo" @click.prevent="currentLang='Uk'; langOpen=false">Uk</a>
+          <a href="#" class="sr-lo" @click.prevent="currentLang='De'; langOpen=false">De</a>
+          <a href="#" class="sr-lo" @click.prevent="currentLang='Fr'; langOpen=false">Fr</a>
+          <a href="#" class="sr-lo" @click.prevent="currentLang='Es'; langOpen=false">Es</a>
+        </div>
+      </div>
+      <!-- Burger -->
+      <button class="sr-bg" :class="{ 'is-open': $store.menu.open }"
+        @click="if(window.innerWidth < 1280){ $store.menu.open = !$store.menu.open; $store.menu.open ? document.body.style.overflow='hidden' : document.body.style.overflow='' }">
+        <span></span><span></span><span></span>
+      </button>
     </div>
+  </div>
 </header>
 
-<!-- MENU OVERLAY (планшет + мобайл) -->
-<div class="sr-menu" id="sr-menu" hidden>
-    <div class="sr-menu-backdrop" id="sr-menu-backdrop"></div>
-    <div class="sr-menu-panel">
-        <!-- Panel top -->
-        <div class="sr-menu-head">
-            <a href="{{ site.baseurl }}/en/" class="sr-menu-logo">
-                <img src="{{ site.baseurl }}/assets/global/senserevolt-logo.svg" alt="SenseRevolt" width="144" height="31">
-            </a>
-            <div class="sr-menu-head-right">
-                <!-- Мова в меню -->
-                <div class="sr-lang sr-lang--menu">
-                    <button class="sr-lang-btn" aria-expanded="false">
-                        <span class="sr-lang-current">En</span>
-                        <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    </button>
-                    <div class="sr-lang-list" hidden>
-                        <a href="#" class="sr-lang-opt" data-lang="Uk" hreflang="uk">Uk</a>
-                        <a href="#" class="sr-lang-opt" data-lang="De" hreflang="de">De</a>
-                        <a href="#" class="sr-lang-opt" data-lang="Fr" hreflang="fr">Fr</a>
-                        <a href="#" class="sr-lang-opt" data-lang="Es" hreflang="es">Es</a>
-                    </div>
-                </div>
-                <button class="sr-menu-close" id="sr-menu-close" aria-label="Close menu">
-                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 2l14 14M16 2L2 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                </button>
-            </div>
-        </div>
-
-        <!-- TABLET: два стовпці -->
-        <div class="sr-menu-tablet">
-            <!-- Права колонка: список -->
-            <nav class="sr-menu-nav-col">
-                <a href="{{ site.baseurl }}/en/somatic-tools/all-kits/" class="sr-menu-link" data-sub="somatic">
-                    <svg width="8" height="13" viewBox="0 0 8 13" fill="none"><path d="M7 1L1 6.5l6 5.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    Somatic Tools
-                </a>
-                <a href="{{ site.baseurl }}/en/sel-tools/all-books/" class="sr-menu-link">
-                    <svg width="8" height="13" viewBox="0 0 8 13" fill="none"><path d="M7 1L1 6.5l6 5.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    SEL Tools for Kids
-                </a>
-                <a href="{{ site.baseurl }}/en/for-pros/" class="sr-menu-link">
-                    <svg width="8" height="13" viewBox="0 0 8 13" fill="none"><path d="M7 1L1 6.5l6 5.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    For Pros
-                </a>
-                <a href="{{ site.baseurl }}/en/our-story/" class="sr-menu-link">
-                    <svg width="8" height="13" viewBox="0 0 8 13" fill="none"><path d="M7 1L1 6.5l6 5.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    Our Story
-                </a>
-                <a href="{{ site.baseurl }}/en/blog/" class="sr-menu-link">
-                    <svg width="8" height="13" viewBox="0 0 8 13" fill="none"><path d="M7 1L1 6.5l6 5.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    Blog
-                </a>
-                <a href="{{ site.baseurl }}/en/faqs/" class="sr-menu-link">
-                    <svg width="8" height="13" viewBox="0 0 8 13" fill="none"><path d="M7 1L1 6.5l6 5.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    FAQs
-                </a>
-                <a href="{{ site.baseurl }}/en/music/" class="sr-menu-link">
-                    <svg width="8" height="13" viewBox="0 0 8 13" fill="none"><path d="M7 1L1 6.5l6 5.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    Music
-                </a>
-            </nav>
-            <!-- Ліва колонка: підменю (виїздить зліва) -->
-            <div class="sr-menu-sub-col" id="sr-sub-col" hidden>
-                <a href="{{ site.baseurl }}/en/somatic-tools/our-method/" class="sr-sub-link"><span>Our Method</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-                <a href="{{ site.baseurl }}/en/somatic-tools/all-kits/" class="sr-sub-link"><span>All Kits</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-                <a href="{{ site.baseurl }}/en/somatic-tools/bundles/" class="sr-sub-link"><span>Bundles</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-                <a href="{{ site.baseurl }}/en/somatic-tools/extras/" class="sr-sub-link"><span>Extras</span><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-            </div>
-        </div>
-
-        <!-- MOBILE: один стовпець + підменю overlay -->
-        <div class="sr-menu-mobile">
-            <nav class="sr-mob-nav">
-                <button class="sr-mob-link sr-mob-trigger" data-sub="sr-mob-sub">
-                    <svg width="8" height="13" viewBox="0 0 8 13" fill="none"><path d="M7 1L1 6.5l6 5.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <span>Somatic Tools</span>
-                </button>
-                <a href="{{ site.baseurl }}/en/sel-tools/all-books/" class="sr-mob-link">
-                    <svg width="8" height="13" viewBox="0 0 8 13" fill="none"><path d="M7 1L1 6.5l6 5.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <span>SEL Tools for Kids</span>
-                </a>
-                <a href="{{ site.baseurl }}/en/for-pros/" class="sr-mob-link">
-                    <svg width="8" height="13" viewBox="0 0 8 13" fill="none"><path d="M7 1L1 6.5l6 5.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <span>For Pros</span>
-                </a>
-                <a href="{{ site.baseurl }}/en/our-story/" class="sr-mob-link">
-                    <svg width="8" height="13" viewBox="0 0 8 13" fill="none"><path d="M7 1L1 6.5l6 5.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <span>Our Story</span>
-                </a>
-                <a href="{{ site.baseurl }}/en/blog/" class="sr-mob-link">
-                    <svg width="8" height="13" viewBox="0 0 8 13" fill="none"><path d="M7 1L1 6.5l6 5.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <span>Blog</span>
-                </a>
-                <a href="{{ site.baseurl }}/en/faqs/" class="sr-mob-link">
-                    <svg width="8" height="13" viewBox="0 0 8 13" fill="none"><path d="M7 1L1 6.5l6 5.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <span>FAQs</span>
-                </a>
-                <a href="{{ site.baseurl }}/en/music/" class="sr-mob-link">
-                    <svg width="8" height="13" viewBox="0 0 8 13" fill="none"><path d="M7 1L1 6.5l6 5.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <span>Music</span>
-                </a>
-            </nav>
-            <!-- Підменю overlay -->
-            <div class="sr-mob-sub" id="sr-mob-sub" hidden>
-                <div class="sr-mob-sub-head">
-                    <button class="sr-mob-back" aria-label="Back">
-                        <svg width="10" height="17" viewBox="0 0 10 17" fill="none"><path d="M9 1L1 8.5 9 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    </button>
-                    <span>Somatic Tools</span>
-                    <span style="width:2rem"></span>
-                </div>
-                <a href="{{ site.baseurl }}/en/somatic-tools/our-method/" class="sr-mob-sub-link">Our Method</a>
-                <a href="{{ site.baseurl }}/en/somatic-tools/all-kits/" class="sr-mob-sub-link">All Kits</a>
-                <a href="{{ site.baseurl }}/en/somatic-tools/bundles/" class="sr-mob-sub-link">Bundles</a>
-                <a href="{{ site.baseurl }}/en/somatic-tools/extras/" class="sr-mob-sub-link">Extras</a>
-            </div>
-        </div>
-
+<!-- MOBILE MENU -->
+<nav class="sr-menu" x-data x-show="$store.menu.open && window.innerWidth < 1280" x-cloak @keydown.escape.window="$store.menu.open = false">
+  <div x-data="{ somOpen: false }">
+    <!-- Somatic Tools -->
+    <button class="sr-mlink" :class="{ 'is-open': somOpen }" @click="somOpen = !somOpen">
+      Somatic Tools
+      <svg width="8" height="13" viewBox="0 0 8 13" fill="none"><path d="M1 1l6.5 6-6.5 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="sr-msub" x-show="somOpen">
+      <a href="{{ site.baseurl }}/en/somatic-tools/our-method/" class="sr-mslink">Our Method</a>
+      <a href="{{ site.baseurl }}/en/somatic-tools/all-kits/" class="sr-mslink">All Kits</a>
+      <a href="{{ site.baseurl }}/en/somatic-tools/bundles/" class="sr-mslink">Bundles</a>
+      <a href="{{ site.baseurl }}/en/somatic-tools/extras/" class="sr-mslink">Extras</a>
     </div>
-</div>
+  </div>
+  <a href="{{ site.baseurl }}/en/sel-tools/all-books/" class="sr-mlink">SEL Tools for Kids</a>
+  <a href="{{ site.baseurl }}/en/for-pros/" class="sr-mlink">For Pros</a>
+  <a href="{{ site.baseurl }}/en/blog/" class="sr-mlink">Blog</a>
+  <a href="{{ site.baseurl }}/en/our-story/" class="sr-mlink">Our Story</a>
+  <a href="{{ site.baseurl }}/en/faqs/" class="sr-mlink">FAQs</a>
+  <a href="{{ site.baseurl }}/en/music/" class="sr-mlink">Music</a>
+</nav>
+
+<script>
+document.addEventListener('alpine:init', function() {
+  Alpine.store('menu', { open: false });
+});
+// Активна сторінка
+document.addEventListener('DOMContentLoaded', function(){
+  var path = window.location.pathname;
+  document.querySelectorAll('.sr-na,.sr-mlink,.sr-mslink,.sr-da').forEach(function(a){
+    var href = a.getAttribute('href');
+    if(!href) return;
+    try{
+      var lp = new URL(href, window.location.origin).pathname;
+      if(lp !== '/' && path.startsWith(lp)) a.classList.add('act');
+    }catch(e){}
+  });
+});
+</script>
