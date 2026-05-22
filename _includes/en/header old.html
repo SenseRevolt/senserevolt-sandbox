@@ -16,7 +16,7 @@
   font-family:'Jost',sans-serif;font-size:.78rem;font-weight:300;
   letter-spacing:.03em;color:rgba(251,239,220,.6);
   -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
-.sr-tb-c{max-width:var(--max-width,1600px);width:100%;margin:0 auto;padding:0 var(--margin,20px);text-align:center;}
+.sr-tb-c{max-width:1600px;width:100%;margin:0 auto;padding:0 2rem;text-align:center;}
 .sr-tb-c span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:inline-block;max-width:100%;}
 .sr-tb-marq{display:none;width:100%;overflow:hidden;white-space:nowrap;
   -webkit-mask-image:linear-gradient(to right,transparent 0%,black 5%,black 95%,transparent 100%);
@@ -29,7 +29,7 @@
 .sr-h{background:#2d2c2b;position:sticky;top:0;z-index:900;width:100%;
   border-bottom:1px solid rgba(251,239,220,.05);
   -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
-.sr-h-in{max-width:var(--max-width,1600px);width:100%;margin:0 auto;padding:0 var(--margin,20px);
+.sr-h-in{max-width:1600px;width:100%;margin:0 auto;padding:0 2rem;
   height:5rem;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:1rem;}
 
 /* На планшеті/мобайлі — flex замість grid */
@@ -143,21 +143,18 @@
 
 /* Мобайл */
 @media(max-width:767px){
-  .sr-h-in{height:4rem;padding:0 1rem;}
+  .sr-h-in{height:4rem;}
   .sr-logo img{width:8rem;}
   .sr-tb{height:2.2rem;font-size:.7rem;}
   .sr-tb-c{display:none;}
   .sr-tb-marq{display:block;}
   .sr-tb-track{animation:srMarq 32s linear infinite;}
   .sr-m{padding-top:6.2rem;}
-  .sr-m .sr-ml{padding-left:1rem;}
-  .sr-m .sr-msl{padding-left:2rem;}
 }
 
 /* Планшет */
 @media(max-width:1279px) and (min-width:768px){
   .sr-logo img{width:9.5rem;}
-  .sr-h-in{padding:0 1.5rem;}
 }
 
 /* Контент завжди max 1600px на всіх розмірах — сітка не розтягується */
@@ -218,7 +215,7 @@
         </div>
       </div>
       <button class="sr-bg" :class="{'op':$store.menu.open}"
-        @click.stop="$store.menu.open=!$store.menu.open; $store.menu.open ? document.body.style.overflow='hidden' : document.body.style.overflow=''">
+        @click="$store.menu.open=!$store.menu.open; $store.menu.open ? document.body.style.overflow='hidden' : document.body.style.overflow=''">
         <span></span><span></span><span></span>
       </button>
     </div>
