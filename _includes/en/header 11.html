@@ -1,0 +1,485 @@
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+<style>
+[x-cloak]{display:none!important;}
+
+/* ============================================================
+   SENSEREVOLT HEADER
+   Сітка: max 1600px, контент центрований
+   Брейкпоінти: desktop 1280+, tablet/mobile до 1279
+   ============================================================ */
+
+/* ── TOP BAR ── */
+.sr-tbw{background-color:#2d2c2b;width:100%;opacity:1;position:relative;z-index:899;}
+.sr-tb{height:2.5rem;display:flex;align-items:center;justify-content:center;
+  border-bottom:1px solid rgba(251,239,220,.08);overflow:hidden;
+  font-family:'Jost',sans-serif;font-size:.78rem;font-weight:300;
+  letter-spacing:.03em;color:rgba(251,239,220,.6);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+.sr-tb-c{max-width:var(--max-width,1600px);width:100%;margin:0 auto;padding:0 var(--margin,20px);text-align:center;}
+.sr-tb-c span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:inline-block;max-width:100%;}
+.sr-tb-marq{display:none;width:100%;overflow:hidden;white-space:nowrap;
+  -webkit-mask-image:linear-gradient(to right,transparent 0%,black 5%,black 95%,transparent 100%);
+          mask-image:linear-gradient(to right,transparent 0%,black 5%,black 95%,transparent 100%);}
+.sr-tb-track{display:inline-flex;}
+.sr-tb-track span{white-space:nowrap;padding-right:3rem;}
+@keyframes srMarq{from{transform:translateX(0)}to{transform:translateX(-33.333%)}}
+
+/* ── HEADER ── */
+.sr-h{background-color:#2d2c2b;position:sticky;top:0;z-index:900;width:100%;
+  border-bottom:1px solid rgba(251,239,220,.05);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  opacity:1;}
+.sr-h a,.sr-h button,.sr-m a,.sr-m button{
+  -webkit-tap-highlight-color:transparent;
+  outline:none;
+}
+.sr-h a:focus,.sr-h button:focus,.sr-m a:focus,.sr-m button:focus{outline:none;}
+.sr-h a:focus-visible,.sr-h button:focus-visible{outline:1px solid rgba(251,239,220,.3);outline-offset:2px;}
+.sr-h-in{max-width:var(--max-width,1600px);width:100%;margin:0 auto;padding:0 var(--margin,20px);
+  height:5rem;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:1rem;}
+
+/* На планшеті/мобайлі — flex замість grid */
+@media(max-width:1279px){
+  .sr-h-in{display:flex;justify-content:space-between;}
+}
+
+/* ── LOGO ── */
+.sr-logo,.sr-logo:focus,.sr-logo:active,.sr-logo:focus-visible,.sr-logo:focus-within{
+  justify-self:start;text-decoration:none;flex-shrink:0;
+  outline:none!important;border:none!important;box-shadow:none!important;
+  -webkit-tap-highlight-color:transparent!important;
+}
+.sr-logo img,.sr-logo img:focus,.sr-logo img:active{
+  outline:none!important;border:none!important;box-shadow:none!important;
+  -webkit-tap-highlight-color:transparent!important;
+}
+.sr-logo img{width:11.83rem;height:auto;display:block;}
+
+/* ── DESKTOP NAV ── */
+.sr-n{display:flex;align-items:stretch;height:5rem;justify-content:center;}
+.sr-ni{position:relative;display:flex;align-items:center;}
+.sr-na{position:relative;display:flex;align-items:center;color:#fbefdc;
+  text-decoration:none;font-family:'Jost',sans-serif;font-weight:300;font-size:.94rem;
+  padding:0 .9rem;height:100%;white-space:nowrap;transition:color .2s;letter-spacing:.01em;}
+.sr-na:hover{color:rgba(251,239,220,.55);}
+.sr-na.act::after{content:'';position:absolute;bottom:0;left:.9rem;right:.9rem;
+  height:1px;background:rgba(251,239,220,.55);}
+.sr-ni:not(:last-child) .sr-na::before,
+.sr-n>.sr-na:not(:last-child)::before{content:'';position:absolute;right:0;top:50%;
+  transform:translateY(-50%);width:1px;height:.8rem;background:rgba(251,239,220,.2);}
+
+/* ── DESKTOP DROPDOWN (Somatic Tools) ── */
+.sr-ni.dd{position:relative;}
+.sr-dd{position:absolute;top:100%;left:0;background:#2d2c2b;
+  border:1px solid rgba(251,239,220,.1);border-top:none;min-width:14rem;
+  opacity:0;visibility:hidden;transition:opacity .18s,visibility .18s;z-index:200;}
+.sr-ni.dd:hover .sr-dd,.sr-ni.dd:focus-within .sr-dd,.sr-dd.force-open{opacity:1;visibility:visible;}
+.sr-da{display:block;padding:1rem 1.4rem;
+  color:rgba(251,239,220,.75);text-decoration:none;font-family:'Jost',sans-serif;
+  font-size:.94rem;font-weight:300;border-bottom:1px solid rgba(251,239,220,.07);
+  transition:color .18s,background .18s;}
+.sr-da:last-child{border-bottom:none;}
+.sr-da:hover{color:#fbefdc;background:rgba(251,239,220,.03);}
+
+
+/* ── RIGHT ── */
+.sr-r{display:flex;align-items:center;gap:.9rem;justify-self:end;flex-shrink:0;}
+
+/* ── LANG ── */
+.sr-lw{position:relative;}
+.sr-lb{display:flex;align-items:center;gap:.3rem;min-width:3.8rem;
+  border:1px solid rgba(251,239,220,.35);padding:.25rem .6rem;border-radius:4px;
+  font-family:'Jost',sans-serif;font-size:.83rem;font-weight:300;
+  background:none;color:#fbefdc;cursor:pointer;transition:border-color .2s;white-space:nowrap;}
+.sr-lb:hover{border-color:rgba(251,239,220,.7);}
+.sr-lb.op{border-radius:4px 4px 0 0;border-bottom-color:#2d2c2b;}
+.sr-lc{opacity:.5;transition:transform .2s;flex-shrink:0;}
+.sr-lc.op{transform:rotate(180deg);}
+.sr-ll{position:absolute;top:100%;left:0;min-width:100%;z-index:300;
+  display:none;flex-direction:column;}
+.sr-ll.is-open{display:flex;}
+.sr-lo{display:block;border-left:1px solid rgba(251,239,220,.35);
+  border-right:1px solid rgba(251,239,220,.35);
+  border-bottom:1px solid rgba(251,239,220,.35);border-top:none;
+  padding:.28rem .6rem;background:#2d2c2b;color:rgba(251,239,220,.6);
+  text-decoration:none;font-family:'Jost',sans-serif;font-size:.83rem;font-weight:300;
+  white-space:nowrap;transition:color .18s,background .18s;}
+.sr-lo:last-child{border-radius:0 0 3px 3px;}
+.sr-lo:hover{color:#fbefdc;background:#333231;}
+
+/* ── BURGER ── */
+.sr-bg{display:none;flex-direction:column;justify-content:center;align-items:center;
+  width:2.2rem;height:2.2rem;background:none;border:none;cursor:pointer;
+  padding:.35rem;border-radius:4px;flex-shrink:0;}
+.sr-bg span{display:block;width:22px;height:1.5px;background:#fbefdc;border-radius:2px;
+  margin:3px 0;transition:transform .28s,opacity .28s;transform-origin:center;}
+.sr-bg.op span:nth-child(1){transform:translateY(7.5px) rotate(45deg);}
+.sr-bg.op span:nth-child(2){opacity:0;transform:scaleX(0);}
+.sr-bg.op span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg);}
+
+/* ── MOBILE/TABLET MENU (випадає вниз) ── */
+/* Fullscreen overlay menu */
+.sr-m{position:fixed;top:0;left:0;right:0;bottom:0;
+  background:#262524;z-index:1000;
+  display:none;flex-direction:column;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+.sr-m.is-open{display:flex;}
+
+/* Власний хедер меню */
+.sr-m-head{
+  flex-shrink:0;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 1.5rem;
+  height:5rem;
+  background:#2d2c2b;
+  border-bottom:1px solid rgba(251,239,220,.08);
+}
+.sr-m-logo{flex-shrink:0;text-decoration:none;outline:none;}
+.sr-m-logo img{width:9.5rem;height:auto;display:block;outline:none;border:none;}
+.sr-m-head-r{display:flex;align-items:center;gap:.9rem;}
+.sr-m-close{
+  display:flex;align-items:center;justify-content:center;
+  width:2.2rem;height:2.2rem;
+  background:none;border:none;cursor:pointer;
+  color:#fbefdc;padding:0;border-radius:4px;
+}
+.sr-m-close:hover{background:rgba(251,239,220,.05);}
+
+/* Скролювана частина списку */
+.sr-m-list{
+  flex:1;
+  overflow-y:auto;overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior:contain;
+  padding-bottom:3rem;
+}
+.sr-m-list > div,.sr-m-list > a{display:block;width:100%;}
+.sr-ml{display:flex;align-items:center;justify-content:space-between;
+  padding:1rem 1.4rem;color:#fbefdc;text-decoration:none;
+  font-family:'Jost',sans-serif;font-size:1rem;font-weight:300;letter-spacing:.02em;
+  border-bottom:1px solid rgba(251,239,220,.06);
+  background:none;border-left:none;border-right:none;border-top:none;
+  width:100%;cursor:pointer;transition:background .18s;text-align:left;}
+.sr-ml:hover{background:rgba(251,239,220,.03);}
+.sr-ml svg{opacity:.35;transition:transform .2s;flex-shrink:0;}
+.sr-ml.op svg{transform:rotate(90deg);}
+.sr-ms{display:none;flex-direction:column;background:#1e1d1c;}
+.sr-ms.is-open{display:flex;}
+.sr-msl{display:block;padding:.85rem 2rem;color:rgba(251,239,220,.65);
+  text-decoration:none;font-family:'Jost',sans-serif;font-size:.94rem;font-weight:300;
+  border-bottom:1px solid rgba(251,239,220,.05);transition:color .18s,background .18s;}
+.sr-msl:hover{color:#fbefdc;background:rgba(251,239,220,.03);}
+
+/* ════════════════════════════════
+   БРЕЙКПОІНТИ
+   Desktop: 1280+
+   Tablet/Mobile: до 1279 (включаючи 1920 landscape планшета)
+   ════════════════════════════════ */
+
+/* Desktop: горизонтальне меню */
+@media(min-width:1280px){
+  .sr-bg{display:none!important;}
+  .sr-m{display:none!important;}
+}
+
+/* Планшет + мобайл — бургер */
+@media(max-width:1279px){
+  .sr-n{display:none;}
+  .sr-bg{display:flex;}
+}
+
+/* Мобайл (портрет + ландшафт телефону) */
+@media(max-width:767px), (max-height:500px) and (orientation:landscape){
+  .sr-h-in{height:4rem;padding:0 1rem;display:flex;justify-content:space-between;}
+  .sr-logo img{width:8rem;}
+  .sr-tb{height:2.2rem;font-size:.7rem;}
+  .sr-tb-c{display:none;}
+  .sr-tb-marq{display:block;}
+  .sr-tb-track{animation:srMarq 32s linear infinite;}
+  .sr-m-head{height:4rem;padding:0 1rem;} .sr-m-logo img{width:8rem;}
+  .sr-m .sr-ml{padding-left:1rem;}
+  .sr-m .sr-msl{padding-left:2rem;}
+  .sr-n{display:none;}
+  .sr-bg{display:flex;}
+}
+/* Ландшафт телефону — компактніше */
+@media (max-height:500px) and (orientation:landscape){
+  .sr-m-head{height:3.5rem;}
+  .sr-m-logo img{width:7rem;}
+  .sr-m .sr-ml{padding-top:.6rem;padding-bottom:.6rem;}
+  .sr-m .sr-msl{padding-top:.5rem;padding-bottom:.5rem;}
+}
+
+/* Планшет */
+@media(max-width:1279px) and (min-width:768px){
+  .sr-logo img{width:9.5rem;}
+  .sr-h-in{padding:0 1.5rem;}
+}
+
+/* Контент завжди max 1600px на всіх розмірах — сітка не розтягується */
+</style>
+
+<!-- TOP BAR -->
+<div class="sr-tbw">
+  <div class="sr-tb">
+    <div class="sr-tb-c">
+      <span>Welcome to a world where understanding yourself and your child starts with better tools</span>
+    </div>
+    <div class="sr-tb-marq" aria-hidden="true">
+      <div class="sr-tb-track">
+        <span>Welcome to a world where understanding yourself and your child starts with better tools ✦ </span>
+        <span>Welcome to a world where understanding yourself and your child starts with better tools ✦ </span>
+        <span>Welcome to a world where understanding yourself and your child starts with better tools ✦ </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="sr-h" x-data="{ langOpen: false, currentLang: 'En' }">
+  <div class="sr-h-in">
+    <a href="{{ site.baseurl }}/en/" class="sr-logo">
+      <img src="{{ site.baseurl }}/assets/global/senserevolt-logo.svg" alt="SenseRevolt">
+    </a>
+
+    <nav class="sr-n">
+      <!-- Somatic Tools -->
+      <div class="sr-ni dd" x-data="{open:false}" @mouseleave="open=false" @click.outside="open=false">
+        <a href="{{ site.baseurl }}/en/somatic-tools/all-kits/" class="sr-na"
+           @click="
+              if(document.body.classList.contains('is-touch') && !open){
+                $event.preventDefault();
+                $event.stopPropagation();
+                open = true;
+              }
+            "
+           @mouseenter="if(!document.body.classList.contains('is-touch')) open=true">Somatic Tools</a>
+        <div class="sr-dd" :class="{'force-open':open}">
+          <a href="{{ site.baseurl }}/en/somatic-tools/our-method/" class="sr-da"><span>Our Method</span></a>
+          <a href="{{ site.baseurl }}/en/somatic-tools/all-kits/" class="sr-da"><span>All Kits</span></a>
+          <a href="{{ site.baseurl }}/en/somatic-tools/bundles/" class="sr-da"><span>Bundles</span></a>
+          <a href="{{ site.baseurl }}/en/somatic-tools/extras/" class="sr-da"><span>Extras</span></a>
+        </div>
+      </div>
+      <!-- SEL Tools for Kids -->
+      <div class="sr-ni dd" x-data="{open:false}" @mouseleave="open=false" @click.outside="open=false">
+        <a href="{{ site.baseurl }}/en/sel-tools/all-books/" class="sr-na"
+           @click="
+              if(document.body.classList.contains('is-touch') && !open){
+                $event.preventDefault();
+                $event.stopPropagation();
+                open = true;
+              }
+            "
+           @mouseenter="if(!document.body.classList.contains('is-touch')) open=true">SEL Tools for Kids</a>
+        <div class="sr-dd" :class="{'force-open':open}">
+          <a href="{{ site.baseurl }}/en/sel-tools/our-method/" class="sr-da"><span>Our Method</span></a>
+          <a href="{{ site.baseurl }}/en/sel-tools/all-books/" class="sr-da"><span>All Books</span></a>
+          <a href="{{ site.baseurl }}/en/sel-tools/bundles/" class="sr-da"><span>Bundles</span></a>
+          <a href="{{ site.baseurl }}/en/sel-tools/extras/" class="sr-da"><span>Extras</span></a>
+        </div>
+      </div>
+      <!-- For Pros -->
+      <div class="sr-ni dd" x-data="{open:false}" @mouseleave="open=false" @click.outside="open=false">
+        <a href="{{ site.baseurl }}/en/for-pros/" class="sr-na"
+           @click="
+              if(document.body.classList.contains('is-touch') && !open){
+                $event.preventDefault();
+                $event.stopPropagation();
+                open = true;
+              }
+            "
+           @mouseenter="if(!document.body.classList.contains('is-touch')) open=true">For Pros</a>
+        <div class="sr-dd" :class="{'force-open':open}">
+          <a href="{{ site.baseurl }}/en/for-pros/pro-kits/" class="sr-da"><span>Pro Kits</span></a>
+          <a href="{{ site.baseurl }}/en/for-pros/bundles/" class="sr-da"><span>Bundles</span></a>
+          <a href="{{ site.baseurl }}/en/for-pros/group-pricing/" class="sr-da"><span>Group Pricing</span></a>
+        </div>
+      </div>
+      <a href="{{ site.baseurl }}/en/blog/" class="sr-na">Blog</a>
+      <a href="{{ site.baseurl }}/en/our-story/" class="sr-na">Our Story</a>
+      <a href="{{ site.baseurl }}/en/faqs/" class="sr-na">FAQs</a>
+      <!-- Music -->
+      <div class="sr-ni dd" x-data="{open:false}" @mouseleave="open=false" @click.outside="open=false">
+        <a href="{{ site.baseurl }}/en/music/" class="sr-na"
+           @click="
+              if(document.body.classList.contains('is-touch') && !open){
+                $event.preventDefault();
+                $event.stopPropagation();
+                open = true;
+              }
+            "
+           @mouseenter="if(!document.body.classList.contains('is-touch')) open=true">Music</a>
+        <div class="sr-dd" :class="{'force-open':open}">
+          <a href="{{ site.baseurl }}/en/music/somatic-music/" class="sr-da"><span>Somatic Music</span></a>
+          <a href="{{ site.baseurl }}/en/music/kids-songs/" class="sr-da"><span>Kids Songs</span></a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="sr-r">
+      <div class="sr-lw" @click.outside="langOpen = false">
+        <button class="sr-lb" :class="{'op':langOpen}" @click="langOpen=!langOpen">
+          <span x-text="currentLang">En</span>
+          <svg class="sr-lc" :class="{'op':langOpen}" width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="sr-ll" :class="{'is-open':langOpen}" x-cloak>
+          <a href="#" class="sr-lo" @click.prevent.stop="currentLang='Uk';langOpen=false">Uk</a>
+          <a href="#" class="sr-lo" @click.prevent.stop="currentLang='De';langOpen=false">De</a>
+          <a href="#" class="sr-lo" @click.prevent.stop="currentLang='Fr';langOpen=false">Fr</a>
+          <a href="#" class="sr-lo" @click.prevent.stop="currentLang='Es';langOpen=false">Es</a>
+        </div>
+      </div>
+      <button class="sr-bg" :class="{'op':$store.menu.open}"
+        @click.stop="$store.menu.open=!$store.menu.open; lockBodyScroll($store.menu.open)">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- MOBILE/TABLET MENU — fullscreen overlay -->
+<div class="sr-m" :class="{'is-open':$store.menu.open}"
+  x-data
+  @keydown.escape.window="$store.menu.open=false; lockBodyScroll(false)">
+  <!-- Власний хедер меню (sticky всередині overlay) -->
+  <div class="sr-m-head">
+    <a href="{{ site.baseurl }}/en/" class="sr-m-logo">
+      <img src="{{ site.baseurl }}/assets/global/senserevolt-logo.svg" alt="SenseRevolt">
+    </a>
+    <div class="sr-m-head-r">
+      <!-- Лангуага в меню -->
+      <div class="sr-lw" x-data="{open:false}" @click.outside="open=false">
+        <button class="sr-lb" :class="{'op':open}" @click="open=!open">
+          <span class="sr-lv">En</span>
+          <svg class="sr-lc" :class="{'op':open}" width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="sr-ll" :class="{'is-open':open}">
+          <a href="#" class="sr-lo" @click.prevent.stop="$root.querySelectorAll('.sr-lv').forEach(t=>t.textContent='Uk');open=false">Uk</a>
+          <a href="#" class="sr-lo" @click.prevent.stop="$root.querySelectorAll('.sr-lv').forEach(t=>t.textContent='De');open=false">De</a>
+          <a href="#" class="sr-lo" @click.prevent.stop="$root.querySelectorAll('.sr-lv').forEach(t=>t.textContent='Fr');open=false">Fr</a>
+          <a href="#" class="sr-lo" @click.prevent.stop="$root.querySelectorAll('.sr-lv').forEach(t=>t.textContent='Es');open=false">Es</a>
+        </div>
+      </div>
+      <!-- Закрити -->
+      <button class="sr-m-close" @click="$store.menu.open=false; lockBodyScroll(false)" aria-label="Close menu">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 2l16 16M18 2L2 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+  <!-- Скролювана частина зі списком -->
+  <nav class="sr-m-list">
+  <!-- Somatic Tools -->
+  <div x-data="{open:false}">
+    <button class="sr-ml" :class="{'op':open}" @click.stop="open=!open">
+      Somatic Tools
+      <svg width="8" height="13" viewBox="0 0 8 13" fill="none"><path d="M1 1l6.5 6-6.5 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="sr-ms" :class="{'is-open':open}" x-cloak>
+      <a href="{{ site.baseurl }}/en/somatic-tools/our-method/" class="sr-msl">Our Method</a>
+      <a href="{{ site.baseurl }}/en/somatic-tools/all-kits/" class="sr-msl">All Kits</a>
+      <a href="{{ site.baseurl }}/en/somatic-tools/bundles/" class="sr-msl">Bundles</a>
+      <a href="{{ site.baseurl }}/en/somatic-tools/extras/" class="sr-msl">Extras</a>
+    </div>
+  </div>
+  <!-- SEL Tools for Kids -->
+  <div x-data="{open:false}">
+    <button class="sr-ml" :class="{'op':open}" @click.stop="open=!open">
+      SEL Tools for Kids
+      <svg width="8" height="13" viewBox="0 0 8 13" fill="none"><path d="M1 1l6.5 6-6.5 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="sr-ms" :class="{'is-open':open}" x-cloak>
+      <a href="{{ site.baseurl }}/en/sel-tools/our-method/" class="sr-msl">Our Method</a>
+      <a href="{{ site.baseurl }}/en/sel-tools/all-books/" class="sr-msl">All Books</a>
+      <a href="{{ site.baseurl }}/en/sel-tools/bundles/" class="sr-msl">Bundles</a>
+      <a href="{{ site.baseurl }}/en/sel-tools/extras/" class="sr-msl">Extras</a>
+    </div>
+  </div>
+  <!-- For Pros -->
+  <div x-data="{open:false}">
+    <button class="sr-ml" :class="{'op':open}" @click.stop="open=!open">
+      For Pros
+      <svg width="8" height="13" viewBox="0 0 8 13" fill="none"><path d="M1 1l6.5 6-6.5 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="sr-ms" :class="{'is-open':open}" x-cloak>
+      <a href="{{ site.baseurl }}/en/for-pros/pro-kits/" class="sr-msl">Pro Kits</a>
+      <a href="{{ site.baseurl }}/en/for-pros/bundles/" class="sr-msl">Bundles</a>
+      <a href="{{ site.baseurl }}/en/for-pros/group-pricing/" class="sr-msl">Group Pricing</a>
+    </div>
+  </div>
+  <a href="{{ site.baseurl }}/en/blog/" class="sr-ml">Blog</a>
+  <a href="{{ site.baseurl }}/en/our-story/" class="sr-ml">Our Story</a>
+  <a href="{{ site.baseurl }}/en/faqs/" class="sr-ml">FAQs</a>
+  <!-- Music -->
+  <div x-data="{open:false}">
+    <button class="sr-ml" :class="{'op':open}" @click.stop="open=!open">
+      Music
+      <svg width="8" height="13" viewBox="0 0 8 13" fill="none"><path d="M1 1l6.5 6-6.5 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="sr-ms" :class="{'is-open':open}" x-cloak>
+      <a href="{{ site.baseurl }}/en/music/somatic-music/" class="sr-msl">Somatic Music</a>
+      <a href="{{ site.baseurl }}/en/music/kids-songs/" class="sr-msl">Kids Songs</a>
+    </div>
+  </div>
+  </nav>
+</div>
+
+<script>
+document.addEventListener('alpine:init', function(){
+  Alpine.store('menu', { open: false });
+});
+
+// Body scroll lock коли меню відкрите
+function lockBodyScroll(lock){document.body.style.overflow=lock?"hidden":"";}
+
+// Touch detection — додаємо клас на body
+(function(){
+  function setTouchClass(){
+    if(('ontouchstart' in window) || navigator.maxTouchPoints > 0 || window.matchMedia('(pointer:coarse)').matches){
+      document.body.classList.add('is-touch');
+    } else {
+      document.body.classList.remove('is-touch');
+    }
+  }
+  setTouchClass();
+  // Перевіряємо на першому реальному touch event теж (на випадок detached детекції)
+  window.addEventListener('touchstart', function(){
+    document.body.classList.add('is-touch');
+  }, {once:true, passive:true});
+})();
+document.addEventListener('DOMContentLoaded', function(){
+  var path = window.location.pathname.replace(/\/$/, '');
+  // Збираємо всі лінки і їхні шляхи
+  var allLinks = [];
+  document.querySelectorAll('.sr-na,.sr-ml,.sr-msl,.sr-da').forEach(function(a){
+    var href = a.getAttribute('href');
+    if(!href || href === '#') return;
+    try{
+      var lp = new URL(href, window.location.origin).pathname.replace(/\/$/, '');
+      if(lp === '' || lp === '/') return;
+      allLinks.push({el: a, path: lp});
+    }catch(e){}
+  });
+  // Знаходимо найдовший шлях що співпадає з поточним
+  var best = null;
+  allLinks.forEach(function(item){
+    if(path === item.path || path.indexOf(item.path + '/') === 0){
+      if(!best || item.path.length > best.path.length){
+        best = item;
+      }
+    }
+  });
+  // Підсвічуємо тільки найдовший матч (найточніший)
+  // Плюс підсвічуємо батьківський пункт меню (sr-na) у відповідного розділу
+  if(best){
+    best.el.classList.add('act');
+    // Якщо це пункт dropdown — підсвітимо і батьківський sr-na
+    var parent = best.el.closest('.sr-ni');
+    if(parent){
+      var parentLink = parent.querySelector('.sr-na');
+      if(parentLink && parentLink !== best.el) parentLink.classList.add('act');
+    }
+  }
+});
+</script>
