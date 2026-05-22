@@ -141,9 +141,9 @@
   .sr-bg{display:flex;}
 }
 
-/* Мобайл (портрет + ландшафт телефону) */
-@media(max-width:767px), (max-height:500px) and (orientation:landscape){
-  .sr-h-in{height:4rem;padding:0 1rem;display:flex;justify-content:space-between;}
+/* Мобайл */
+@media(max-width:767px){
+  .sr-h-in{height:4rem;padding:0 1rem;}
   .sr-logo img{width:8rem;}
   .sr-tb{height:2.2rem;font-size:.7rem;}
   .sr-tb-c{display:none;}
@@ -152,8 +152,6 @@
   .sr-m{padding-top:6.2rem;}
   .sr-m .sr-ml{padding-left:1rem;}
   .sr-m .sr-msl{padding-left:2rem;}
-  .sr-n{display:none;}
-  .sr-bg{display:flex;}
 }
 
 /* Планшет */
@@ -213,10 +211,10 @@
           <svg class="sr-lc" :class="{'op':langOpen}" width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
         <div class="sr-ll" x-show="langOpen" x-cloak>
-          <a href="#" class="sr-lo" @click.prevent.stop="currentLang='Uk';langOpen=false">Uk</a>
-          <a href="#" class="sr-lo" @click.prevent.stop="currentLang='De';langOpen=false">De</a>
-          <a href="#" class="sr-lo" @click.prevent.stop="currentLang='Fr';langOpen=false">Fr</a>
-          <a href="#" class="sr-lo" @click.prevent.stop="currentLang='Es';langOpen=false">Es</a>
+          <a href="#" class="sr-lo" @click.prevent="currentLang='Uk';langOpen=false">Uk</a>
+          <a href="#" class="sr-lo" @click.prevent="currentLang='De';langOpen=false">De</a>
+          <a href="#" class="sr-lo" @click.prevent="currentLang='Fr';langOpen=false">Fr</a>
+          <a href="#" class="sr-lo" @click.prevent="currentLang='Es';langOpen=false">Es</a>
         </div>
       </div>
       <button class="sr-bg" :class="{'op':$store.menu.open}"
@@ -231,7 +229,7 @@
 <nav class="sr-m" x-data x-show="$store.menu.open" x-cloak
   @keydown.escape.window="$store.menu.open=false; document.body.style.overflow=''">
   <div x-data="{somOpen:false}">
-    <button class="sr-ml" :class="{'op':somOpen}" @click.stop="somOpen=!somOpen">
+    <button class="sr-ml" :class="{'op':somOpen}" @click="somOpen=!somOpen">
       Somatic Tools
       <svg width="8" height="13" viewBox="0 0 8 13" fill="none"><path d="M1 1l6.5 6-6.5 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
