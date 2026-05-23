@@ -1,4 +1,7 @@
-<!-- Alpine.js для desktop dropdown -->
+<!-- MMenu Light для мобільного меню — перевірена бібліотека -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mmenu-light@3/dist/mmenu-light.css">
+<script src="https://cdn.jsdelivr.net/npm/mmenu-light@3/dist/mmenu-light.js"></script>
+<!-- Alpine.js тільки для desktop dropdown -->
 <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 
 <style>
@@ -20,7 +23,8 @@
 
 /* ── HEADER ── */
 .sr-h{background-color:#2d2c2b;position:sticky;top:0;z-index:900;width:100%;
-  border-bottom:1px solid rgba(251,239,220,.05);-webkit-font-smoothing:antialiased;}
+  border-bottom:1px solid rgba(251,239,220,.05);
+  -webkit-font-smoothing:antialiased;}
 .sr-h a,.sr-h button{-webkit-tap-highlight-color:transparent;outline:none;}
 .sr-h a:focus,.sr-h button:focus{outline:none;}
 .sr-h-in{max-width:var(--max-width,1600px);width:100%;margin:0 auto;padding:0 var(--margin,20px);
@@ -91,10 +95,8 @@
 .sr-bg span{display:block;width:22px;height:1.5px;background:#fbefdc;border-radius:2px;
   margin:3px 0;transition:transform .28s,opacity .28s;transform-origin:center;}
 @media(max-width:1279px){.sr-bg{display:flex;}.sr-n{display:none;}}
-.sr-bg.is-open span:nth-child(1){transform:translateY(7.5px) rotate(45deg);}
-.sr-bg.is-open span:nth-child(2){opacity:0;transform:scaleX(0);}
-.sr-bg.is-open span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg);}
 
+/* MARQUEE mobile */
 @media(max-width:767px){
   .sr-h-in{height:4rem;padding:0 1rem;}
   .sr-tb{height:2.2rem;font-size:.7rem;}
@@ -104,47 +106,68 @@
 }
 
 /* ════════════════════════════════
-   MOBILE MENU — slide-in drawer
+   MMENU LIGHT — кастомізація під SenseRevolt
    ════════════════════════════════ */
-.sr-mob-backdrop{
+.mm-spn{background:#262524!important;color:#fbefdc!important;
+  font-family:'Jost',sans-serif!important;
+  -webkit-font-smoothing:antialiased!important;}
+.mm-spn:after{display:none!important;}
+.mm-spn ul{padding:0!important;}
+.mm-spn li{padding:0!important;}
+.mm-spn li a,.mm-spn li span.mm-spn--open{
+  padding:1rem 1.4rem!important;
+  color:#fbefdc!important;
+  font-family:'Jost',sans-serif!important;
+  font-weight:300!important;
+  font-size:1rem!important;
+  letter-spacing:.02em!important;
+  border-bottom:1px solid rgba(251,239,220,.06)!important;
+  display:block!important;
+}
+.mm-spn li a:before,.mm-spn li span:before{display:none!important;}
+.mm-spn--navbar:before{
+  color:rgba(251,239,220,.8)!important;
+  border-color:rgba(251,239,220,.5)!important;}
+.mm-spn--main>.mm-spn--title{display:none!important;}
+.mm-spn--vertical .mm-spn{padding-left:0!important;}
+
+/* Кастомний overlay коли меню відкрите */
+.sr-menu-backdrop{
   position:fixed;top:0;left:0;right:0;bottom:0;
   background:rgba(0,0,0,.5);
   z-index:9998;
   opacity:0;visibility:hidden;
   transition:opacity .25s,visibility .25s;
 }
-.sr-mob-backdrop.is-open{opacity:1;visibility:visible;}
+.sr-menu-backdrop.is-open{opacity:1;visibility:visible;}
 
-.sr-mob-drawer{
+/* Контейнер для MMenu */
+#sr-mobile-menu{
   position:fixed;
-  top:0;right:0;bottom:0;
+  top:0;right:-100%;bottom:0;
   width:min(85vw,420px);
   background:#262524;
   z-index:9999;
-  transform:translateX(100%);
-  transition:transform .3s cubic-bezier(.16,1,.3,1);
+  transition:right .3s cubic-bezier(.16,1,.3,1);
+  overflow:hidden;
   display:flex;
   flex-direction:column;
   -webkit-font-smoothing:antialiased;
-  box-shadow:-4px 0 20px rgba(0,0,0,.3);
 }
-.sr-mob-drawer.is-open{transform:translateX(0);}
-@media(max-width:767px){.sr-mob-drawer{width:100%;}}
-@media(min-width:1280px){
-  .sr-mob-drawer,.sr-mob-backdrop{display:none!important;}
-}
+#sr-mobile-menu.is-open{right:0;}
+@media(max-width:767px){#sr-mobile-menu{width:100%;}}
 
-/* Хедер drawer */
-.sr-md-head{
+/* Хедер всередині меню */
+.sr-mm-head{
   flex-shrink:0;
   display:flex;align-items:center;justify-content:space-between;
   padding:0 1.5rem;height:5rem;
   background:#2d2c2b;
   border-bottom:1px solid rgba(251,239,220,.08);
 }
-.sr-md-head img{width:8rem;height:auto;display:block;}
-.sr-md-head .right{display:flex;align-items:center;gap:.9rem;}
-.sr-md-close{
+.sr-mm-head img{width:8rem;height:auto;display:block;}
+.sr-mm-head .right{display:flex;align-items:center;gap:.9rem;}
+.sr-mm-close{
   display:flex;align-items:center;justify-content:center;
   width:2.2rem;height:2.2rem;
   background:none;border:none;cursor:pointer;
@@ -152,75 +175,26 @@
   -webkit-tap-highlight-color:transparent;
 }
 @media(max-width:767px){
-  .sr-md-head{height:4rem;padding:0 1rem;}
+  .sr-mm-head{height:4rem;padding:0 1rem;}
 }
 
-/* Body drawer — скролюваний контейнер з панелями */
-.sr-md-body{
+/* Контент меню — скролюваний */
+.sr-mm-body{
   flex:1 1 auto;
   min-height:0;
-  position:relative;
   overflow:hidden;
+  position:relative;
 }
 
-/* Панелі — слайдяться горизонтально */
-.sr-md-panel{
-  position:absolute;
-  top:0;left:0;right:0;bottom:0;
-  overflow-y:auto;overflow-x:hidden;
-  -webkit-overflow-scrolling:touch;
-  overscroll-behavior:contain;
-  transform:translateX(100%);
-  transition:transform .3s cubic-bezier(.16,1,.3,1);
-  padding-bottom:2rem;
-}
-.sr-md-panel.is-main{transform:translateX(0);}
-.sr-md-panel.is-active{transform:translateX(0);}
-/* Коли підпанель активна, головну зсуваємо вліво */
-.sr-md-body.has-sub .sr-md-panel.is-main{transform:translateX(-30%);}
-
-/* Заголовок підпанелі з кнопкою назад */
-.sr-md-sub-head{
-  display:flex;align-items:center;
-  padding:1rem 1.5rem;
-  border-bottom:1px solid rgba(251,239,220,.08);
-  background:#1e1d1c;
-  color:#fbefdc;
-  font-family:'Jost',sans-serif;font-size:1rem;font-weight:400;
-}
-.sr-md-back{
-  display:flex;align-items:center;justify-content:center;
-  width:2rem;height:2rem;
-  background:none;border:none;cursor:pointer;
-  color:#fbefdc;padding:0;margin-right:.5rem;
-  -webkit-tap-highlight-color:transparent;
+/* Hide на десктопі */
+@media(min-width:1280px){
+  #sr-mobile-menu,.sr-menu-backdrop{display:none!important;}
 }
 
-/* Пункти меню */
-.sr-md-item{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:1.1rem 1.5rem;
-  color:#fbefdc;text-decoration:none;
-  font-family:'Jost',sans-serif;font-size:1rem;font-weight:300;letter-spacing:.02em;
-  border-bottom:1px solid rgba(251,239,220,.06);
-  background:none;border-left:none;border-right:none;border-top:none;
-  width:100%;cursor:pointer;text-align:left;
-  -webkit-tap-highlight-color:transparent;
-  transition:background .18s;
-}
-.sr-md-item:hover,.sr-md-item:active{background:rgba(251,239,220,.03);}
-.sr-md-item svg{opacity:.4;flex-shrink:0;}
-.sr-md-item.act{font-weight:400;}
-.sr-md-sub-item{
-  display:block;
-  padding:1rem 1.5rem;
-  color:rgba(251,239,220,.75);text-decoration:none;
-  font-family:'Jost',sans-serif;font-size:.95rem;font-weight:300;
-  border-bottom:1px solid rgba(251,239,220,.05);
-  -webkit-tap-highlight-color:transparent;
-  transition:color .18s,background .18s;
-}
-.sr-md-sub-item:hover{color:#fbefdc;background:rgba(251,239,220,.03);}
+/* Burger animation */
+.sr-bg.is-open span:nth-child(1){transform:translateY(7.5px) rotate(45deg);}
+.sr-bg.is-open span:nth-child(2){opacity:0;transform:scaleX(0);}
+.sr-bg.is-open span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg);}
 </style>
 
 <!-- TOP BAR -->
@@ -243,6 +217,8 @@
     <a href="{{ site.baseurl }}/en/" class="sr-logo">
       <img src="{{ site.baseurl }}/assets/global/senserevolt-logo.svg" alt="SenseRevolt">
     </a>
+
+    <!-- DESKTOP NAV -->
     <nav class="sr-n">
       <div class="sr-ni dd" x-data="{open:false}" @mouseleave="open=false" @click.outside="open=false">
         <a href="{{ site.baseurl }}/en/somatic-tools/all-kits/" class="sr-na"
@@ -289,8 +265,9 @@
         </div>
       </div>
     </nav>
+
     <div class="sr-hdr-r">
-      <div class="sr-lw">
+      <div class="sr-lw" id="hdr-lang">
         <button class="sr-lb" type="button">
           <span class="sr-lv">En</span>
           <svg class="sr-lc" width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -309,15 +286,15 @@
   </div>
 </header>
 
-<!-- MOBILE DRAWER -->
-<div class="sr-mob-backdrop" id="sr-backdrop"></div>
-<aside class="sr-mob-drawer" id="sr-drawer">
-  <div class="sr-md-head">
+<!-- MOBILE MENU — slide-in drawer -->
+<div class="sr-menu-backdrop" id="sr-backdrop"></div>
+<div id="sr-mobile-menu">
+  <div class="sr-mm-head">
     <a href="{{ site.baseurl }}/en/">
       <img src="{{ site.baseurl }}/assets/global/senserevolt-logo.svg" alt="SenseRevolt">
     </a>
     <div class="right">
-      <div class="sr-lw">
+      <div class="sr-lw" id="menu-lang">
         <button class="sr-lb" type="button">
           <span class="sr-lv">En</span>
           <svg class="sr-lc" width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -329,71 +306,53 @@
           <a href="#" class="sr-lo" data-l="Es">Es</a>
         </div>
       </div>
-      <button class="sr-md-close" id="sr-md-close" type="button" aria-label="Close menu">
+      <button class="sr-mm-close" id="sr-mm-close" type="button" aria-label="Close menu">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 2l16 16M18 2L2 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
       </button>
     </div>
   </div>
 
-  <div class="sr-md-body" id="sr-md-body">
-    <!-- Головна панель -->
-    <div class="sr-md-panel is-main">
-      <button class="sr-md-item" data-panel="somatic">Somatic Tools
-        <svg width="8" height="13" viewBox="0 0 8 13" fill="none"><path d="M1 1l6.5 6-6.5 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <button class="sr-md-item" data-panel="sel">SEL Tools for Kids
-        <svg width="8" height="13" viewBox="0 0 8 13" fill="none"><path d="M1 1l6.5 6-6.5 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <button class="sr-md-item" data-panel="pros">For Pros
-        <svg width="8" height="13" viewBox="0 0 8 13" fill="none"><path d="M1 1l6.5 6-6.5 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <a href="{{ site.baseurl }}/en/blog/" class="sr-md-item">Blog</a>
-      <a href="{{ site.baseurl }}/en/our-story/" class="sr-md-item">Our Story</a>
-      <a href="{{ site.baseurl }}/en/faqs/" class="sr-md-item">FAQs</a>
-      <button class="sr-md-item" data-panel="music">Music
-        <svg width="8" height="13" viewBox="0 0 8 13" fill="none"><path d="M1 1l6.5 6-6.5 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-    </div>
-    <!-- Підпанелі -->
-    <div class="sr-md-panel" data-name="somatic">
-      <div class="sr-md-sub-head">
-        <button class="sr-md-back"><svg width="10" height="17" viewBox="0 0 10 17" fill="none"><path d="M9 1L1 8.5 9 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  <nav id="sr-mm-content" class="sr-mm-body">
+    <ul>
+      <li>
         <span>Somatic Tools</span>
-      </div>
-      <a href="{{ site.baseurl }}/en/somatic-tools/our-method/" class="sr-md-sub-item">Our Method</a>
-      <a href="{{ site.baseurl }}/en/somatic-tools/all-kits/" class="sr-md-sub-item">All Kits</a>
-      <a href="{{ site.baseurl }}/en/somatic-tools/bundles/" class="sr-md-sub-item">Bundles</a>
-      <a href="{{ site.baseurl }}/en/somatic-tools/extras/" class="sr-md-sub-item">Extras</a>
-    </div>
-    <div class="sr-md-panel" data-name="sel">
-      <div class="sr-md-sub-head">
-        <button class="sr-md-back"><svg width="10" height="17" viewBox="0 0 10 17" fill="none"><path d="M9 1L1 8.5 9 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <ul>
+          <li><a href="{{ site.baseurl }}/en/somatic-tools/our-method/">Our Method</a></li>
+          <li><a href="{{ site.baseurl }}/en/somatic-tools/all-kits/">All Kits</a></li>
+          <li><a href="{{ site.baseurl }}/en/somatic-tools/bundles/">Bundles</a></li>
+          <li><a href="{{ site.baseurl }}/en/somatic-tools/extras/">Extras</a></li>
+        </ul>
+      </li>
+      <li>
         <span>SEL Tools for Kids</span>
-      </div>
-      <a href="{{ site.baseurl }}/en/sel-tools/our-method/" class="sr-md-sub-item">Our Method</a>
-      <a href="{{ site.baseurl }}/en/sel-tools/all-books/" class="sr-md-sub-item">All Books</a>
-      <a href="{{ site.baseurl }}/en/sel-tools/bundles/" class="sr-md-sub-item">Bundles</a>
-      <a href="{{ site.baseurl }}/en/sel-tools/extras/" class="sr-md-sub-item">Extras</a>
-    </div>
-    <div class="sr-md-panel" data-name="pros">
-      <div class="sr-md-sub-head">
-        <button class="sr-md-back"><svg width="10" height="17" viewBox="0 0 10 17" fill="none"><path d="M9 1L1 8.5 9 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <ul>
+          <li><a href="{{ site.baseurl }}/en/sel-tools/our-method/">Our Method</a></li>
+          <li><a href="{{ site.baseurl }}/en/sel-tools/all-books/">All Books</a></li>
+          <li><a href="{{ site.baseurl }}/en/sel-tools/bundles/">Bundles</a></li>
+          <li><a href="{{ site.baseurl }}/en/sel-tools/extras/">Extras</a></li>
+        </ul>
+      </li>
+      <li>
         <span>For Pros</span>
-      </div>
-      <a href="{{ site.baseurl }}/en/for-pros/pro-kits/" class="sr-md-sub-item">Pro Kits</a>
-      <a href="{{ site.baseurl }}/en/for-pros/bundles/" class="sr-md-sub-item">Bundles</a>
-      <a href="{{ site.baseurl }}/en/for-pros/group-pricing/" class="sr-md-sub-item">Group Pricing</a>
-    </div>
-    <div class="sr-md-panel" data-name="music">
-      <div class="sr-md-sub-head">
-        <button class="sr-md-back"><svg width="10" height="17" viewBox="0 0 10 17" fill="none"><path d="M9 1L1 8.5 9 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <ul>
+          <li><a href="{{ site.baseurl }}/en/for-pros/pro-kits/">Pro Kits</a></li>
+          <li><a href="{{ site.baseurl }}/en/for-pros/bundles/">Bundles</a></li>
+          <li><a href="{{ site.baseurl }}/en/for-pros/group-pricing/">Group Pricing</a></li>
+        </ul>
+      </li>
+      <li><a href="{{ site.baseurl }}/en/blog/">Blog</a></li>
+      <li><a href="{{ site.baseurl }}/en/our-story/">Our Story</a></li>
+      <li><a href="{{ site.baseurl }}/en/faqs/">FAQs</a></li>
+      <li>
         <span>Music</span>
-      </div>
-      <a href="{{ site.baseurl }}/en/music/somatic-music/" class="sr-md-sub-item">Somatic Music</a>
-      <a href="{{ site.baseurl }}/en/music/kids-songs/" class="sr-md-sub-item">Kids Songs</a>
-    </div>
-  </div>
-</aside>
+        <ul>
+          <li><a href="{{ site.baseurl }}/en/music/somatic-music/">Somatic Music</a></li>
+          <li><a href="{{ site.baseurl }}/en/music/kids-songs/">Kids Songs</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+</div>
 
 <script>
 // Touch detection
@@ -404,62 +363,50 @@
   window.addEventListener('touchstart', function(){ document.body.classList.add('is-touch'); }, {once:true, passive:true});
 })();
 
-// Drawer logic — vanilla JS, без бібліотек
-(function(){
+// Init MMenu Light + slide-in drawer
+document.addEventListener('DOMContentLoaded', function(){
   var burger = document.getElementById('sr-burger');
-  var drawer = document.getElementById('sr-drawer');
+  var menu = document.getElementById('sr-mobile-menu');
   var backdrop = document.getElementById('sr-backdrop');
-  var closeBtn = document.getElementById('sr-md-close');
-  var body = document.getElementById('sr-md-body');
+  var closeBtn = document.getElementById('sr-mm-close');
+  var content = document.getElementById('sr-mm-content');
 
-  function openDrawer(){
-    drawer.classList.add('is-open');
+  // Initialize MMenu Light
+  if(window.MmenuLight && content){
+    var mmenu = new MmenuLight(content, '(max-width: 1279px)');
+    mmenu.navigation({ title: '' });
+    mmenu.offcanvas();
+  }
+
+  function openMenu(){
+    menu.classList.add('is-open');
     backdrop.classList.add('is-open');
     burger.classList.add('is-open');
+    document.documentElement.style.overflow = 'hidden';
     document.body.style.overflow = 'hidden';
   }
-  function closeDrawer(){
-    drawer.classList.remove('is-open');
+  function closeMenu(){
+    menu.classList.remove('is-open');
     backdrop.classList.remove('is-open');
     burger.classList.remove('is-open');
+    document.documentElement.style.overflow = '';
     document.body.style.overflow = '';
-    // Скинути на головну панель
-    setTimeout(function(){
-      body.classList.remove('has-sub');
-      body.querySelectorAll('.sr-md-panel.is-active').forEach(function(p){p.classList.remove('is-active');});
-    }, 300);
   }
 
   burger.addEventListener('click', function(e){
-    e.preventDefault();e.stopPropagation();
-    drawer.classList.contains('is-open') ? closeDrawer() : openDrawer();
+    e.preventDefault();
+    e.stopPropagation();
+    menu.classList.contains('is-open') ? closeMenu() : openMenu();
   });
-  closeBtn.addEventListener('click', closeDrawer);
-  backdrop.addEventListener('click', closeDrawer);
-  document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeDrawer(); });
-
-  // Перехід в підпанель
-  body.querySelectorAll('[data-panel]').forEach(function(btn){
-    btn.addEventListener('click', function(e){
-      e.preventDefault();
-      var name = btn.getAttribute('data-panel');
-      var panel = body.querySelector('.sr-md-panel[data-name="'+name+'"]');
-      if(panel){
-        panel.classList.add('is-active');
-        body.classList.add('has-sub');
-      }
-    });
+  closeBtn.addEventListener('click', function(e){
+    e.preventDefault();
+    closeMenu();
   });
-  // Назад
-  body.querySelectorAll('.sr-md-back').forEach(function(btn){
-    btn.addEventListener('click', function(e){
-      e.preventDefault();
-      var panel = btn.closest('.sr-md-panel');
-      if(panel) panel.classList.remove('is-active');
-      body.classList.remove('has-sub');
-    });
+  backdrop.addEventListener('click', closeMenu);
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') closeMenu();
   });
-})();
+});
 
 // Lang switcher
 (function(){
@@ -480,8 +427,11 @@
           if(c) c.classList.remove('op');
         }
       });
-      if(isOpen){list.classList.remove('is-open');btn.classList.remove('op');if(chev) chev.classList.remove('op');}
-      else{list.classList.add('is-open');btn.classList.add('op');if(chev) chev.classList.add('op');}
+      if(isOpen){
+        list.classList.remove('is-open');btn.classList.remove('op');if(chev) chev.classList.remove('op');
+      } else {
+        list.classList.add('is-open');btn.classList.add('op');if(chev) chev.classList.add('op');
+      }
     });
     list.querySelectorAll('.sr-lo').forEach(function(opt){
       opt.addEventListener('click', function(e){
@@ -507,7 +457,7 @@
 document.addEventListener('DOMContentLoaded', function(){
   var path = window.location.pathname.replace(/\/$/, '');
   var allLinks = [];
-  document.querySelectorAll('.sr-na,.sr-da,.sr-md-item,.sr-md-sub-item').forEach(function(a){
+  document.querySelectorAll('.sr-na,.sr-da,#sr-mm-content a').forEach(function(a){
     var href = a.getAttribute('href');
     if(!href || href === '#') return;
     try{
