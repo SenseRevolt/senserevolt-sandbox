@@ -427,32 +427,17 @@
     document.body.appendChild(backdrop);
   }
 
-  // Зберігаємо позицію скролу
-  var scrollY = 0;
-  
   function openDrawer(){
-    scrollY = window.scrollY || window.pageYOffset;
-    // Фіксуємо body на поточній позиції — забирає transform з body
-    document.body.style.position = 'fixed';
-    document.body.style.top = '-' + scrollY + 'px';
-    document.body.style.left = '0';
-    document.body.style.right = '0';
-    document.body.style.overflow = 'hidden';
     drawer.classList.add('is-open');
     backdrop.classList.add('is-open');
     burger.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
   }
   function closeDrawer(){
     drawer.classList.remove('is-open');
     backdrop.classList.remove('is-open');
     burger.classList.remove('is-open');
-    // Відновлюємо body і повертаємо скрол
-    document.body.style.position = '';
-    document.body.style.top = '';
-    document.body.style.left = '';
-    document.body.style.right = '';
     document.body.style.overflow = '';
-    window.scrollTo(0, scrollY);
     // Скинути на головну панель
     setTimeout(function(){
       body.classList.remove('has-sub');
