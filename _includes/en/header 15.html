@@ -189,11 +189,7 @@
   background:#1e1d1c;
   color:#fbefdc;
   font-family:'Jost',sans-serif;font-size:1rem;font-weight:400;
-  cursor:pointer;
-  -webkit-tap-highlight-color:transparent;
-  transition:background .18s;
 }
-.sr-md-sub-head:hover,.sr-md-sub-head:active{background:#252423;}
 .sr-md-back{
   display:flex;align-items:center;justify-content:center;
   width:2rem;height:2rem;
@@ -418,15 +414,6 @@
   var closeBtn = document.getElementById('sr-md-close');
   var body = document.getElementById('sr-md-body');
 
-  // КРИТИЧНО: переносимо drawer і backdrop прямо в <body> 
-  // щоб уникнути transform/filter на предках що ламають position:fixed
-  if(drawer && drawer.parentNode !== document.body){
-    document.body.appendChild(drawer);
-  }
-  if(backdrop && backdrop.parentNode !== document.body){
-    document.body.appendChild(backdrop);
-  }
-
   function openDrawer(){
     drawer.classList.add('is-open');
     backdrop.classList.add('is-open');
@@ -465,11 +452,11 @@
       }
     });
   });
-  // Назад — клікається ВСЯ плашка з назвою, не тільки стрілка
-  body.querySelectorAll('.sr-md-sub-head').forEach(function(head){
-    head.addEventListener('click', function(e){
+  // Назад
+  body.querySelectorAll('.sr-md-back').forEach(function(btn){
+    btn.addEventListener('click', function(e){
       e.preventDefault();
-      var panel = head.closest('.sr-md-panel');
+      var panel = btn.closest('.sr-md-panel');
       if(panel) panel.classList.remove('is-active');
       body.classList.remove('has-sub');
     });
