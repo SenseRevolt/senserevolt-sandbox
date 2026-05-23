@@ -1,12 +1,8 @@
 <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 
 <style>
-/* ГЛОБАЛЬНИЙ ФІКС ДЛЯ STICKY MENU НА СТАРИХ ANDROID/IOS */
-html, body { overflow-x: clip !important; }
-@supports not (overflow-x: clip) { html, body { overflow-x: visible !important; } }
-
 /* ── TOP BAR ── */
-.sr-tbw{background-color:#2d2c2b;width:100%;position:relative;z-index:902 !important;}
+.sr-tbw{background-color:#2d2c2b;width:100%;position:relative;z-index:899;}
 .sr-tb{height:2.5rem;display:flex;align-items:center;justify-content:center;
   border-bottom:1px solid rgba(251,239,220,.08);overflow:hidden;
   font-family:'Jost',sans-serif;font-size:.78rem;font-weight:300;
@@ -21,22 +17,9 @@ html, body { overflow-x: clip !important; }
 .sr-tb-track span{white-space:nowrap;padding-right:3rem;}
 @keyframes srMarq{from{transform:translateX(0)}to{transform:translateX(-33.333%)}}
 
-/* ── HEADER (STICKY) ── */
-.sr-h{
-  background-color:#2d2c2b;
-  position:-webkit-sticky !important;
-  position:sticky !important;
-  top:-1px !important; /* Фікс зникнення на скролі (Redmi/iOS) */
-  z-index:900;
-  width:100%;
-  border-bottom:1px solid rgba(251,239,220,.05);
-  -webkit-font-smoothing:antialiased;
-}
-/* Хак від пустоти над меню на iOS */
-.sr-h::before {
-  content:''; position:absolute; bottom:99%; left:0; right:0; height:50vh;
-  background-color:#2d2c2b; z-index:-1; pointer-events:none;
-}
+/* ── HEADER ── */
+.sr-h{background-color:#2d2c2b;position:sticky;top:0;z-index:900;width:100%;
+  border-bottom:1px solid rgba(251,239,220,.05);-webkit-font-smoothing:antialiased;}
 .sr-h a,.sr-h button{-webkit-tap-highlight-color:transparent;outline:none;}
 .sr-h a:focus,.sr-h button:focus{outline:none;}
 .sr-h-in{max-width:var(--max-width,1600px);width:100%;margin:0 auto;padding:0 var(--margin,20px);
@@ -123,21 +106,20 @@ html, body { overflow-x: clip !important; }
    MOBILE MENU — slide-in drawer
    ════════════════════════════════ */
 .sr-mob-backdrop{
-  position:fixed;top:-50vh !important;left:0;right:0;bottom:-50vh !important;
-  height:200vh !important; /* Залізобетонне перекриття екрану */
+  position:fixed;top:0;left:0;right:0;bottom:0;
   background:rgba(0,0,0,.5);
   z-index:9998;
   opacity:0;visibility:hidden;
   transition:opacity .25s,visibility .25s;
-  overscroll-behavior:none;
+  overscroll-behavior: none;
 }
 .sr-mob-backdrop.is-open{opacity:1;visibility:visible;}
 
 .sr-mob-drawer{
-  position:fixed !important;
-  top:0 !important;right:0;bottom:0 !important;
-  height:100% !important;
-  height:100dvh !important;
+  position:fixed;
+  top:0;right:0;bottom:0;
+  height:100%; /* Фікс для старого Android (Redmi Note 5) */
+  height:100dvh; /* Сучасний підхід */
   width:min(85vw,420px);
   background:#262524;
   z-index:9999;
@@ -147,22 +129,21 @@ html, body { overflow-x: clip !important; }
   flex-direction:column;
   -webkit-font-smoothing:antialiased;
   box-shadow:-4px 0 20px rgba(0,0,0,.3);
-  overscroll-behavior:none;
+  overscroll-behavior: none;
 }
 .sr-mob-drawer.is-open{transform:translateX(0);}
 @media(max-width:767px){.sr-mob-drawer{width:100%;}}
-@media(min-width:1280px){.sr-mob-drawer,.sr-mob-backdrop{display:none!important;}}
+@media(min-width:1280px){
+  .sr-mob-drawer,.sr-mob-backdrop{display:none!important;}
+}
 
-/* Хедер drawer (з урахуванням Safe Area iOS) */
+/* Хедер drawer */
 .sr-md-head{
   flex-shrink:0;
   display:flex;align-items:center;justify-content:space-between;
   padding:0 1.5rem;
-  padding-top:env(safe-area-inset-top, 0px);
-  padding-left:env(safe-area-inset-left, 0px);
-  padding-right:env(safe-area-inset-right, 0px);
-  height:auto !important;
-  min-height:calc(5rem + env(safe-area-inset-top, 0px));
+  height:5rem;
+  min-height:5rem;
   background:#2d2c2b;
   border-bottom:1px solid rgba(251,239,220,.08);
 }
@@ -176,25 +157,19 @@ html, body { overflow-x: clip !important; }
   -webkit-tap-highlight-color:transparent;
 }
 @media(max-width:767px){
-  .sr-md-head{
-    padding:0 1rem;
-    padding-top:env(safe-area-inset-top, 0px);
-    padding-left:max(1rem, env(safe-area-inset-left));
-    padding-right:max(1rem, env(safe-area-inset-right));
-    min-height:calc(4rem + env(safe-area-inset-top, 0px));
-  }
+  .sr-md-head{height:4rem; min-height:4rem; padding:0 1rem;}
 }
 
-/* Body drawer */
+/* Body drawer — скролюваний контейнер з панелями */
 .sr-md-body{
   flex:1 1 auto;
-  height:100%;
+  height:100%; /* Запобігає випадінню вмісту у ландшафтному режимі */
   min-height:0;
   position:relative;
   overflow:hidden;
 }
 
-/* Панелі (з урахуванням Safe Area) */
+/* Панелі — слайдяться горизонтально */
 .sr-md-panel{
   position:absolute;
   top:0;left:0;right:0;bottom:0;
@@ -204,15 +179,14 @@ html, body { overflow-x: clip !important; }
   overscroll-behavior:contain;
   transform:translateX(100%);
   transition:transform .3s cubic-bezier(.16,1,.3,1);
-  padding-bottom:calc(2rem + env(safe-area-inset-bottom, 0px));
-  padding-left:env(safe-area-inset-left, 0px);
-  padding-right:env(safe-area-inset-right, 0px);
+  padding-bottom:2rem;
   z-index:1;
 }
 .sr-md-panel.is-active{z-index:2;}
 .sr-md-panel.is-main{transform:translateX(0);}
 .sr-md-panel.is-active{transform:translateX(0);}
 
+/* Заголовок підпанелі з кнопкою назад */
 .sr-md-sub-head{
   display:flex;align-items:center;
   padding:1rem 1.5rem;
@@ -233,6 +207,7 @@ html, body { overflow-x: clip !important; }
   -webkit-tap-highlight-color:transparent;
 }
 
+/* Пункти меню */
 .sr-md-item{
   display:flex;align-items:center;justify-content:space-between;
   padding:1.1rem 1.5rem;
@@ -258,17 +233,19 @@ html, body { overflow-x: clip !important; }
 }
 .sr-md-sub-item:hover{color:#fbefdc;background:rgba(251,239,220,.03);}
 
-/* ЛАНДШАФТНИЙ РЕЖИМ */
+/* ЛАНДШАФТНИЙ РЕЖИМ (ФІКС РОЗПОВЗАННЯ) */
 @media(max-height:500px) and (orientation:landscape) {
-  .sr-md-head { min-height: calc(3.2rem + env(safe-area-inset-top, 0px)); }
+  .sr-md-head { height: 3.2rem; min-height: 3.2rem; padding: 0 1rem; }
   .sr-md-head img { width: 6.5rem; }
   .sr-md-close { width: 1.8rem; height: 1.8rem; }
-  .sr-md-item, .sr-md-sub-item { padding: 0.65rem max(1rem, env(safe-area-inset-left)); font-size: 0.95rem; }
-  .sr-md-sub-head { padding: 0.65rem max(1rem, env(safe-area-inset-left)); }
+  .sr-md-item, .sr-md-sub-item { padding: 0.65rem 1rem; font-size: 0.95rem; }
+  .sr-md-sub-head { padding: 0.65rem 1rem; }
 }
 
-/* ФІКС СКРОЛУ БЕЗ СТРИБКІВ */
-html.sr-no-scroll, body.sr-no-scroll { overflow: hidden !important; }
+/* ФІКС СКРОЛУ БЕЗ СТРИБКІВ ВГОРУ */
+html.sr-no-scroll, body.sr-no-scroll {
+  overflow: hidden !important;
+}
 </style>
 
 <div class="sr-tbw">
@@ -447,8 +424,9 @@ html.sr-no-scroll, body.sr-no-scroll { overflow: hidden !important; }
   window.addEventListener('touchstart', function(){ document.body.classList.add('is-touch'); }, {once:true, passive:true});
 })();
 
-// Drawer logic — vanilla JS
+// Drawer logic — vanilla JS, без бібліотек
 (function(){
+  // Відкладаємо виконання до повної побудови DOM
   document.addEventListener('DOMContentLoaded', function() {
     var burger = document.getElementById('sr-burger');
     var drawer = document.getElementById('sr-drawer');
@@ -456,9 +434,15 @@ html.sr-no-scroll, body.sr-no-scroll { overflow: hidden !important; }
     var closeBtn = document.getElementById('sr-md-close');
     var mdBody = document.getElementById('sr-md-body');
 
-    if(drawer && drawer.parentNode !== document.body){ document.body.appendChild(drawer); }
-    if(backdrop && backdrop.parentNode !== document.body){ document.body.appendChild(backdrop); }
+    // КРИТИЧНО: переносимо drawer в корінь body, щоб він не успадковував z-index від header
+    if(drawer && drawer.parentNode !== document.body){
+      document.body.appendChild(drawer);
+    }
+    if(backdrop && backdrop.parentNode !== document.body){
+      document.body.appendChild(backdrop);
+    }
 
+    // Знімаємо CSS-анімацію з body після її завершення
     setTimeout(function() {
       document.body.style.animation = 'none';
       document.body.style.transform = 'none';
@@ -487,7 +471,9 @@ html.sr-no-scroll, body.sr-no-scroll { overflow: hidden !important; }
       setTimeout(function(){
         if(mdBody) {
           mdBody.classList.remove('has-sub');
-          mdBody.querySelectorAll('.sr-md-panel.is-active').forEach(function(p){ p.classList.remove('is-active'); });
+          mdBody.querySelectorAll('.sr-md-panel.is-active').forEach(function(p){
+            p.classList.remove('is-active');
+          });
         }
       }, 300);
     }
@@ -502,19 +488,25 @@ html.sr-no-scroll, body.sr-no-scroll { overflow: hidden !important; }
     if(closeBtn) closeBtn.addEventListener('click', closeDrawer);
     if(backdrop) {
       backdrop.addEventListener('click', closeDrawer);
+      // Блокування "протягування" фону на старих пристроях
       backdrop.addEventListener('touchmove', function(e){ e.preventDefault(); }, {passive: false});
     }
     document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeDrawer(); });
 
+    // Перехід в підпанель
     if(mdBody) {
       mdBody.querySelectorAll('[data-panel]').forEach(function(btn){
         btn.addEventListener('click', function(e){
           e.preventDefault();
           var name = btn.getAttribute('data-panel');
           var panel = mdBody.querySelector('.sr-md-panel[data-name="'+name+'"]');
-          if(panel){ panel.classList.add('is-active'); mdBody.classList.add('has-sub'); }
+          if(panel){
+            panel.classList.add('is-active');
+            mdBody.classList.add('has-sub');
+          }
         });
       });
+      // Назад
       mdBody.querySelectorAll('.sr-md-sub-head').forEach(function(head){
         head.addEventListener('click', function(e){
           e.preventDefault();
