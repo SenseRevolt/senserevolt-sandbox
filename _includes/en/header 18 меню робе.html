@@ -111,15 +111,12 @@
   z-index:9998;
   opacity:0;visibility:hidden;
   transition:opacity .25s,visibility .25s;
-  overscroll-behavior: none;
 }
 .sr-mob-backdrop.is-open{opacity:1;visibility:visible;}
 
 .sr-mob-drawer{
   position:fixed;
   top:0;right:0;bottom:0;
-  height:100%; /* Фікс для старого Android (Redmi Note 5) */
-  height:100dvh; /* Сучасний підхід */
   width:min(85vw,420px);
   background:#262524;
   z-index:9999;
@@ -129,7 +126,6 @@
   flex-direction:column;
   -webkit-font-smoothing:antialiased;
   box-shadow:-4px 0 20px rgba(0,0,0,.3);
-  overscroll-behavior: none;
 }
 .sr-mob-drawer.is-open{transform:translateX(0);}
 @media(max-width:767px){.sr-mob-drawer{width:100%;}}
@@ -141,9 +137,7 @@
 .sr-md-head{
   flex-shrink:0;
   display:flex;align-items:center;justify-content:space-between;
-  padding:0 1.5rem;
-  height:5rem;
-  min-height:5rem;
+  padding:0 1.5rem;height:5rem;
   background:#2d2c2b;
   border-bottom:1px solid rgba(251,239,220,.08);
 }
@@ -157,13 +151,12 @@
   -webkit-tap-highlight-color:transparent;
 }
 @media(max-width:767px){
-  .sr-md-head{height:4rem; min-height:4rem; padding:0 1rem;}
+  .sr-md-head{height:4rem;padding:0 1rem;}
 }
 
 /* Body drawer — скролюваний контейнер з панелями */
 .sr-md-body{
   flex:1 1 auto;
-  height:100%; /* Запобігає випадінню вмісту у ландшафтному режимі */
   min-height:0;
   position:relative;
   overflow:hidden;
@@ -185,6 +178,7 @@
 .sr-md-panel.is-active{z-index:2;}
 .sr-md-panel.is-main{transform:translateX(0);}
 .sr-md-panel.is-active{transform:translateX(0);}
+/* Коли підпанель активна, головна залишається під нею (з фоном) */
 
 /* Заголовок підпанелі з кнопкою назад */
 .sr-md-sub-head{
@@ -232,15 +226,6 @@
   transition:color .18s,background .18s;
 }
 .sr-md-sub-item:hover{color:#fbefdc;background:rgba(251,239,220,.03);}
-
-/* ЛАНДШАФТНИЙ РЕЖИМ (ФІКС РОЗПОВЗАННЯ) */
-@media(max-height:500px) and (orientation:landscape) {
-  .sr-md-head { height: 3.2rem; min-height: 3.2rem; padding: 0 1rem; }
-  .sr-md-head img { width: 6.5rem; }
-  .sr-md-close { width: 1.8rem; height: 1.8rem; }
-  .sr-md-item, .sr-md-sub-item { padding: 0.65rem 1rem; font-size: 0.95rem; }
-  .sr-md-sub-head { padding: 0.65rem 1rem; }
-}
 
 /* ФІКС СКРОЛУ БЕЗ СТРИБКІВ ВГОРУ */
 html.sr-no-scroll, body.sr-no-scroll {
@@ -442,13 +427,16 @@ html.sr-no-scroll, body.sr-no-scroll {
       document.body.appendChild(backdrop);
     }
 
-    // Знімаємо CSS-анімацію з body після її завершення
+    // КРИТИЧНИЙ ФІКС: Знімаємо CSS-анімацію з body після її завершення (через 600мс).
+    // Анімація pageFadeIn має transform, що робить body "containing block". 
+    // Через це position: fixed ламався при скролі.
     setTimeout(function() {
       document.body.style.animation = 'none';
       document.body.style.transform = 'none';
     }, 600);
 
     function openDrawer(){
+      // Страхувальний скид, якщо меню відкрили до завершення стартової анімації
       document.body.style.animation = 'none';
       document.body.style.transform = 'none';
 
@@ -486,11 +474,7 @@ html.sr-no-scroll, body.sr-no-scroll {
     }
     
     if(closeBtn) closeBtn.addEventListener('click', closeDrawer);
-    if(backdrop) {
-      backdrop.addEventListener('click', closeDrawer);
-      // Блокування "протягування" фону на старих пристроях
-      backdrop.addEventListener('touchmove', function(e){ e.preventDefault(); }, {passive: false});
-    }
+    if(backdrop) backdrop.addEventListener('click', closeDrawer);
     document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeDrawer(); });
 
     // Перехід в підпанель
