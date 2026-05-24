@@ -7,6 +7,7 @@ lang_full: "Español"
 topbar: "Un mundo donde entenderte a ti y a tu hijo empieza con las herramientas adecuadas"
 
 nav:
+  home: "Inicio"
   somatic: "Prácticas somáticas"
   sel: "SEL para niños"
   pros: "Para profesionales"

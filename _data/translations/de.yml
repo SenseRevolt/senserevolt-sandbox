@@ -7,6 +7,7 @@ lang_full: "Deutsch"
 topbar: "Eine Welt, in der das Verstehen von dir und deinem Kind mit den richtigen Werkzeugen beginnt"
 
 nav:
+  home: "Startseite"
   somatic: "Somatische Praktiken"
   sel: "SEL für Kinder"
   pros: "Für Profis"
