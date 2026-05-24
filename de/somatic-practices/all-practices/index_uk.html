@@ -1,0 +1,478 @@
+---
+title: "SenseRevolt | Каталог соматичних практик"
+lang: uk
+---
+<!DOCTYPE html>
+<html lang="{{ page.lang }}">
+<head>
+    {% include head.html %}
+</head>
+<body>
+
+    {% include en/header.html %}
+
+    {% assign t = site.data.translations[page.lang] %}
+
+    <nav class="breadcrumbs-section">
+        <div class="container grid">
+            <div class="breadcrumbs-content">
+                <a href="{{ site.baseurl }}/{{ page.lang }}/">{{ t.nav.home | default: "Home" }}</a><span class="breadcrumbs-separator">/</span><span>{{ t.nav.somatic }}</span>
+            </div>
+        </div>
+    </nav>
+
+    <section class="catalog-hero">
+        <div class="container grid">
+            <div class="catalog-hero-content">
+                <h1 class="catalog-title">{{ t.nav.somatic }}</h1>
+                <p class="catalog-subtitle">Printable somatic kits for self-analysis, emotional regulation and nervous system care.<br>New kit every two weeks.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="launch-schedule">
+        <div class="container">
+            <h2 class="schedule-title">Launch Schedule · 2026</h2>
+            <div class="timeline-container">
+                <div class="timeline-line"></div>
+                <div class="timeline-grid">
+                    <div class="timeline-item completed">
+                        <div class="timeline-circle"><svg class="icon-check" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+                        <span class="timeline-week">Week 1</span><span class="timeline-name">Anger Kit<br>Vol.1</span>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-circle"><svg class="icon-arrow" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
+                        <span class="timeline-week">Week 3</span><span class="timeline-name">Insomnia Kit<br>Vol.1</span>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-circle"><svg class="icon-arrow" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
+                        <span class="timeline-week">Week 5</span><span class="timeline-name">Panic Kit<br>Vol.1</span>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-circle"><svg class="icon-arrow" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
+                        <span class="timeline-week">Week 6</span><span class="timeline-name">Burnout Kit<br>Vol.1</span>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-circle"><svg class="icon-arrow" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
+                        <span class="timeline-week">Week 7</span><span class="timeline-name">ADHD Kit<br>Vol.1</span>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-circle"><svg class="icon-arrow" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
+                        <span class="timeline-week">Week 8</span><span class="timeline-name">Anxiety Kit<br>Vol.1</span>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-circle"><svg class="icon-arrow" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
+                        <span class="timeline-week">Week 9</span><span class="timeline-name">Dopamine Kit<br>Vol.1</span>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-circle"><svg class="icon-arrow" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
+                        <span class="timeline-week">Week 10</span><span class="timeline-name">Test Anxiety Kit<br>Vol.1</span>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-circle"><svg class="icon-arrow" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
+                        <span class="timeline-week">Week 12</span><span class="timeline-name">Decompression Kit<br>Vol.1</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="catalog-filters">
+        <div class="container">
+            <div class="filter-row">
+                <div class="filter-group topic-group">
+                    <span class="filter-label">Topic:</span>
+                    <div class="pills-container">
+                        <button class="filter-pill active" data-group="topic" data-value="all">All</button>
+                        <button class="filter-pill" data-group="topic" data-value="anger">Anger</button>
+                        <button class="filter-pill" data-group="topic" data-value="insomnia">Insomnia</button>
+                        <button class="filter-pill" data-group="topic" data-value="panic">Panic</button>
+                        <button class="filter-pill" data-group="topic" data-value="burnout">Burnout</button>
+                        <button class="filter-pill" data-group="topic" data-value="adhd">ADHD</button>
+                        <button class="filter-pill" data-group="topic" data-value="anxiety">Anxiety</button>
+                        <button class="filter-pill" data-group="topic" data-value="dopamine">Dopamine</button>
+                        <button class="filter-pill" data-group="topic" data-value="decompression">Decompression</button>
+                    </div>
+                </div>
+                <div class="filter-group status-group">
+                    <span class="filter-label">Status:</span>
+                    <div class="pills-container">
+                        <button class="filter-pill active" data-group="status" data-value="all">All</button>
+                        <button class="filter-pill" data-group="status" data-value="available">Available</button>
+                        <button class="filter-pill" data-group="status" data-value="coming-soon">Coming Soon</button>
+                    </div>
+                </div>
+            </div>
+            <div class="filter-row">
+                <div class="filter-group type-group">
+                    <span class="filter-label">Type:</span>
+                    <div class="pills-container">
+                        <button class="filter-pill active" data-group="type" data-value="all">All</button>
+                        <button class="filter-pill" data-group="type" data-value="new">New</button>
+                        <button class="filter-pill" data-group="type" data-value="launch-price">Launch Price</button>
+                        <button class="filter-pill disabled" data-group="type" data-value="bundles">
+                            <svg class="icon-lock" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                            Bundles
+                        </button>
+                    </div>
+                </div>
+                <div class="filter-group series-group">
+                    <span class="filter-label">Series:</span>
+                    <div class="pills-container">
+                        <button class="filter-pill active" data-group="series" data-value="all">All</button>
+                        <button class="filter-pill" data-group="series" data-value="vol-1">Vol.1</button>
+                        <button class="filter-pill disabled" data-group="series" data-value="vol-2">
+                            <svg class="icon-lock" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                            Vol.2
+                        </button>
+                        <button class="filter-pill disabled" data-group="series" data-value="vol-3">
+                            <svg class="icon-lock" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                            Vol.3
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="catalog-products">
+        <div class="container">
+            <div class="products-grid" id="productsGrid">
+                
+                <div class="product-card" data-topic="anger" data-status="available" data-type="new launch-price" data-series="vol-1">
+                    <div class="product-image-box hover-carousel">
+                        <img src="{{ site.baseurl }}/assets/en/covers/anger-kit/card-1.jpg" class="carousel-img img-1 active" alt="Anger Kit Main">
+                        <img src="{{ site.baseurl }}/assets/en/covers/anger-kit/card-2.jpg" class="carousel-img img-2" alt="Anger Kit Preview 1">
+                        <img src="{{ site.baseurl }}/assets/en/covers/anger-kit/card-3.jpg" class="carousel-img img-3" alt="Anger Kit Preview 2">
+                    </div>
+                    <span class="product-vol-text">Vol.1</span>
+                    <div class="product-card-line"></div>
+                    <h3 class="product-card-title">Anger Kit</h3>
+                    <p class="product-card-subtitle">Body-Based Practices to Move Through Rage & Understand What's Underneath</p>
+                </div>
+
+                <div class="product-card" data-topic="insomnia" data-status="coming-soon" data-type="" data-series="vol-1">
+                    <div class="product-image-box">
+                        <div class="project-status-overlay">
+                            <div class="lock-icon-container">
+                                <svg class="lock-icon" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                            </div>
+                            <span class="project-text-small">Week 3</span>
+                            <span class="project-text-large">Jun 2026</span>
+                            <a href="#" class="notify-btn"><span>Notify Me</span></a>
+                        </div>
+                        <img src="{{ site.baseurl }}/assets/en/covers/insomnia-kit/card-1.jpg" alt="Insomnia Kit">
+                    </div>
+                    <span class="product-vol-text">Vol.1</span>
+                    <div class="product-card-line"></div>
+                    <h3 class="product-card-title">Insomnia Kit</h3>
+                    <p class="product-card-subtitle">Body-Based Wind-Down Practices for Nights Your Nervous System Won't Quiet</p>
+                </div>
+
+                <div class="product-card" data-topic="panic" data-status="coming-soon" data-type="" data-series="vol-1">
+                    <div class="product-image-box">
+                        <div class="project-status-overlay">
+                            <div class="lock-icon-container">
+                                <svg class="lock-icon" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                            </div>
+                            <span class="project-text-small">Week 5</span>
+                            <span class="project-text-large">Jun 2026</span>
+                            <a href="#" class="notify-btn"><span>Notify Me</span></a>
+                        </div>
+                        <img src="{{ site.baseurl }}/assets/en/covers/panic-kit/card-1.jpg" alt="Panic Kit">
+                    </div>
+                    <span class="product-vol-text">Vol.1</span>
+                    <div class="product-card-line"></div>
+                    <h3 class="product-card-title">Grounding Kit</h3>
+                    <p class="product-card-subtitle">Body-Based Practices to Exit Panic & Return to Yourself</p>
+                </div>
+
+                <div class="product-card" data-topic="burnout" data-status="coming-soon" data-type="" data-series="vol-1">
+                    <div class="product-image-box">
+                        <div class="project-status-overlay">
+                            <div class="lock-icon-container">
+                                <svg class="lock-icon" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-02-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                            </div>
+                            <span class="project-text-small">Week 6</span>
+                            <span class="project-text-large">Jul 2026</span>
+                            <a href="#" class="notify-btn"><span>Notify Me</span></a>
+                        </div>
+                        <img src="{{ site.baseurl }}/assets/en/covers/burnout-kit/card-1.jpg" alt="Burnout Kit">
+                    </div>
+                    <span class="product-vol-text">Vol.1</span>
+                    <div class="product-card-line"></div>
+                    <h3 class="product-card-title">Burnout Kit</h3>
+                    <p class="product-card-subtitle">Body-Based Practices to Reconnect With Yourself Through Exhaustion</p>
+                </div>
+
+                <div class="product-card" data-topic="focus" data-status="coming-soon" data-type="" data-series="vol-1">
+                    <div class="product-image-box">
+                        <div class="project-status-overlay">
+                            <div class="lock-icon-container">
+                                <svg class="lock-icon" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                            </div>
+                            <span class="project-text-small">Week 7</span>
+                            <span class="project-text-large">Jul 2026</span>
+                            <a href="#" class="notify-btn"><span>Notify Me</span></a>
+                        </div>
+                        <img src="{{ site.baseurl }}/assets/en/covers/focus-kit/card-1.jpg" alt="Focus Kit">
+                    </div>
+                    <span class="product-vol-text">Vol.1</span>
+                    <div class="product-card-line"></div>
+                    <h3 class="product-card-title">Focus Kit</h3>
+                    <p class="product-card-subtitle">Body-Based Practices to Work With a Restless Mind, Not Against It</p>
+                </div>
+
+                <div class="product-card" data-topic="anxiety" data-status="coming-soon" data-type="" data-series="vol-1">
+                    <div class="product-image-box">
+                        <div class="project-status-overlay">
+                            <div class="lock-icon-container">
+                                <svg class="lock-icon" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                            </div>
+                            <span class="project-text-small">Week 8</span>
+                            <span class="project-text-large">Aug 2026</span>
+                            <a href="#" class="notify-btn"><span>Notify Me</span></a>
+                        </div>
+                        <img src="{{ site.baseurl }}/assets/en/covers/anxiety-kit/card-1.jpg" alt="Anxiety Kit">
+                    </div>
+                    <span class="product-vol-text">Vol.1</span>
+                    <div class="product-card-line"></div>
+                    <h3 class="product-card-title">Anxiety Kit</h3>
+                    <p class="product-card-subtitle">Body-Based Practices to Notice, Trace & Understand What Your Body Holds</p>
+                </div>
+
+                <div class="product-card" data-topic="dopamine" data-status="coming-soon" data-type="" data-series="vol-1">
+                    <div class="product-image-box">
+                        <div class="project-status-overlay">
+                            <div class="lock-icon-container">
+                                <svg class="lock-icon" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                            </div>
+                            <span class="project-text-small">Week 9</span>
+                            <span class="project-text-large">Aug 2026</span>
+                            <a href="#" class="notify-btn"><span>Notify Me</span></a>
+                        </div>
+                        <img src="{{ site.baseurl }}/assets/en/covers/dopamine-kit/card-1.jpg" alt="Dopamine Kit">
+                    </div>
+                    <span class="product-vol-text">Vol.1</span>
+                    <div class="product-card-line"></div>
+                    <h3 class="product-card-title">Dopamine Kit</h3>
+                    <p class="product-card-subtitle">Body-Based Practices to Explore Real Motivation From the Inside</p>
+                </div>
+
+                <div class="product-card" data-topic="anxiety" data-status="coming-soon" data-type="" data-series="vol-1">
+                    <div class="product-image-box">
+                        <div class="project-status-overlay">
+                            <div class="lock-icon-container">
+                                <svg class="lock-icon" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                            </div>
+                            <span class="project-text-small">Week 10</span>
+                            <span class="project-text-large">Sep 2026</span>
+                            <a href="#" class="notify-btn"><span>Notify Me</span></a>
+                        </div>
+                        <img src="{{ site.baseurl }}/assets/en/covers/test-anxiety-kit/card-1.jpg" alt="Test Anxiety Kit">
+                    </div>
+                    <span class="product-vol-text">Vol.1</span>
+                    <div class="product-card-line"></div>
+                    <h3 class="product-card-title">Test Anxiety Kit</h3>
+                    <p class="product-card-subtitle">Body-Based Practices to Feel Present & Steady Before Exams</p>
+                </div>
+
+                <div class="product-card" data-topic="decompression" data-status="coming-soon" data-type="" data-series="vol-1">
+                    <div class="product-image-box">
+                        <div class="project-status-overlay">
+                            <div class="lock-icon-container">
+                                <svg class="lock-icon" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                            </div>
+                            <span class="project-text-small">Week 10</span>
+                            <span class="project-text-large">Sep 2026</span>
+                            <a href="#" class="notify-btn"><span>Notify Me</span></a>
+                        </div>
+                        <img src="{{ site.baseurl }}/assets/en/covers/decompression-kit/card-1.jpg" alt="After-School Decompression Kit">
+                    </div>
+                    <span class="product-vol-text">Vol.1</span>
+                    <div class="product-card-line"></div>
+                    <h3 class="product-card-title">After-School Decompression Kit</h3>
+                    <p class="product-card-subtitle">Somatic Wind-Down Practices for Kids & Teens</p>
+                </div>
+
+                <div class="no-results hidden" id="noResultsMessage">
+                    <h4 class="no-results-title">Still cooking.</h4>
+                    <p class="no-results-text">This combination doesn't exist yet — but it might soon. Reset to browse what's available now.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    {% include en/footer.html %}
+
+    <style>
+        .project-status-overlay {
+            background: rgba(0, 0, 0, 0) !important;
+            backdrop-filter: blur(8px) !important;
+            -webkit-backdrop-filter: blur(8px) !important;
+        }
+        .pills-container {
+            display: flex !important;
+            gap: 8px !important;
+            flex-wrap: nowrap !important;
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch !important;
+            padding-bottom: 4px !important;
+        }
+        @media (min-width: 1024px) {
+            .pills-container {
+                flex-wrap: wrap !important;
+                overflow-x: visible !important;
+            }
+        }
+        .project-text-small,
+        .project-text-large {
+            font-weight: 400 !important;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .notify-btn {
+            width: 150px !important;
+            max-width: 100% !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-weight: 300 !important;
+            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1) !important;
+            backface-visibility: hidden !important;
+            -webkit-backface-visibility: hidden !important;
+            transform: translateZ(0) scale(1) !important;
+            -webkit-transform: translateZ(0) scale(1) !important;
+        }
+        .notify-btn span {
+            display: inline-block !important;
+            font-weight: 300 !important;
+            transform: translateY(2px) !important;
+            -webkit-transform: translateY(2px) !important;
+        }
+        .notify-btn:hover {
+            transform: translateZ(0) scale(1.05) !important;
+            -webkit-transform: translateZ(0) scale(1.05) !important;
+        }
+        .product-vol-text {
+            font-family: 'El Messiri', sans-serif !important;
+            font-size: 24px !important;
+            font-weight: 400 !important;
+            color: #fbefdc !important;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .product-card-line {
+            margin-bottom: 0.55rem !important;
+        }
+        .product-card-title {
+            font-family: 'El Messiri', sans-serif !important;
+            font-size: 36px !important;
+            font-weight: 400 !important;
+            color: #fbefdc !important;
+            margin-top: 20px !important;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .product-card-subtitle {
+            font-family: 'El Messiri', sans-serif !important;
+            font-size: 24px !important;
+            font-weight: 400 !important;
+            color: #aaa399 !important;
+            margin-top: 0px !important;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .product-image-box {
+            position: relative;
+            overflow: hidden;
+        }
+        .carousel-img {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            opacity: 0; z-index: 1;
+            transition: opacity 0.8s ease-in-out !important;
+        }
+        .carousel-img.active {
+            opacity: 1 !important;
+            z-index: 2 !important;
+        }
+        .carousel-img.img-1 {
+            position: relative;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const filterButtons = document.querySelectorAll('.filter-pill:not(.disabled)');
+            const productCards = document.querySelectorAll('.product-card');
+            const noResultsMessage = document.getElementById('noResultsMessage');
+            const activeFilters = { topic: 'all', status: 'all', type: 'all', series: 'all' };
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const group = button.getAttribute('data-group');
+                    const value = button.getAttribute('data-value');
+                    document.querySelectorAll(`.filter-pill[data-group="${group}"]`).forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    activeFilters[group] = value;
+                    filterProducts();
+                });
+            });
+
+            function filterProducts() {
+                let visibleCardsCount = 0;
+                productCards.forEach(card => {
+                    const matchTopic = activeFilters.topic === 'all' || card.getAttribute('data-topic') === activeFilters.topic;
+                    const matchStatus = activeFilters.status === 'all' || card.getAttribute('data-status') === activeFilters.status;
+                    const matchSeries = activeFilters.series === 'all' || card.getAttribute('data-series') === activeFilters.series;
+                    const cardType = card.getAttribute('data-type') || "";
+                    const matchType = activeFilters.type === 'all' || cardType.includes(activeFilters.type);
+                    if (matchTopic && matchStatus && matchSeries && matchType) {
+                        card.classList.remove('hidden');
+                        visibleCardsCount++;
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+                if (visibleCardsCount === 0) noResultsMessage.classList.remove('hidden');
+                else noResultsMessage.classList.add('hidden');
+            }
+            filterProducts();
+
+            const carousels = document.querySelectorAll('.hover-carousel');
+            carousels.forEach(carousel => {
+                const images = carousel.querySelectorAll('.carousel-img');
+                let intervalId = null;
+                let currentIndex = 0;
+                carousel.addEventListener('mouseenter', () => {
+                    if (images.length <= 1) return;
+                    setTimeout(() => {
+                        if (intervalId !== null) {
+                            images[currentIndex].classList.remove('active');
+                            currentIndex = (currentIndex + 1) % images.length;
+                            images[currentIndex].classList.add('active');
+                        }
+                    }, 150);
+                    intervalId = setInterval(() => {
+                        images[currentIndex].classList.remove('active');
+                        currentIndex = (currentIndex + 1) % images.length;
+                        images[currentIndex].classList.add('active');
+                    }, 2200);
+                });
+                carousel.addEventListener('mouseleave', () => {
+                    if (intervalId) { clearInterval(intervalId); intervalId = null; }
+                    images.forEach(img => img.classList.remove('active'));
+                    currentIndex = 0;
+                    images[0].classList.add('active');
+                });
+            });
+        });
+    </script>
+
+    {% include scripts.html %}
+
+</body>
+</html>

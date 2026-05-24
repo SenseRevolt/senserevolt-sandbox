@@ -537,8 +537,18 @@ document.addEventListener('DOMContentLoaded', function() {
             opt.addEventListener('click', function(e){
                 e.preventDefault();e.stopPropagation();
                 var targetLang = opt.getAttribute('data-lang');
+                // Беремо поточний path і міняємо мову
+                var path = window.location.pathname;
                 var baseurl = '/senserevolt-sandbox';
-                window.location.href = baseurl + '/' + targetLang + '/somatic-practices/all-practices/';
+                // Прибираємо baseurl з початку
+                var pathWithoutBase = path.replace(baseurl, '');
+                // Перший сегмент — це мова (/en/..., /uk/...)
+                var segments = pathWithoutBase.split('/').filter(Boolean);
+                if(segments.length > 0){
+                    segments[0] = targetLang;
+                }
+                var newPath = baseurl + '/' + segments.join('/') + '/';
+                window.location.href = newPath;
             });
         });
     });
