@@ -131,7 +131,7 @@
 .sr-mob-backdrop.is-open{opacity:1;visibility:visible;}
 
 .sr-mob-drawer{
-  /* Єдина змінна для ідеального вирівнювання лівого та правого країв */
+  /* Єдина змінна для ідеального вирівнювання лівого краю та правого краю */
   --md-px: 1.5rem; 
   position:fixed !important;
   top:0 !important;right:0 !important;bottom:0 !important;
@@ -206,12 +206,10 @@
   -webkit-tap-highlight-color:transparent;
 }
 .sr-md-sub-head:hover,.sr-md-sub-head:active{background:#252423;}
-
-/* ФІКС СТРІЛКИ: прибрали ширину/центрування, щоб іконка стала в одну лінію з текстом */
 .sr-md-back{
-  display:flex;align-items:center;
-  background:none;border:none;cursor:pointer;
-  color:#fbefdc;padding:0;margin-right:.8rem;
+  display:flex;align-items:center;justify-content:center;
+  width:2rem;height:2rem;background:none;border:none;cursor:pointer;
+  color:#fbefdc;padding:0;margin-right:.5rem;
 }
 
 .sr-md-item{
