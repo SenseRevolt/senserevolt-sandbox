@@ -1,9 +1,6 @@
 <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 
 <style>
-/* ── RESET & ГЛОБАЛЬНІ ФІКСИ ── */
-html, body { background-color: #2d2c2b; overflow-x: clip !important; }
-
 /* ── TOP BAR ── */
 .sr-tbw{background-color:#2d2c2b;width:100%;position:relative;z-index:902 !important;}
 .sr-tb{height:2.5rem;display:flex;align-items:center;justify-content:center;
@@ -34,14 +31,14 @@ html, body { background-color: #2d2c2b; overflow-x: clip !important; }
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
 }
-/* Хаки для iPhone (дірка зверху) */
+/* Хак від пустоти над меню на iOS */
 .sr-h::before {
   content: ''; 
   position: absolute; 
   bottom: 100%; 
   left: 0; 
   right: 0; 
-  height: 100vh; 
+  height: 100px; 
   background-color: #2d2c2b; 
   z-index: -1; 
   pointer-events: none;
@@ -379,4 +376,198 @@ html.sr-no-scroll, body.sr-no-scroll { overflow: hidden !important; }
       <a href="{{ site.baseurl }}/en/our-story/" class="sr-md-item">Our Story</a>
       <a href="{{ site.baseurl }}/en/faqs/" class="sr-md-item">FAQs</a>
       <button class="sr-md-item" data-panel="music">Music
-        <svg width="8" height="13"
+        <svg width="8" height="13" viewBox="0 0 8 13" fill="none"><path d="M1 1l6.5 6-6.5 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+    
+    <div class="sr-md-panel" data-name="somatic">
+      <div class="sr-md-sub-head">
+        <button class="sr-md-back"><svg width="10" height="17" viewBox="0 0 10 17" fill="none"><path d="M9 1L1 8.5 9 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <span>Somatic Tools</span>
+      </div>
+      <a href="{{ site.baseurl }}/en/somatic-tools/our-method/" class="sr-md-sub-item">Our Method</a>
+      <a href="{{ site.baseurl }}/en/somatic-tools/all-kits/" class="sr-md-sub-item">All Kits</a>
+      <a href="{{ site.baseurl }}/en/somatic-tools/bundles/" class="sr-md-sub-item">Bundles</a>
+      <a href="{{ site.baseurl }}/en/somatic-tools/extras/" class="sr-md-sub-item">Extras</a>
+    </div>
+    
+    <div class="sr-md-panel" data-name="sel">
+      <div class="sr-md-sub-head">
+        <button class="sr-md-back"><svg width="10" height="17" viewBox="0 0 10 17" fill="none"><path d="M9 1L1 8.5 9 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <span>SEL Tools for Kids</span>
+      </div>
+      <a href="{{ site.baseurl }}/en/sel-tools/our-method/" class="sr-md-sub-item">Our Method</a>
+      <a href="{{ site.baseurl }}/en/sel-tools/all-books/" class="sr-md-sub-item">All Books</a>
+      <a href="{{ site.baseurl }}/en/sel-tools/bundles/" class="sr-md-sub-item">Bundles</a>
+      <a href="{{ site.baseurl }}/en/sel-tools/extras/" class="sr-md-sub-item">Extras</a>
+    </div>
+    
+    <div class="sr-md-panel" data-name="pros">
+      <div class="sr-md-sub-head">
+        <button class="sr-md-back"><svg width="10" height="17" viewBox="0 0 10 17" fill="none"><path d="M9 1L1 8.5 9 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <span>For Pros</span>
+      </div>
+      <a href="{{ site.baseurl }}/en/for-pros/pro-kits/" class="sr-md-sub-item">Pro Kits</a>
+      <a href="{{ site.baseurl }}/en/for-pros/bundles/" class="sr-md-sub-item">Bundles</a>
+      <a href="{{ site.baseurl }}/en/for-pros/group-pricing/" class="sr-md-sub-item">Group Pricing</a>
+    </div>
+    
+    <div class="sr-md-panel" data-name="music">
+      <div class="sr-md-sub-head">
+        <button class="sr-md-back"><svg width="10" height="17" viewBox="0 0 10 17" fill="none"><path d="M9 1L1 8.5 9 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <span>Music</span>
+      </div>
+      <a href="{{ site.baseurl }}/en/music/somatic-music/" class="sr-md-sub-item">Somatic Music</a>
+      <a href="{{ site.baseurl }}/en/music/kids-songs/" class="sr-md-sub-item">Kids Songs</a>
+    </div>
+  </div>
+</aside>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 1. Touch Detection
+    if(('ontouchstart' in window) || navigator.maxTouchPoints > 0 || window.matchMedia('(pointer:coarse)').matches){
+        document.body.classList.add('is-touch');
+    }
+    window.addEventListener('touchstart', function(){ document.body.classList.add('is-touch'); }, {once:true, passive:true});
+
+    // 2. Drawer Logic
+    var burger = document.getElementById('sr-burger');
+    var drawer = document.getElementById('sr-drawer');
+    var backdrop = document.getElementById('sr-backdrop');
+    var closeBtn = document.getElementById('sr-md-close');
+    var mdBody = document.getElementById('sr-md-body');
+
+    if(drawer && drawer.parentNode !== document.body) document.body.appendChild(drawer);
+    if(backdrop && backdrop.parentNode !== document.body) document.body.appendChild(backdrop);
+
+    setTimeout(function() {
+        document.body.style.animation = 'none';
+        document.body.style.transform = 'none';
+    }, 600);
+
+    function openDrawer(){
+        document.documentElement.classList.add('sr-no-scroll');
+        document.body.classList.add('sr-no-scroll');
+        if(drawer) drawer.classList.add('is-open');
+        if(backdrop) backdrop.classList.add('is-open');
+        if(burger) burger.classList.add('is-open');
+    }
+
+    function closeDrawer(){
+        if(drawer) drawer.classList.remove('is-open');
+        if(backdrop) backdrop.classList.remove('is-open');
+        if(burger) burger.classList.remove('is-open');
+        document.documentElement.classList.remove('sr-no-scroll');
+        document.body.classList.remove('sr-no-scroll');
+        setTimeout(function(){
+            if(mdBody) {
+                mdBody.classList.remove('has-sub');
+                mdBody.querySelectorAll('.sr-md-panel.is-active').forEach(function(p){ p.classList.remove('is-active'); });
+            }
+        }, 300);
+    }
+
+    if(burger) {
+        burger.addEventListener('click', function(e){
+            e.preventDefault(); e.stopPropagation();
+            drawer.classList.contains('is-open') ? closeDrawer() : openDrawer();
+        });
+    }
+    if(closeBtn) closeBtn.addEventListener('click', closeDrawer);
+    if(backdrop) {
+        backdrop.addEventListener('click', closeDrawer);
+        backdrop.addEventListener('touchmove', function(e){ e.preventDefault(); }, {passive: false});
+    }
+    document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeDrawer(); });
+
+    if(mdBody) {
+        mdBody.querySelectorAll('[data-panel]').forEach(function(btn){
+            btn.addEventListener('click', function(e){
+                e.preventDefault();
+                var name = btn.getAttribute('data-panel');
+                var panel = mdBody.querySelector('.sr-md-panel[data-name="'+name+'"]');
+                if(panel){ panel.classList.add('is-active'); mdBody.classList.add('has-sub'); }
+            });
+        });
+        mdBody.querySelectorAll('.sr-md-sub-head').forEach(function(head){
+            head.addEventListener('click', function(e){
+                e.preventDefault();
+                var panel = head.closest('.sr-md-panel');
+                if(panel) panel.classList.remove('is-active');
+                mdBody.classList.remove('has-sub');
+            });
+        });
+    }
+
+    // 3. Lang Switcher
+    document.querySelectorAll('.sr-lw').forEach(function(wrap){
+        var btn = wrap.querySelector('.sr-lb');
+        var list = wrap.querySelector('.sr-ll');
+        var chev = wrap.querySelector('.sr-lc');
+        if(!btn || !list) return;
+        btn.addEventListener('click', function(e){
+            e.preventDefault();e.stopPropagation();
+            var isOpen = list.classList.contains('is-open');
+            document.querySelectorAll('.sr-ll.is-open').forEach(function(l){
+                if(l !== list){
+                    l.classList.remove('is-open');
+                    var b = l.parentElement.querySelector('.sr-lb');
+                    var c = l.parentElement.querySelector('.sr-lc');
+                    if(b) b.classList.remove('op');
+                    if(c) c.classList.remove('op');
+                }
+            });
+            if(isOpen){
+                list.classList.remove('is-open'); btn.classList.remove('op'); if(chev) chev.classList.remove('op');
+            } else {
+                list.classList.add('is-open'); btn.classList.add('op'); if(chev) chev.classList.add('op');
+            }
+        });
+        list.querySelectorAll('.sr-lo').forEach(function(opt){
+            opt.addEventListener('click', function(e){
+                e.preventDefault();e.stopPropagation();
+                var lang = opt.getAttribute('data-l');
+                document.querySelectorAll('.sr-lv').forEach(function(t){ t.textContent = lang; });
+                list.classList.remove('is-open');btn.classList.remove('op');if(chev) chev.classList.remove('op');
+            });
+        });
+    });
+    document.addEventListener('click', function(){
+        document.querySelectorAll('.sr-ll.is-open').forEach(function(l){
+            l.classList.remove('is-open');
+            var b = l.parentElement.querySelector('.sr-lb');
+            var c = l.parentElement.querySelector('.sr-lc');
+            if(b) b.classList.remove('op');
+            if(c) c.classList.remove('op');
+        });
+    });
+
+    // 4. Активна сторінка
+    var path = window.location.pathname.replace(/\/$/, '');
+    var allLinks = [];
+    document.querySelectorAll('.sr-na,.sr-da,.sr-md-item,.sr-md-sub-item').forEach(function(a){
+        var href = a.getAttribute('href');
+        if(!href || href === '#') return;
+        try{
+            var lp = new URL(href, window.location.origin).pathname.replace(/\/$/, '');
+            if(lp === '' || lp === '/') return;
+            allLinks.push({el: a, path: lp});
+        }catch(e){}
+    });
+    var best = null;
+    allLinks.forEach(function(item){
+        if(path === item.path || path.indexOf(item.path + '/') === 0){
+            if(!best || item.path.length > best.path.length) best = item;
+        }
+    });
+    if(best){
+        best.el.classList.add('act');
+        var parent = best.el.closest('.sr-ni');
+        if(parent){
+            var pLink = parent.querySelector('.sr-na');
+            if(pLink && pLink !== best.el) pLink.classList.add('act');
+        }
+    }
+});
+</script>
