@@ -1,0 +1,42 @@
+# SenseRevolt — Ukrainian translations
+# _data/translations/uk.yml
+
+lang_name: "Uk"
+lang_full: "Українська"
+
+topbar: "Світ, де розуміння себе і дитини починається з правильних інструментів"
+
+nav:
+  somatic: "Соматичні практики"
+  sel: "SEL для дітей"
+  pros: "Для фахівців"
+  blog: "Блог"
+  story: "Наша історія"
+  faqs: "Питання"
+  music: "Музика"
+
+somatic_sub:
+  method: "Наш метод"
+  all: "Всі практики"
+  bundles: "Підбірки"
+  extras: "Суміжні продукти"
+
+sel_sub:
+  method: "Наш метод"
+  all: "Всі книги"
+  bundles: "Підбірки"
+  extras: "Суміжні продукти"
+
+pros_sub:
+  kits: "Фахові практики"
+  bundles: "Підбірки"
+  pricing: "Групові ціни"
+
+music_sub:
+  somatic: "Соматична музика"
+  kids: "Дитячі пісні"
+
+aria:
+  open_menu: "Відкрити меню"
+  close_menu: "Закрити меню"
+  back: "Назад"

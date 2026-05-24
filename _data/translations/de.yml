@@ -1,0 +1,42 @@
+# SenseRevolt — German translations
+# _data/translations/de.yml
+
+lang_name: "De"
+lang_full: "Deutsch"
+
+topbar: "Eine Welt, in der das Verstehen von dir und deinem Kind mit den richtigen Werkzeugen beginnt"
+
+nav:
+  somatic: "Somatische Praktiken"
+  sel: "SEL für Kinder"
+  pros: "Für Profis"
+  blog: "Blog"
+  story: "Unsere Geschichte"
+  faqs: "FAQ"
+  music: "Musik"
+
+somatic_sub:
+  method: "Unsere Methode"
+  all: "Alle Praktiken"
+  bundles: "Bundles"
+  extras: "Extras"
+
+sel_sub:
+  method: "Unsere Methode"
+  all: "Alle Bücher"
+  bundles: "Bundles"
+  extras: "Extras"
+
+pros_sub:
+  kits: "Pro-Kits"
+  bundles: "Bundles"
+  pricing: "Gruppentarife"
+
+music_sub:
+  somatic: "Somatische Musik"
+  kids: "Kinderlieder"
+
+aria:
+  open_menu: "Menü öffnen"
+  close_menu: "Menü schließen"
+  back: "Zurück"
