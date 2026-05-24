@@ -102,7 +102,6 @@
   white-space:nowrap;transition:color .18s,background .18s;}
 .sr-lo:last-child{border-radius:0 0 3px 3px;}
 .sr-lo:hover{color:#fbefdc;background:#333231;}
-.sr-lo.is-current{color:#fbefdc;font-weight:400;}
 
 /* BURGER */
 .sr-bg{display:none;flex-direction:column;justify-content:center;align-items:center;
@@ -330,11 +329,10 @@ html.sr-no-scroll, body.sr-no-scroll { overflow: hidden !important; }
           <svg class="sr-lc" width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
         <div class="sr-ll">
-          <a href="#" class="sr-lo{% if lang == "en" %} is-current{% endif %}" data-lang="en">En</a>
-          <a href="#" class="sr-lo{% if lang == "uk" %} is-current{% endif %}" data-lang="uk">Uk</a>
-          <a href="#" class="sr-lo{% if lang == "de" %} is-current{% endif %}" data-lang="de">De</a>
-          <a href="#" class="sr-lo{% if lang == "fr" %} is-current{% endif %}" data-lang="fr">Fr</a>
-          <a href="#" class="sr-lo{% if lang == "es" %} is-current{% endif %}" data-lang="es">Es</a>
+          <a href="#" class="sr-lo" data-l="Uk">Uk</a>
+          <a href="#" class="sr-lo" data-l="De">De</a>
+          <a href="#" class="sr-lo" data-l="Fr">Fr</a>
+          <a href="#" class="sr-lo" data-l="Es">Es</a>
         </div>
       </div>
       <button class="sr-bg" id="sr-burger" type="button" aria-label="{{ t.aria.open_menu }}">
@@ -357,11 +355,10 @@ html.sr-no-scroll, body.sr-no-scroll { overflow: hidden !important; }
           <svg class="sr-lc" width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
         <div class="sr-ll" style="right:0;left:auto;">
-          <a href="#" class="sr-lo{% if lang == "en" %} is-current{% endif %}" data-lang="en">En</a>
-          <a href="#" class="sr-lo{% if lang == "uk" %} is-current{% endif %}" data-lang="uk">Uk</a>
-          <a href="#" class="sr-lo{% if lang == "de" %} is-current{% endif %}" data-lang="de">De</a>
-          <a href="#" class="sr-lo{% if lang == "fr" %} is-current{% endif %}" data-lang="fr">Fr</a>
-          <a href="#" class="sr-lo{% if lang == "es" %} is-current{% endif %}" data-lang="es">Es</a>
+          <a href="#" class="sr-lo" data-l="Uk">Uk</a>
+          <a href="#" class="sr-lo" data-l="De">De</a>
+          <a href="#" class="sr-lo" data-l="Fr">Fr</a>
+          <a href="#" class="sr-lo" data-l="Es">Es</a>
         </div>
       </div>
       <button class="sr-md-close" id="sr-md-close" type="button" aria-label="{{ t.aria.close_menu }}">
@@ -536,19 +533,9 @@ document.addEventListener('DOMContentLoaded', function() {
         list.querySelectorAll('.sr-lo').forEach(function(opt){
             opt.addEventListener('click', function(e){
                 e.preventDefault();e.stopPropagation();
-                var targetLang = opt.getAttribute('data-lang');
-                // Беремо поточний path і міняємо мову
-                var path = window.location.pathname;
-                var baseurl = '/senserevolt-sandbox';
-                // Прибираємо baseurl з початку
-                var pathWithoutBase = path.replace(baseurl, '');
-                // Перший сегмент — це мова (/en/..., /uk/...)
-                var segments = pathWithoutBase.split('/').filter(Boolean);
-                if(segments.length > 0){
-                    segments[0] = targetLang;
-                }
-                var newPath = baseurl + '/' + segments.join('/') + '/';
-                window.location.href = newPath;
+                var lang = opt.getAttribute('data-l');
+                document.querySelectorAll('.sr-lv').forEach(function(t){ t.textContent = lang; });
+                list.classList.remove('is-open');btn.classList.remove('op');if(chev) chev.classList.remove('op');
             });
         });
     });
