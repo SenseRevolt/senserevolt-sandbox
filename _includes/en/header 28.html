@@ -11,7 +11,7 @@
   letter-spacing:.03em;color:rgba(251,239,220,.6);
   -webkit-font-smoothing:antialiased;}
 .sr-tb-c{max-width:var(--max-width,1600px);width:100%;margin:0 auto;padding:0 var(--margin,20px);text-align:center;}
-.sr-tb-c span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
+.sr-tb-c span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:inline-block;max-width:100%;}
 .sr-tb-marq{display:none;width:100%;overflow:hidden;white-space:nowrap;
   -webkit-mask-image:linear-gradient(to right,transparent 0%,black 5%,black 95%,transparent 100%);
   mask-image:linear-gradient(to right,transparent 0%,black 5%,black 95%,transparent 100%);}
@@ -154,12 +154,6 @@
   }
 }
 @media(min-width:1280px){.sr-mob-drawer,.sr-mob-backdrop{display:none!important;}}
-
-/* UK мова — Lato weight:300 */
-:lang(uk) .sr-na,:lang(uk) .sr-da,:lang(uk) .sr-lb,:lang(uk) .sr-lo,
-:lang(uk) .sr-md-item,:lang(uk) .sr-md-sub-item,:lang(uk) .sr-ml,:lang(uk) .sr-msl{
-  font-weight:300!important;
-}
 
 /* Drawer Header */
 .sr-md-head{
