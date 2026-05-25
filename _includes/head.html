@@ -1,47 +1,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#2d2c2b">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>{% if page.title %}{{ page.title }}{% else %}SenseRevolt{% endif %}</title>
-
-{% assign base = "https://senserevolt.com" %}
-{% assign current_path = page.url | remove_first: "/" | remove_first: page.lang | prepend: "/" %}
-
-<!-- hreflang для SEO -->
-<link rel="alternate" hreflang="en" href="{{ base }}/en{{ current_path }}">
-<link rel="alternate" hreflang="uk" href="{{ base }}/uk{{ current_path }}">
-<link rel="alternate" hreflang="de" href="{{ base }}/de{{ current_path }}">
-<link rel="alternate" hreflang="fr" href="{{ base }}/fr{{ current_path }}">
-<link rel="alternate" hreflang="es" href="{{ base }}/es{{ current_path }}">
-<link rel="alternate" hreflang="x-default" href="{{ base }}/en{{ current_path }}">
-<link rel="canonical" href="{{ base }}{{ page.url }}">
-
-<!-- Open Graph -->
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="SenseRevolt">
-<meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}SenseRevolt{% endif %}">
-<meta property="og:url" content="{{ base }}{{ page.url }}">
-{% if page.lang == "uk" %}
-<meta property="og:locale" content="uk_UA">
-{% elsif page.lang == "de" %}
-<meta property="og:locale" content="de_DE">
-{% elsif page.lang == "fr" %}
-<meta property="og:locale" content="fr_FR">
-{% elsif page.lang == "es" %}
-<meta property="og:locale" content="es_ES">
-{% else %}
-<meta property="og:locale" content="en_US">
-{% endif %}
-<meta property="og:locale:alternate" content="en_US">
-<meta property="og:locale:alternate" content="uk_UA">
-<meta property="og:locale:alternate" content="de_DE">
-<meta property="og:locale:alternate" content="fr_FR">
-<meta property="og:locale:alternate" content="es_ES">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css?family=El+Messiri:wght@400;600;700&family=Jost:ital,wght@0,300;0,400;0,500;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;600;700&family=Jost:ital,wght@0,300;0,400;0,500;1,500&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="{{ site.baseurl }}/assets/global/css/main.css">
+{% if page.lang == "uk" %}
+<style>
+  body, .sr-h, .sr-mob-drawer, button, a, input {
+    font-family: 'Montserrat', sans-serif !important;
+  }
+</style>
+{% endif %}
 <link rel="stylesheet" href="{{ site.baseurl }}/assets/global/css/header.css">
